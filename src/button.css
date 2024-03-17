@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn {
+    @apply border-[1px]
+  border-sky-950
+    no-underline 
+    cursor-pointer 
+    inline-block 
+  bg-sky-500 
+    rounded-md
+  text-sky-950 
+    py-2.5 px-8 
+    text-center 
+    font-medium
+  }
+  .btn:hover,
+  .btn:focus,
+  .btn:active {
+    @apply rounded-full   shadow-sky-950
+  }
+  .btn--outline {
+    @apply bg-transparent py-2.5 px-8  border-[1px] border-sky-950 rounded-md;
+  }
+  .btn--outline:hover,
+  .btn--outline:focus,
+  .btn--outline:active {
+    @apply rounded-full bg-transparent;
+  }
+}
