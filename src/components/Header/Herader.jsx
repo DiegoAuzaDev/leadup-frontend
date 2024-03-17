@@ -15,11 +15,10 @@ function Header() {
   return (
     <>
       <header>
-        {/* Nav Phone and tablet  */}
         <section className=" fixed w-full py-4 shadow-lg bg-white">
           <div className="container-main">
-            <div className="flex flex-row md:gap-6">
-              <NavLink className="/">
+            <div className="flex flex-row justify-between md:gap-6">
+              <NavLink className="" to="/">
                 <img
                   src={LogoBlack}
                   className="  object-cover h-12"
@@ -40,22 +39,28 @@ function Header() {
               </button>
               <section className=" hidden md:flex  m-0   flex-row justify-between flex-1">
                 <nav className=" flex-1 flex">
-                  <ul
-                    role="list"
-                    className="m-0 flex flex-row divide-x-2 gap-3"
-                  >
+                  <ul role="list" className="m-0 flex flex-row gap-3">
                     <li className="self-center">
-                      <NavLink to="/" className=" font-medium self-center p-3">
+                      <NavLink
+                        to="/"
+                        className=" font-medium self-center p-3 hover:bg-sky-300"
+                      >
                         Product
                       </NavLink>
                     </li>
                     <li className="self-center">
-                      <NavLink to="/" className=" font-medium self-center p-3">
+                      <NavLink
+                        to="/"
+                        className=" font-medium self-center p-3 hover:bg-sky-300"
+                      >
                         Learn
                       </NavLink>
                     </li>
                     <li className="self-center">
-                      <NavLink to="/" className=" font-medium self-center p-3">
+                      <NavLink
+                        to="/"
+                        className=" font-medium self-center p-3 hover:bg-sky-300"
+                      >
                         Contact
                       </NavLink>
                     </li>
@@ -69,14 +74,13 @@ function Header() {
             </div>
           </div>
         </section>
-
         <div
-          className={`absolute left-0 md:hidden top-20  w-full h-[85%] flex flex-col navHeaderMobile ${
-            !isActive ? "active" : ""
-          }`}
+          className={` pt-2 pb-8 w-full mobile-menu ${
+            !isActive ? "" : "active"
+          } md:hidden`}
           id="mobile-menu"
         >
-          <nav className="pt-2 pb-6 flex flex-col justify-between flex-1 ">
+          <nav>
             <ul role="list" className="flex flex-col">
               <li className="border-b-2 flex border-gray-300 hover:bg-sky-100 hover:border-sky-950 ">
                 <NavLink
@@ -118,15 +122,13 @@ function Header() {
                 </NavLink>
               </li>
             </ul>
-            <div className="mx-6">
-              <NavLink className="btn block" to="/">
-                Sign in
-              </NavLink>
-            </div>
           </nav>
+          <div className="mx-6">
+            <NavLink className="btn block" to="/">
+              Sign in
+            </NavLink>
+          </div>
         </div>
-
-        {/* Nav large screens */}
       </header>
     </>
   );
