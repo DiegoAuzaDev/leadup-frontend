@@ -1,11 +1,12 @@
+import Welcome from "./components/Welcome/Welcome"
+import { Routes, Route } from "react-router-dom";
 
 function App() {
-
   return (
-    <>
-     <h1 className=" font-vietnam">Hello there this is how to use a font</h1>
-    </>
-  )
+      <Routes>
+        <Route path="/" element={<Welcome/>}/> 
+      </Routes>
+  );
 }
 
-export default App
+export default App;
