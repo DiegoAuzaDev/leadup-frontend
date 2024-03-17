@@ -1,18 +1,17 @@
 @tailwind components;
 
-@layer{
-.mobile-menu {
-  display: none;
-  height: -webkit-fill-available;
-  position: absolute;
-  top: 5rem;
+@layer {
+ .ul-cointainer {
+    height: -webkit-fill-available;
+    left: 800px;
+    transition: all 500ms ease-in-out;
+    -webkit-transition: all 500ms ease-in-out;
+    -moz-transition: all 500ms ease-in-out;
+    -ms-transition: all 500ms ease-in-out;
+    -o-transition: all 500ms ease-in-out;
 }
-.mobile-menu.active {
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  top: 5rem;
-}
+ .ul-cointainer.active {
+    left: 0
+ }
 }
 
