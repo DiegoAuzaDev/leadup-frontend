@@ -12,7 +12,7 @@
   bg-sky-500 
     rounded-md
   text-sky-950 
-    py-2.5 px-8 
+    py-2.5 px-4
     text-center 
     font-medium
   }
@@ -22,7 +22,7 @@
     @apply rounded-full   shadow-sky-950
   }
   .btn--outline {
-    @apply bg-transparent py-2.5 px-8  border-[1px] border-sky-950 rounded-md;
+    @apply bg-transparent py-2.5 px-4  border-[1px] border-sky-950 rounded-md     text-center ; 
   }
   .btn--outline:hover,
   .btn--outline:focus,

@@ -28,7 +28,7 @@ function Header() {
           >
             <div className=" flex flex-row divide-x-2 ">
               <li className="flex">
-                <NavLink className=" hover:bg-gray-200 focus:bg-gray-200 font-medium p-3 transition-all ease-in-out duration-300 ">
+                <NavLink className=" hover:bg-gray-200 focus:bg-gray-200 font-medium py-3 px-1 transition-all ease-in-out duration-300 ">
                   Services
                 </NavLink>
               </li>
@@ -43,8 +43,9 @@ function Header() {
                 </NavLink>
               </li>
             </div>
-            <div className="flex">
-              <NavLink className=" btn block">Sign in</NavLink>
+            <div className="flex gap-2">
+              <NavLink className="btn block" to="/signup">Sign up</NavLink>
+              <NavLink className=" btn--outline block">Log in</NavLink>
             </div>
           </ul>
           <button
@@ -94,7 +95,8 @@ function Header() {
               </li>
             </div>
             <div className="container-main">
-              <NavLink className=" btn block">Sign in</NavLink>
+              <NavLink className=" btn block my-4">Log in</NavLink>
+              <NavLink className=" btn--outline block">Sign up</NavLink>
             </div>
           </ul>
         </nav>
