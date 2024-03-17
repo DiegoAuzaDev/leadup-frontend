@@ -15,7 +15,7 @@ function Header() {
   return (
     <>
       <header>
-        <section className=" fixed w-full py-4 shadow-lg bg-white">
+        <section className=" fixed w-full py-4 shadow-lg bg-white z-[100000]">
           <div className="container-main">
             <div className="flex flex-row justify-between md:gap-6">
               <NavLink className="" to="/">
