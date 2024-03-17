@@ -12,8 +12,8 @@ function Header() {
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <header>
-      <div className="container-main py-7 shadow-md fixed">
+    <header className="py-7 shadow-md fixed w-full">
+      <div className="container-main">
         <nav className=" flex justify-between md:gap-2">
           <NavLink>
             <img
