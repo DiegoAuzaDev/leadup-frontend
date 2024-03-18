@@ -1,18 +1,38 @@
 import { NavLink } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Logo from "../../assets/LeadUpBlack.png";
-import { useState } from "react";
-import GoogleImg from "../../assets/Google.png"
-import Patter from "../../assets/pattern.svg"
-import "./signup.css"
+import { useEffect, useState } from "react";
+import GoogleImg from "../../assets/Google.png";
+import Patter from "../../assets/pattern.svg";
+import "./signup.css";
 function SignUp() {
+  // const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const urlToken = searchParams.get("token");
+    console.log(urlToken);
+
+    if (urlToken) {
+      console.log("token found in url");
+    }
+  });
+
+  function doGoogleAuth() {
+    const redirectUrl = "http://localhost:5173/dashboard";
+    // const baseUrl = `http://localhost:3004/api/`;
+    const baseUrl = `http://localhost:3004/auth/google?redirect_url=${redirectUrl}`;
+    location.href = baseUrl;
+  }
+
   return (
-    <div className=" flex flex-row">
-      <div className="container-main pb-8">
+    <div className=" flex flex-row h-[100vh]">
+      <div className="pt-12 md:mt-0 container-main pb-8 overflow-scroll">
+
         <div className=" flex flex-col md:items-end">
           <header className="flex mb-8 pt-8 md:w-96">
-            <NavLink to="/" className="">
+            <NavLink to="localhost:" className="">
               <img src={Logo} alt="Leadup logo" className="h-12 object-fill" />
             </NavLink>
           </header>
@@ -20,7 +40,7 @@ function SignUp() {
 
         <main className=" flex flex-col md:items-end">
           <div>
-            <h2 className=" font-medium italic text-sky-900  text-[32px] w-96">
+            <h2 className="  md:w-96 font-medium italic text-sky-900  text-[32px] w-96">
               Create your account
             </h2>
             <p className=" font-bold text-[18px]">
@@ -32,7 +52,10 @@ function SignUp() {
           </div>
 
           <div className="md:w-96">
-            <NavLink className="btn--outline flex justify-center gap-2">
+            <NavLink
+              className="btn--outline flex justify-center gap-2"
+              onClick={doGoogleAuth}
+            >
               <img src={GoogleImg} className=" h-8" alt="Google logo" />
               <small className="my-auto">Google</small>
             </NavLink>
@@ -64,7 +87,7 @@ function SignUp() {
             </fieldset>
             <fieldset className="mt-4 mb-6">
               <legend className=" font-semibold text-gray-800">
-                Email Address
+                First Name
               </legend>
               <label className=" flex flex-col gap-2">
                 <small className=" text-gray-600">
@@ -85,7 +108,7 @@ function SignUp() {
             </fieldset>
             <fieldset className="mt-4 mb-6">
               <legend className=" font-semibold text-gray-800">
-                Email Address
+                Last name
               </legend>
               <label className=" flex flex-col gap-2">
                 <small className=" text-gray-600">
@@ -105,9 +128,7 @@ function SignUp() {
               </label>
             </fieldset>
             <fieldset className="mt-4 mb-6">
-              <legend className=" font-semibold text-gray-800">
-                Email Address
-              </legend>
+              <legend className=" font-semibold text-gray-800">Password</legend>
               <label className=" flex flex-col gap-2">
                 <small className=" text-gray-600">
                   We recommend using your work email
@@ -126,18 +147,18 @@ function SignUp() {
               </label>
             </fieldset>
             <div className=" flex flex-col gap-3 mt-6">
-              <button className="btn">Sign up</button>
-              <button className="btn--outline bg-gray-200">Log in</button>
+              {/* Need to complete local Auth */}
+              <NavLink className="btn">Sign up</NavLink>
+              <NavLink className="btn--outline bg-gray-200">Log in</NavLink>
             </div>
           </form>
         </main>
       </div>
       <div
-        className=" hidden md:inline-block h-[100vh] w-3/5 md:bg-sky-900"
-        style={{ backgroundImage: `url(${Patter})`, height : "auto" }}
+        className="md:h-auto md:static  h-4 md:inline-block  md:w-3/5 md:bg-sky-900"
+        style={{ backgroundImage: `url(${Patter})` }}
       ></div>
     </div>
   );
 }
 export default SignUp;
-

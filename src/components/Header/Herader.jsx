@@ -12,7 +12,7 @@ function Header() {
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <header className="py-7 shadow-md fixed w-full">
+    <header className="py-7 shadow-md fixed w-full z-[1000000] bg-[#F8F9FA]">
       <div className="container-main">
         <nav className=" flex justify-between md:gap-2">
           <NavLink>
@@ -24,7 +24,7 @@ function Header() {
           </NavLink>
           <ul
             role="list"
-            className={`justify-between m-0 hidden md:flex flex-row flex-1`}
+            className={`justify-between m-0 hidden md:flex flex-row flex-1 `}
           >
             <div className=" flex flex-row divide-x-2 ">
               <li className="flex">
@@ -44,7 +44,9 @@ function Header() {
               </li>
             </div>
             <div className="flex gap-2">
-              <NavLink className="btn block" to="/signup">Sign up</NavLink>
+              <NavLink className="btn block" to="/signup">
+                Sign up
+              </NavLink>
               <NavLink className=" btn--outline block">Log in</NavLink>
             </div>
           </ul>
@@ -58,7 +60,7 @@ function Header() {
           </button>
           <ul
             role="list"
-            className={`fixed w-full top-[104px] bottom-0 flex flex-col justify-between m-0 pb-14 pt-6 ul-cointainer ${
+            className={`bg-[#F8F9FA] fixed w-full top-[104px] bottom-0 flex flex-col justify-between m-0 pb-14 pt-6 ul-cointainer ${
               !isActive ? "" : "active"
             }  md:hidden`}
           >
