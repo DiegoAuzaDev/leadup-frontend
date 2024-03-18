@@ -1,21 +1,11 @@
 import { NavLink } from "react-router-dom";
-import Patter from "../../assets/patterBanner.png";
 import "../../button.css";
+import "./banner.css"
 
 function Banner() {
   return (
     <main>
-      <div className=" pt-[8rem] pb-8 mb-7 md:h-[90vh] shadow-xl">
-        <div
-          className="md:absolute md:h-[90vh]  right-[-200px] top-0 md:inline-block md:w-[100vw]"
-          style={{
-            backgroundImage: `url(${Patter})`,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-        ></div>
-
+      <div className=" pt-[8rem] pb-8 mb-7 md:h-[90vh] shadow-xl banner-img">
         <section
           className="container-main md:flex md:items-center"
           style={{
