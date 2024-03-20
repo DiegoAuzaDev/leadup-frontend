@@ -1,13 +1,14 @@
 import PropTypes from "prop-types";
 import Logo from "../../../assets/LeadUpBlack.png";
 import { NavLink } from "react-router-dom";
+import ErrorImage from "../../../assets/avatar.png";
 
-function LargeNavigator({ user }) {
+function LargeNavigator({ user, logout, error }) {
   return (
     <nav
       className={`hidden md:bg-white md:shadow-md md:h-[100vh] md:flex md:flex-col md:py-6 justify-evenly md:px-4 md:min-w-[175px] gap-3 overflow-scroll ${
         !user && "animate-pulse"
-      }`}
+      } ${error && "animate-none"}`}
     >
       <div>
         <img src={Logo} alt="Leadup logo" className=" h-8 mx-3" />
@@ -48,7 +49,14 @@ function LargeNavigator({ user }) {
       </ul>
       <div className=" flex flex-col gap-2">
         <button className="flex justify-center">
-          {!user && <div className="w-12 rounded-full h-12 bg-slate-500"></div>}
+          {error && (
+            <img
+              src={ErrorImage}
+              alt="Profile photo"
+              className="w-12 rounded-full h-12"
+            />
+          )}
+          {!user && (<div className="w-12 rounded-full h-12 bg-slate-500"></div>) }
           {user && (
             <img
               src={user.photo}
@@ -57,9 +65,16 @@ function LargeNavigator({ user }) {
             />
           )}
         </button>
-        <NavLink className="py-2 text-center" to="/workspace/settings">
+
+        <button
+          className="py-2 text-center"
+          to="/workspace/settings"
+          onClick={() => {
+            logout();
+          }}
+        >
           Settings
-        </NavLink>
+        </button>
       </div>
     </nav>
   );
@@ -67,6 +82,32 @@ function LargeNavigator({ user }) {
 
 LargeNavigator.propTypes = {
   user: PropTypes.object,
+  logout: PropTypes.func,
+  error: PropTypes.string,
 };
 
 export default LargeNavigator;
+
+// Todo Settings and add routes
+
+// {
+//   !user ? <div className="w-12 rounded-full h-12 bg-slate-500"></div> : null;
+// }
+// {
+//   error ?? (
+//     <img
+//       src={ErrorImage}
+//       alt="Profile photo"
+//       className=" w-12 rounded-full h-12"
+//     />
+//   );
+// }
+// {
+//   user && (
+//     <img
+//       src={user.photo}
+//       alt="Profile photo"
+//       className=" w-12 rounded-full h-12"
+//     />
+//   );
+// }

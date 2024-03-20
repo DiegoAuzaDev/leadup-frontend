@@ -98,7 +98,9 @@ function Header() {
             </div>
             <div className="container-main">
               <NavLink className=" btn block my-4">Log in</NavLink>
-              <NavLink className=" btn--outline block">Sign up</NavLink>
+              <NavLink className=" btn--outline block" to="/signup">
+                Sign up
+              </NavLink>
             </div>
           </ul>
         </nav>

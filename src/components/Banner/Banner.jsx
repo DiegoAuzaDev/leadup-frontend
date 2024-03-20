@@ -28,7 +28,9 @@ function Banner() {
               </p>
             </div>
             <div className=" flex flex-col gap-3 py-4">
-              <NavLink className="btn">Sign up</NavLink>
+              <NavLink className="btn" to="/signup">
+                Sign up
+              </NavLink>
               <NavLink className="btn--outline">Learn more</NavLink>
             </div>
           </div>

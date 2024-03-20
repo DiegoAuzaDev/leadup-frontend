@@ -24,49 +24,56 @@ function WorkSpace() {
   const navigate = useNavigate();
   const [token, setToken] = useToken();
   const [searchParams, setSearchParamas] = useSearchParams();
+  const [error, setError] = useState(null);
   // todo
   const [userData, setuserData] = useState();
   const [companyData, setCompanyData] = useState();
-  const API_URL = `http://localhost:3004/api`
-
+  const API_URL = `http://localhost:3004/api`;
 
   // get user token if there is no token on the url or session storage it will navigate back to log in
   useEffect(() => {
+    console.log("hello");
     const urlToken = searchParams.get("token");
     if (urlToken) {
       setToken(urlToken);
-      return;
+      const API_TOKEN = urlToken;
+      let headers = {
+        Authorization: `Bearer ${API_TOKEN}`,
+        "application-type": "application/json",
+      };
+      fetch(API_URL, {
+        method: "GET",
+        mode: "cors",
+        headers: headers,
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(response.status);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data.user);
+          setuserData(data.user);
+          setCompanyData(data.company);
+        })
+        .catch((err) => {
+          console.log(err.message);
+          setError(err.message);
+          setCompanyData(null)
+          setuserData(null)
+        });
+        return;
     }
     if (!token) {
       navigate("/signup");
     }
   }, [token]);
 
-  // get user Data after checking for the token
-  useEffect(() => {
-    const API_TOKEN = token;
-    let headers = {
-      Authorization: `Bearer ${API_TOKEN}`,
-      "application-type": "application/json",
-    };
-   fetch(API_URL, {
-     method: "GET",
-     mode: "cors",
-     headers: headers,
-   }).then((response) => {
-     if (!response.ok) {
-       throw new Error(response.error);
-     }
-     return response.json();
-   }).then((data)=>{
-    console.log(data.user)
-    setuserData(data.user)
-    setCompanyData(data.company)
-
-   }).catch((err)=>{
-    console.log(err)
-   })
-  }, [])
+  const doLogout = () => {
+    setToken(null);
+    navigate("/");
+  };
 
   const [isActive, setIsActive] = useState(false);
   return (
@@ -172,13 +179,18 @@ function WorkSpace() {
                 </li>
               </div>
               <div className="container-main flex">
-                <button className=" btn btn--danger block flex-1">
+                <button
+                  className=" btn btn--danger block flex-1"
+                  onClick={() => {
+                    doLogout();
+                  }}
+                >
                   logout
                 </button>
               </div>
             </ul>
           </nav>
-          <LargeNavigator user={userData} />
+          <LargeNavigator user={userData} logout={doLogout} error={error} />
         </section>
       </header>
       <main className=" md:ml-0 md:my-6 container-main">
