@@ -64,12 +64,11 @@ function SignUp() {
     e.preventDefault();
     console.log(e);
 
-    // Here you can perform further actions like submitting the form data
+
   };
 
   function doGoogleAuth() {
-    const redirectUrl = "http://localhost:5173/dashboard";
-    // const baseUrl = `http://localhost:3004/api/`;
+    const redirectUrl = "http://localhost:5173/workspace/dashboard";
     const baseUrl = `http://localhost:3004/auth/google?redirect_url=${redirectUrl}`;
     location.href = baseUrl;
   }

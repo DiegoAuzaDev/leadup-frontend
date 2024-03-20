@@ -1,6 +1,5 @@
-@tailwind base;
+
 @tailwind components;
-@tailwind utilities;
 
 @layer components {
   .btn {
@@ -28,5 +27,11 @@
   .btn--outline:focus,
   .btn--outline:active {
     @apply rounded-full bg-transparent;
+  }
+
+  .btn--danger {
+    @apply 
+    bg-red-400
+    text-sky-950
   }
 }
