@@ -1,20 +1,30 @@
+/* eslint-disable no-unused-vars */
 import {
   Outlet,
   NavLink,
   useSearchParams,
   useNavigate,
 } from "react-router-dom";
-import LogoBlack from "../../assets/LeadUpBlack.png"
+//
+import Logo from "../../assets/LeadUp.svg";
+import Bars from "../../assets/bars-solid.svg";
+import Close from "../../assets/xmark-solid.svg";
+import LargeNavigator from "./LargeNavigator/LargeNavigator"
+
+//
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight, faL } from "@fortawesome/free-solid-svg-icons";
 import { useToken } from "../../context/tokenContext";
 import { useEffect, useState } from "react";
-import "./workSpace.css"
+//
+import "./workSpace.css";
 import "../../button.css";
+
 function WorkSpace() {
   const navigate = useNavigate();
   const [token, setToken] = useToken();
   const [searchParams, setSearchParamas] = useSearchParams();
+  // todo
   const [userData, setuserData] = useState();
   const [companyData, setCompanyData] = useState();
 
@@ -33,30 +43,48 @@ function WorkSpace() {
 
   // get user Data after checking for the token
   useEffect(() => {
+    // todo
   }, []);
 
-  const [ isActive, setIsActive] = useState(true)
+  const [isActive, setIsActive] = useState(false);
   return (
     <>
-      <header>
+      <header  className=" md:fixed left-0 md:w-25% md:bg-red-500 md:h-[100vh]">
         <section>
-          <nav className=" fixed top-0">
+          <nav className="flex justify-between md:hidden bg-white py-4 mb-4 shadow-md">
+            <div className=" container-main flex justify-between">
+              <NavLink to="/workspace/dashboard">
+                <img src={Logo} alt="Leadup logo" className=" h-8" />
+              </NavLink>
+              <button
+                onClick={() => {
+                  setIsActive(!isActive);
+                }}
+              >
+                <img
+                  src={`${!isActive ? Bars : Close}`}
+                  alt=""
+                  className=" h-6"
+                />
+              </button>
+            </div>
+
             <div
-            onClick={()=>{
-              setIsActive(!isActive)
-            }}
-              className={`bg-[#ff000048] h-[100vh] fixed w-[100vw] top-0 mobile-nav-workspace-bg-color ${
-                  isActive ? "active" : ""
-              }`}
+              onClick={() => {
+                setIsActive(!isActive);
+              }}
+              className={`bg-[#00000048] h-[100vh] fixed w-[100vw] left-[800px] top-0 mobile-nav-workspace-bg-color ${
+                isActive ? "active" : ""
+              } md:hidden`}
             ></div>
             <ul
               role="list"
-              className={`bg-[#F8F9FA]  w-2/4 fixed bottom-0 top-0  h-[100vh] flex flex-col m-0 pb-14 pt-6 justify-between mobile-nav-workspace ${
+              className={`bg-[#F8F9FA]  w-[66%] fixed bottom-0 top-0 left-[800px] h-[100vh] flex flex-col m-0 pb-14 pt-6 justify-between mobile-nav-workspace ${
                 isActive ? "active" : ""
               } md:hidden `}
             >
               <div className="divide-y-2 gap-1">
-                <li className="flex">
+                <li className="flex flex-col">
                   <NavLink
                     to="/workspace/dashboard"
                     className=" container-main py-4 flex justify-between hover:bg-gray-200"
@@ -102,10 +130,11 @@ function WorkSpace() {
               </div>
             </ul>
           </nav>
+          <LargeNavigator/>
         </section>
       </header>
-      <main className="">
-        <Outlet />
+      <main className=" md:fixed right-[200px]">
+        <Outlet/>
       </main>
     </>
   );
