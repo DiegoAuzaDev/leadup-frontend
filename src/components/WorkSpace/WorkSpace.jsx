@@ -9,7 +9,7 @@ import {
 import Logo from "../../assets/LeadUp.svg";
 import Bars from "../../assets/bars-solid.svg";
 import Close from "../../assets/xmark-solid.svg";
-import LargeNavigator from "./LargeNavigator/LargeNavigator"
+import LargeNavigator from "./LargeNavigator/LargeNavigator";
 
 //
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,10 +27,11 @@ function WorkSpace() {
   // todo
   const [userData, setuserData] = useState();
   const [companyData, setCompanyData] = useState();
+  const API_URL = `http://localhost:3004/api`
+
 
   // get user token if there is no token on the url or session storage it will navigate back to log in
   useEffect(() => {
-    console.log("Getting the token");
     const urlToken = searchParams.get("token");
     if (urlToken) {
       setToken(urlToken);
@@ -43,14 +44,35 @@ function WorkSpace() {
 
   // get user Data after checking for the token
   useEffect(() => {
-    // todo
-  }, []);
+    const API_TOKEN = token;
+    let headers = {
+      Authorization: `Bearer ${API_TOKEN}`,
+      "application-type": "application/json",
+    };
+   fetch(API_URL, {
+     method: "GET",
+     mode: "cors",
+     headers: headers,
+   }).then((response) => {
+     if (!response.ok) {
+       throw new Error(response.error);
+     }
+     return response.json();
+   }).then((data)=>{
+    console.log(data.user)
+    setuserData(data.user)
+    setCompanyData(data.company)
+
+   }).catch((err)=>{
+    console.log(err)
+   })
+  }, [])
 
   const [isActive, setIsActive] = useState(false);
   return (
-    <>
-      <header  className=" md:fixed left-0 md:w-25% md:bg-red-500 md:h-[100vh]">
-        <section>
+    <div className=" md:flex flex-row">
+      <header>
+        <section className=" md:flex">
           <nav className="flex justify-between md:hidden bg-white py-4 mb-4 shadow-md">
             <div className=" container-main flex justify-between">
               <NavLink to="/workspace/dashboard">
@@ -99,6 +121,18 @@ function WorkSpace() {
                 </li>
                 <li className="flex">
                   <NavLink
+                    to="/workspace/employee"
+                    className=" container-main py-4 flex justify-between hover:bg-gray-200"
+                  >
+                    Employee
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      style={{ color: "#000" }}
+                    />
+                  </NavLink>
+                </li>
+                <li className="flex">
+                  <NavLink
                     to="/workspace/settings"
                     className=" container-main py-4 flex justify-between hover:bg-gray-200"
                   >
@@ -112,12 +146,26 @@ function WorkSpace() {
                 </li>
                 <li className="flex">
                   <NavLink
-                    to="/workspace/employee"
+                    to="/workspace/company"
                     className=" container-main py-4 flex justify-between hover:bg-gray-200"
                   >
-                    Employee
+                    Company
                     <FontAwesomeIcon
                       icon={faChevronRight}
+                      className=" self-center"
+                      style={{ color: "#000" }}
+                    />
+                  </NavLink>
+                </li>
+                <li className="flex">
+                  <NavLink
+                    to="/workspace/delivery"
+                    className=" container-main py-4 flex justify-between hover:bg-gray-200"
+                  >
+                    Delivery
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      className=" self-center"
                       style={{ color: "#000" }}
                     />
                   </NavLink>
@@ -130,13 +178,13 @@ function WorkSpace() {
               </div>
             </ul>
           </nav>
-          <LargeNavigator/>
+          <LargeNavigator user={userData} />
         </section>
       </header>
-      <main className=" md:fixed right-[200px]">
-        <Outlet/>
+      <main className=" md:ml-0 md:my-6 container-main">
+        <Outlet context={[userData, companyData]} />
       </main>
-    </>
+    </div>
   );
 }
 export default WorkSpace;
