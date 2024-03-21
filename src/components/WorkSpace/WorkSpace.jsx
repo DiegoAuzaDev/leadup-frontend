@@ -26,13 +26,12 @@ function WorkSpace() {
   const [searchParams, setSearchParamas] = useSearchParams();
   const [error, setError] = useState(null);
   // todo
-  const [userData, setuserData] = useState();
-  const [companyData, setCompanyData] = useState();
+  const [userData, setuserData] = useState({});
+  const [companyData, setCompanyData] = useState({});
   const API_URL = `http://localhost:3004/api`;
 
   // get user token if there is no token on the url or session storage it will navigate back to log in
   useEffect(() => {
-    console.log("hello");
     const urlToken = searchParams.get("token");
     if (urlToken) {
       setToken(urlToken);
@@ -53,15 +52,14 @@ function WorkSpace() {
           return response.json();
         })
         .then((data) => {
-          console.log(data.user);
           setuserData(data.user);
           setCompanyData(data.company);
         })
         .catch((err) => {
-          console.log(err.message);
           setError(err.message);
-          setCompanyData(null)
-          setuserData(null)
+          setuserData({
+            error : true
+          })
         });
         return;
     }
@@ -190,7 +188,7 @@ function WorkSpace() {
               </div>
             </ul>
           </nav>
-          <LargeNavigator user={userData} logout={doLogout} error={error} />
+          <LargeNavigator user={userData} logout={doLogout} />
         </section>
       </header>
       <main className=" md:ml-0 md:my-6 container-main">

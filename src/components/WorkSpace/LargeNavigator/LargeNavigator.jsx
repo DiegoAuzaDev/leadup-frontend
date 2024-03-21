@@ -3,12 +3,10 @@ import Logo from "../../../assets/LeadUpBlack.png";
 import { NavLink } from "react-router-dom";
 import ErrorImage from "../../../assets/avatar.png";
 
-function LargeNavigator({ user, logout, error }) {
+function LargeNavigator({ user, logout }) {
   return (
     <nav
-      className={`hidden md:bg-white md:shadow-md md:h-[100vh] md:flex md:flex-col md:py-6 justify-evenly md:px-4 md:min-w-[175px] gap-3 overflow-scroll ${
-        !user && "animate-pulse"
-      } ${error && "animate-none"}`}
+      className={`hidden md:bg-white md:shadow-md md:h-[100vh] md:flex md:flex-col md:py-6 justify-evenly md:px-4 md:min-w-[175px] gap-3 overflow-scroll ${user.error ? "animate-none" : Object.keys(user).length === 0 ? "animate-pulse"  : "animate-none"} `}
     >
       <div>
         <img src={Logo} alt="Leadup logo" className=" h-8 mx-3" />
@@ -49,17 +47,12 @@ function LargeNavigator({ user, logout, error }) {
       </ul>
       <div className=" flex flex-col gap-2">
         <button className="flex justify-center">
-          {error && (
-            <img
-              src={ErrorImage}
-              alt="Profile photo"
-              className="w-12 rounded-full h-12"
-            />
+          {Object.keys(user).length === 0 && (
+            <div className="w-12 rounded-full h-12 bg-slate-500"></div>
           )}
-          {!user && (<div className="w-12 rounded-full h-12 bg-slate-500"></div>) }
-          {user && (
+          {Object.keys(user).length != 0 && (
             <img
-              src={user.photo}
+              src={user.error ? ErrorImage : user.photo}
               alt="Profile photo"
               className=" w-12 rounded-full h-12"
             />
@@ -88,26 +81,3 @@ LargeNavigator.propTypes = {
 
 export default LargeNavigator;
 
-// Todo Settings and add routes
-
-// {
-//   !user ? <div className="w-12 rounded-full h-12 bg-slate-500"></div> : null;
-// }
-// {
-//   error ?? (
-//     <img
-//       src={ErrorImage}
-//       alt="Profile photo"
-//       className=" w-12 rounded-full h-12"
-//     />
-//   );
-// }
-// {
-//   user && (
-//     <img
-//       src={user.photo}
-//       alt="Profile photo"
-//       className=" w-12 rounded-full h-12"
-//     />
-//   );
-// }
