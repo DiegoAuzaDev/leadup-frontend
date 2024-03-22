@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 //
@@ -8,60 +9,75 @@ function DashBoard() {
   return (
     <>
       <div className=" flex flex-col gap-8 lg:flex-row md:flex-1 md:gap-4">
-        <section className=" flex  flex-col lg:w-1/3">
-          <div className=" mb-4">
-            <h2 className="m-0 text-3xl md:text-3xl lg:text-3xl">Dashboard</h2>
-            <small>Sync your team with your routes</small>
-          </div>
-          <div
-            className={`${
-              Object.keys(companyData).length === 0 && "animate-pulse"
-            } transition-all ease-in-out duration-500 bg-gray-200 rounded-md min-h-[190px]  flex flex-col gap-5 px-3 py-5`}
-          >
-            {Object.keys(companyData).length === 0 && (
-              <>
-                <div className=" bg-gray-300 h-8 mt-2 w-2/3 rounded-md"></div>
-                <div className=" bg-gray-300 h-10 rounded-md"></div>
-                <div className=" bg-gray-300 h-6 w-1/3 rounded-md"></div>
-              </>
-            )}
-            {Object.keys(companyData).length != 0 && !companyData.error ? (
-              <>
-                <div>
-                  <p className=" text-center ">Your company list is empty</p>
-                  <small>
-                    In order to make use all the advantanges you need to create
-                    a new company
-                  </small>
-                </div>
-                <button className="btn">Add new company</button>
-              </>
-            ) : (
-              companyData.error && (
+        <section className=" flex  flex-col lg:w-1/3 md:gap-7 md:flex-row lg:flex-col">
+          <div className=" lg:mb-4 md:w-1/2 lg:w-[auto]">
+            <div className="mb-4">
+              <h2 className="m-0 text-3xl md:text-3xl lg:text-3xl">
+                Dashboard
+              </h2>
+              <small>Sync your team with your routes</small>
+            </div>
+            <div
+              className={`${
+                Object.keys(companyData).length === 0 && "animate-pulse"
+              } transition-all ease-in-out duration-500 bg-gray-200 rounded-md min-h-[190px]  flex flex-col gap-5 px-3 py-5`}
+            >
+              {Object.keys(companyData).length === 0 && (
                 <>
-                  <p className=" text-center m-0">
-                    There was an error getting your data
-                  </p>
-                  <small className=" font-light">
-                    remeber to double check your conection and ig there error
-                    persist try again later
-                  </small>
-                  <button
-                    className="btn btn--danger"
-                    onClick={() => {
-                      window.location.reload();
-                    }}
-                  >
-                    Reload page
+                  <div className=" bg-gray-300 h-8 mt-2 w-2/3 rounded-md"></div>
+                  <div className=" bg-gray-300 h-10 rounded-md"></div>
+                  <div className=" bg-gray-300 h-6 w-1/3 rounded-md"></div>
+                </>
+              )}
+              {Object.keys(companyData).length != 0 && !companyData.error ? (
+                <>
+                  <div>
+                    <p className="text-center lg:text-left">
+                      Your company list is empty
+                    </p>
+                    <small>
+                      In order to make use all the advantanges you need to
+                      create a new company
+                    </small>
+                  </div>
+                  <button className="btn sm:self-auto  md:self-baseline lg:self-baseline">
+                    Add new company
                   </button>
                 </>
-              )
-            )}
+              ) : (
+                companyData.error && (
+                  <>
+                    <p className=" text-center m-0">
+                      There was an error getting your data
+                    </p>
+                    <small className=" font-light">
+                      remeber to double check your conection and ig there error
+                      persist try again later
+                    </small>
+                    <button
+                      className="btn btn--danger"
+                      onClick={() => {
+                        window.location.reload();
+                      }}
+                    >
+                      Reload page
+                    </button>
+                  </>
+                )
+              )}
+            </div>
           </div>
-          <div className=" hidden md:inline-block md: mt-5">
-            <h3 className="m-0 text-2xl md:text-2xl lg:text-2xl">
-              Employee list
-            </h3>
+
+          <div className=" hidden   flex-1 md:flex flex-col">
+            <div className="mb-4">
+              <h3 className="m-0 text-2xl md:text-2xl lg:text-2xl">
+                Your deliveries
+              </h3>
+              <small>
+                      Keep your items onder control
+              </small>
+            </div>
+            <div className="bg-gray-200 h-[auto] rounded-md flex-1"></div>
           </div>
         </section>
         <section className=" lg:w-2/3  flex  flex-col h-[70vh] lg:h-[auto]">

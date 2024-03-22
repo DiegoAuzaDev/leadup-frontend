@@ -28,7 +28,8 @@ function WorkSpace() {
   // todo
   const [userData, setuserData] = useState({});
   const [companyData, setCompanyData] = useState([]);
-  const API_URL = `https://leadup-backend.onrender.com/api`;
+  // const API_URL = `https://leadup-backend.onrender.com/api`;
+  const API_URL = `http://localhost:3004/api`;
 
   // get user token if there is no token on the url or session storage it will navigate back to log in
   useEffect(() => {
