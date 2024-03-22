@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
+import MapComponent from "../MapComponent/MapComponent";
 //
 import { useOutletContext } from "react-router-dom";
 function DashBoard() {
@@ -87,7 +88,7 @@ function DashBoard() {
             </h3>
             <small>Find your active deliveries list</small>
           </div>
-          <div className="bg-gray-200 h-[40vh] rounded-md flex justify-center items-center flex-col flex-1">
+          <div className="bg-gray-200 h-[40vh] rounded-md flex justify-center items-center flex-col flex-1 overflow-hidden">
             {Object.keys(companyData).length === 0 && (
               <div role="status" className=" flex flex-col gap-2">
                 <svg
@@ -120,6 +121,9 @@ function DashBoard() {
                   <p>There was an error</p>
                 </>
               )
+            )}
+            {companyData && (
+              <MapComponent/>
             )}
           </div>
         </section>
