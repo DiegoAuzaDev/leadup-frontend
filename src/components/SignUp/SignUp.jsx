@@ -69,7 +69,8 @@ function SignUp() {
 
   function doGoogleAuth() {
     const redirectUrl = "http://localhost:5173/workspace/dashboard";
-    const baseUrl = `http://localhost:3004/auth/google?redirect_url=${redirectUrl}`;
+    // const baseUrl = `http://localhost:3004/auth/google?redirect_url=${redirectUrl}`;
+    const baseUrl = `https://leadup-backend.onrender.com/auth/google?redirect_url=${redirectUrl}`;
     location.href = baseUrl;
   }
 

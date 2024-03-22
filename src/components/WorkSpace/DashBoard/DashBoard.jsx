@@ -58,8 +58,13 @@ function DashBoard() {
               )
             )}
           </div>
+          <div className=" hidden md:inline-block md: mt-5">
+            <h3 className="m-0 text-2xl md:text-2xl lg:text-2xl">
+              Employee list
+            </h3>
+          </div>
         </section>
-        <section className=" lg:w-2/3  flex  flex-col">
+        <section className=" lg:w-2/3  flex  flex-col h-[70vh] lg:h-[auto]">
           <div className=" mb-4">
             <h3 className="m-0 text-3xl md:text-3xl lg:text-3xl">
               Your map view
