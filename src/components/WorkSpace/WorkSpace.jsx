@@ -13,7 +13,7 @@ import LargeNavigator from "./LargeNavigator/LargeNavigator";
 
 //
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight, faL } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { useToken } from "../../context/tokenContext";
 import { useEffect, useState } from "react";
 //
@@ -27,8 +27,8 @@ function WorkSpace() {
   const [error, setError] = useState(null);
   // todo
   const [userData, setuserData] = useState({});
-  const [companyData, setCompanyData] = useState({});
-  const API_URL = `http://localhost:3004/api`;
+  const [companyData, setCompanyData] = useState([]);
+  const API_URL = `http://localhost:3004/api/`;
 
   // get user token if there is no token on the url or session storage it will navigate back to log in
   useEffect(() => {
@@ -52,12 +52,24 @@ function WorkSpace() {
           return response.json();
         })
         .then((data) => {
+
           setuserData(data.user);
           setCompanyData(data.company);
+          if(data.company.length == 0){
+            setCompanyData({
+              empty : true
+            })
+          } else { 
+             setCompanyData(data.company);
+          }
+
         })
         .catch((err) => {
           setError(err.message);
           setuserData({
+            error : true
+          })
+          setCompanyData({
             error : true
           })
         });
@@ -76,7 +88,7 @@ function WorkSpace() {
   const [isActive, setIsActive] = useState(false);
   return (
     <div className=" md:flex flex-row">
-      <header>
+      <header className=" md:bg-white md:shadow-md">
         <section className=" md:flex">
           <nav className="flex justify-between md:hidden bg-white py-4 mb-4 shadow-md">
             <div className=" container-main flex justify-between">
@@ -191,7 +203,7 @@ function WorkSpace() {
           <LargeNavigator user={userData} logout={doLogout} />
         </section>
       </header>
-      <main className=" md:ml-0 md:my-6 container-main">
+      <main className=" md:ml-0 pb-8 md:pb-0 md:my-6 container-main md:flex lg:w-[100em]">
         <Outlet context={[userData, companyData]} />
       </main>
     </div>

@@ -6,7 +6,7 @@ import ErrorImage from "../../../assets/avatar.png";
 function LargeNavigator({ user, logout }) {
   return (
     <nav
-      className={`hidden md:bg-white md:shadow-md md:h-[100vh] md:flex md:flex-col md:py-6 justify-evenly md:px-4 md:min-w-[175px] gap-3 overflow-scroll ${user.error ? "animate-none" : Object.keys(user).length === 0 ? "animate-pulse"  : "animate-none"} `}
+      className={`hidden  md:h-[100vh] md:flex md:flex-col md:py-6 justify-evenly md:px-4 md:min-w-[175px] gap-3 overflow-scroll ${user.error ? "animate-none" : Object.keys(user).length === 0 ? "animate-pulse"  : "animate-none"} `}
     >
       <div>
         <img src={Logo} alt="Leadup logo" className=" h-8 mx-3" />
