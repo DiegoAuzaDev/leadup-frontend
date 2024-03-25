@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Outlet, useSearchParams, useNavigate } from "react-router-dom";
-import {API_URL} from "../../utils/keys"
+import { API_URL } from "../../utils/keys";
 //
 
 //
@@ -41,6 +41,7 @@ function WorkSpace() {
           return response.json();
         })
         .then((data) => {
+          console.log(data);
           setUserData({
             email: data.user.email,
             photo: data.user.photo,
@@ -53,6 +54,35 @@ function WorkSpace() {
           setError(err.message);
         });
       return;
+    }
+    if (token) {
+      let headers = {
+        Authorization: `Bearer ${token}`,
+        "application-type": "application/json",
+      };
+      fetch(API_URL, {
+        method: "GET",
+        mode: "cors",
+        headers: headers,
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(response.status);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          setUserData({
+            email: data.user.email,
+            photo: data.user.photo,
+            name: data.user.name,
+            createdAt: data.user.createdAt,
+          });
+          setCompanyData(data.company);
+        })
+        .catch((err) => {
+          setError(err.message);
+        });
     }
     if (!token) {
       navigate("/signup");

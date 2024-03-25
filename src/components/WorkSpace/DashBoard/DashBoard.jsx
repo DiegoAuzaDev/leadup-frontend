@@ -8,7 +8,7 @@ import { useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 function DashBoard() {
   const [userData, companyData, error] = useOutletContext();
-  const [selectedCompany, setSelectedCompany] = useState(null);
+  const [selectedCompany, setSelectedCompany] = useState({});
   const [arrayCompany, setArrayCompany] = useState(null);
   const [errorData, setErrorData] = useState(null);
   useEffect(() => {
@@ -21,8 +21,7 @@ function DashBoard() {
     if (error) {
       setErrorData(error);
     }
-  }, [companyData, userData, error, selectedCompany]);
-
+  }, [userData, companyData, error]);
   return (
     <>
       <div className=" flex flex-col gap-8 lg:flex-row md:flex-1 md:gap-4">
@@ -116,16 +115,18 @@ const ArrayCompanyErrorState = () => {
 };
 
 const DisplayMapSection = ({ selectedCompany, erroData }) => {
+  console.log(selectedCompany);
   const [centerPointSelectedCompany, setCenterPointSelectedCompany] =
-    useState(null);
+    useState();
   useEffect(() => {
-    if (selectedCompany != null) {
+    if (Object.keys(selectedCompany).length != 0) {
       setCenterPointSelectedCompany({
         lat: Number(selectedCompany.location.latitude),
         lng: Number(selectedCompany.location.longitude),
       });
     }
-  }, [selectedCompany]);
+  }, [selectedCompany, erroData]);
+
   return (
     <section className=" lg:w-2/3  flex  flex-col h-[70vh] lg:h-[auto]">
       <div className=" mb-4">
@@ -159,18 +160,16 @@ const DisplayMapSection = ({ selectedCompany, erroData }) => {
             <p>There was an error</p>
           </div>
         )}
-        {selectedCompany != null &&
-          Object.keys(selectedCompany).length == 0 &&
-          !erroData && (
-            <div className="flex flex-col gap-5">
-              <FontAwesomeIcon
-                icon={faFolderOpen}
-                className=" self-center"
-                style={{ color: "#000", fontSize: "30px" }}
-              />
-              <p>The list of companies is empty</p>
-            </div>
-          )}
+        {selectedCompany == null && !erroData && (
+          <div className="flex flex-col gap-5">
+            <FontAwesomeIcon
+              icon={faFolderOpen}
+              className=" self-center"
+              style={{ color: "#000", fontSize: "30px" }}
+            />
+            <p>The list of companies is empty</p>
+          </div>
+        )}
         {selectedCompany != null &&
           Object.keys(selectedCompany).length != 0 &&
           !erroData && (
