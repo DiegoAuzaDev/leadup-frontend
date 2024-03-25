@@ -6,7 +6,9 @@ import ErrorImage from "../../../assets/avatar.png";
 function LargeNavigator({ user, logout, error }) {
   return (
     <nav
-      className={`hidden  md:h-[100vh] md:flex md:flex-col md:py-6 justify-evenly md:px-4 md:min-w-[175px] gap-3 overflow-scroll ${error ? "animate-none" : !user ? "animate-pulse"  : "animate-none"} `}
+      className={`hidden  md:h-[100vh] md:flex md:flex-col md:py-6 justify-evenly md:px-4 md:min-w-[175px] gap-3 overflow-scroll ${
+        error ? "animate-none" : !user ? "animate-pulse" : "animate-none"
+      } `}
     >
       <div>
         <img src={Logo} alt="Leadup logo" className=" h-8 mx-3" />
@@ -47,16 +49,23 @@ function LargeNavigator({ user, logout, error }) {
       </ul>
       <div className=" flex flex-col gap-2">
         <button className="flex justify-center">
-          {!user &&  (
-            <div className="w-12 rounded-full h-12 bg-slate-500"></div>
-          )}
-          {user && (
-            <img
-              src={error ? ErrorImage : user.photo}
-              alt="Profile photo"
-              className=" w-12 rounded-full h-12"
-            />
-          )}
+          {!user && !error && <div className="w-12 rounded-full h-12 bg-slate-500"></div>}
+          {!user &&
+            error && (
+              <img
+                src={ErrorImage}
+                alt="Profile photo"
+                className=" w-12 rounded-full h-12"
+              />
+            )}
+            {user && !error && (
+               <img
+                src={user.photo}
+                alt="Profile photo"
+                className=" w-12 rounded-full h-12"
+              />
+
+            )}
         </button>
 
         <button
