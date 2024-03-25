@@ -1,35 +1,82 @@
 import { NavLink } from "react-router-dom";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import Logo from "../../assets/LeadUpBlack.png";
-import { useEffect, useState } from "react";
 import GoogleImg from "../../assets/Google.png";
 import Patter from "../../assets/pattern.svg";
+import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import "./signup.css";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function SignUp() {
-  // const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [passwordType, setPasswordType] = useState("password");
 
-  useEffect(() => {
-    const urlToken = searchParams.get("token");
-    console.log(urlToken);
+  const [emailError, setEmailError] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
-    if (urlToken) {
-      console.log("token found in url");
+  const validateName = (name) => {
+    if (!name.trim()) {
+      return "Name is required";
+    } else if (name.length < 2) {
+      return "Name must contain at least 2 characters";
     }
-  });
+    return "";
+  };
+
+  const validateEmail = (email) => {
+    if (!email.trim()) {
+      return "Email is required";
+    } else if (!/^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+      return "Invalid email format";
+    }
+    return;
+  };
+
+  const validatePassword = (password) => {
+    if (!password.trim()) {
+      return "Password is required";
+    } else if (password.length < 6) {
+      return "Password must be at least 6 characters long";
+    }
+    return;
+  };
+
+  const handleNameChange = (e) => {
+    const value = e.target.value;
+    setName(value);
+    setNameError(validateName(value));
+  };
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    setEmailError(validateEmail(value));
+  };
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+    setPasswordError(validatePassword(value));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(e);
+
+
+  };
 
   function doGoogleAuth() {
-    const redirectUrl = "http://localhost:5173/dashboard";
-    // const baseUrl = `http://localhost:3004/api/`;
+    const redirectUrl = "http://localhost:5173/workspace/dashboard";
     const baseUrl = `http://localhost:3004/auth/google?redirect_url=${redirectUrl}`;
+    // const baseUrl = `https://leadup-backend.onrender.com/auth/google?redirect_url=${redirectUrl}`;
     location.href = baseUrl;
   }
 
   return (
     <div className=" flex flex-row h-[100vh]">
       <div className="pt-12 md:mt-0 container-main pb-8 overflow-scroll">
-
         <div className=" flex flex-col md:items-end">
           <header className="flex mb-8 pt-8 md:w-96">
             <NavLink to="localhost:" className="">
@@ -60,95 +107,95 @@ function SignUp() {
               <small className="my-auto">Google</small>
             </NavLink>
           </div>
-          <form action="" className=" w-full md:w-96 flex flex-col">
+          <form
+            onSubmit={handleSubmit}
+            className=" w-full md:w-96 flex flex-col"
+          >
             <div className=" my-5 flex emial-password">
               <span className=" text-gray-400 text-sm">Email and password</span>
             </div>
             <fieldset className="mt-4 mb-6">
               <legend className=" font-semibold text-gray-800">
-                Email Address
+                Email Address *
               </legend>
               <label className=" flex flex-col gap-2">
                 <small className=" text-gray-600">
-                  We recommend using your work email
+                  We recommen using your work email
                 </small>
                 <input
-                  className=" border-gray-400 border-2 rounded-md leading-8 px-2"
-                  type="text"
+                  required
+                  className={`border-gray-400 border-2 rounded-md leading-8 px-2 ${
+                    emailError && "focus-visible:outline-red-600"
+                  }`}
+                  type="email"
                   value={email}
-                  onChange={(value) => {
-                    setEmail(value.target.value);
-                  }}
+                  onChange={handleEmailChange}
                 />
-                <small className=" text-red-500">
-                  Email Address must not be empty
-                </small>
+                {emailError && (
+                  <small className=" text-red-500">{emailError}</small>
+                )}
+              </label>
+            </fieldset>
+            <fieldset className="mt-4 mb-6">
+              <legend className=" font-semibold text-gray-800">Name *</legend>
+              <label className=" flex flex-col gap-2">
+                <input
+                  required
+                  autoComplete="given-name"
+                  className={`border-gray-400 border-2 rounded-md leading-8 px-2 ${
+                    nameError && "focus-visible:outline-red-600"
+                  }`}
+                  type="text"
+                  value={name}
+                  onChange={handleNameChange}
+                />
+                {nameError && (
+                  <small className=" text-red-500">{nameError}</small>
+                )}
               </label>
             </fieldset>
             <fieldset className="mt-4 mb-6">
               <legend className=" font-semibold text-gray-800">
-                First Name
+                Password *
               </legend>
               <label className=" flex flex-col gap-2">
-                <small className=" text-gray-600">
-                  We recommend using your work email
-                </small>
-                <input
-                  className=" border-gray-400 border-2 rounded-md leading-8 px-2"
-                  type="text"
-                  value={email}
-                  onChange={(value) => {
-                    setEmail(value.target.value);
-                  }}
-                />
-                <small className=" text-red-500">
-                  Email Address must not be empty
-                </small>
-              </label>
-            </fieldset>
-            <fieldset className="mt-4 mb-6">
-              <legend className=" font-semibold text-gray-800">
-                Last name
-              </legend>
-              <label className=" flex flex-col gap-2">
-                <small className=" text-gray-600">
-                  We recommend using your work email
-                </small>
-                <input
-                  className=" border-gray-400 border-2 rounded-md leading-8 px-2"
-                  type="text"
-                  value={email}
-                  onChange={(value) => {
-                    setEmail(value.target.value);
-                  }}
-                />
-                <small className=" text-red-500">
-                  Email Address must not be empty
-                </small>
-              </label>
-            </fieldset>
-            <fieldset className="mt-4 mb-6">
-              <legend className=" font-semibold text-gray-800">Password</legend>
-              <label className=" flex flex-col gap-2">
-                <small className=" text-gray-600">
-                  We recommend using your work email
-                </small>
-                <input
-                  className=" border-gray-400 border-2 rounded-md leading-8 px-2"
-                  type="text"
-                  value={email}
-                  onChange={(value) => {
-                    setEmail(value.target.value);
-                  }}
-                />
-                <small className=" text-red-500">
-                  Email Address must not be empty
-                </small>
+                <div className="flex flex-row gap-2">
+                  <input
+                    required
+                    autoComplete="off"
+                    className={`border-gray-400 border-2 rounded-md leading-8 px-2 flex-1 ${
+                      passwordError && "focus-visible:outline-red-600"
+                    }`}
+                    type={passwordType}
+                    value={password}
+                    onChange={handlePasswordChange}
+                  />
+                  <button
+                    type="button"
+                    className="px-2"
+                    onClick={() => {
+                      if (passwordType == "password") {
+                        setPasswordType("text");
+                      } else {
+                        setPasswordType("password");
+                      }
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={passwordType === "password" ? faEye : faEyeSlash}
+                    />
+                  </button>
+                </div>
+                {passwordError && (
+                  <small className=" text-red-500">{passwordError}</small>
+                )}
               </label>
             </fieldset>
             <div className=" flex flex-col gap-3 mt-6">
               {/* Need to complete local Auth */}
-              <NavLink className="btn">Sign up</NavLink>
+              <button className="btn   bg-sky-500 " type="submit">
+                Sign up
+              </button>
               <NavLink className="btn--outline bg-gray-200">Log in</NavLink>
             </div>
           </form>

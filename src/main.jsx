@@ -11,3 +11,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </BrowserRouter>
   </TokenProvider>
 );
+
+// Add routes for each button on welcome 
+// Create dashboard component 

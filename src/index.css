@@ -102,6 +102,7 @@
   /* Mobile Size*/
   h1 {
     @apply text-[2.027rem] md:text-[2.986rem] lg:text-[3.815rem];
+    
   }
   h2 {
     @apply text-3xl md:text-4xl lg:text-[3.815rem];

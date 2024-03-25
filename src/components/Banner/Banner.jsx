@@ -1,59 +1,41 @@
+import { NavLink } from "react-router-dom";
+import "../../button.css";
+import "./banner.css"
+
 function Banner() {
   return (
-    <main className=" pt-[10rem]">
-      <h1>Ready to manage all your deliveries in the next 5 minutes</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus quidem
-        rerum quisquam sit laborum? At, aliquam omnis harum et reprehenderit
-        obcaecati eius inventore maxime amet mollitia odit blanditiis ab neque
-        maiores, voluptatum perspiciatis beatae fugit perferendis, officia ad?
-        Nisi laborum cupiditate accusamus? Ipsa quae aspernatur necessitatibus
-        laboriosam sit tenetur voluptates deserunt ipsam, similique iure impedit
-        esse amet saepe nam? Autem minima et sequi asperiores. Dicta vero sed,
-        aspernatur expedita eius veritatis porro id tempora quibusdam excepturi
-        incidunt est illum suscipit corporis, laudantium rem quasi consectetur
-        doloribus aperiam tenetur libero blanditiis. Reiciendis ea tenetur iure
-        deleniti voluptate aut veritatis minima unde?
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus quidem
-        rerum quisquam sit laborum? At, aliquam omnis harum et reprehenderit
-        obcaecati eius inventore maxime amet mollitia odit blanditiis ab neque
-        maiores, voluptatum perspiciatis beatae fugit perferendis, officia ad?
-        Nisi laborum cupiditate accusamus? Ipsa quae aspernatur necessitatibus
-        laboriosam sit tenetur voluptates deserunt ipsam, similique iure impedit
-        esse amet saepe nam? Autem minima et sequi asperiores. Dicta vero sed,
-        aspernatur expedita eius veritatis porro id tempora quibusdam excepturi
-        incidunt est illum suscipit corporis, laudantium rem quasi consectetur
-        doloribus aperiam tenetur libero blanditiis. Reiciendis ea tenetur iure
-        deleniti voluptate aut veritatis minima unde?
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus quidem
-        rerum quisquam sit laborum? At, aliquam omnis harum et reprehenderit
-        obcaecati eius inventore maxime amet mollitia odit blanditiis ab neque
-        maiores, voluptatum perspiciatis beatae fugit perferendis, officia ad?
-        Nisi laborum cupiditate accusamus? Ipsa quae aspernatur necessitatibus
-        laboriosam sit tenetur voluptates deserunt ipsam, similique iure impedit
-        esse amet saepe nam? Autem minima et sequi asperiores. Dicta vero sed,
-        aspernatur expedita eius veritatis porro id tempora quibusdam excepturi
-        incidunt est illum suscipit corporis, laudantium rem quasi consectetur
-        doloribus aperiam tenetur libero blanditiis. Reiciendis ea tenetur iure
-        deleniti voluptate aut veritatis minima unde?
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus quidem
-        rerum quisquam sit laborum? At, aliquam omnis harum et reprehenderit
-        obcaecati eius inventore maxime amet mollitia odit blanditiis ab neque
-        maiores, voluptatum perspiciatis beatae fugit perferendis, officia ad?
-        Nisi laborum cupiditate accusamus? Ipsa quae aspernatur necessitatibus
-        laboriosam sit tenetur voluptates deserunt ipsam, similique iure impedit
-        esse amet saepe nam? Autem minima et sequi asperiores. Dicta vero sed,
-        aspernatur expedita eius veritatis porro id tempora quibusdam excepturi
-        incidunt est illum suscipit corporis, laudantium rem quasi consectetur
-        doloribus aperiam tenetur libero blanditiis. Reiciendis ea tenetur iure
-        deleniti voluptate aut veritatis minima unde?
-      </p>
+    <main>
+      <div className=" pt-[8rem] pb-8 mb-7 md:h-[90vh] shadow-xl banner-img">
+        <section
+          className="container-main md:flex md:items-center"
+          style={{
+            height: "-webkit-fill-available",
+          }}
+        >
+          <div className="flex flex-col text-center divide-y divide-dashed divide-gray-400 md:w-1/2">
+            <div className="mb-8">
+              <h1 className=" text-sky-800 font-semibold mb-2">
+                Lead your delivery list
+              </h1>
+              <p className="sm:text-base md:text-lg m-1 font-semibold">
+                Align your routes easily
+              </p>
+              <p className="sm:text-sm md:text-base m-0 font-light">
+                All you have been looking for in the same place in lees than{" "}
+                <span className=" underline text-blue-500 font-normal">
+                  5 minutes
+                </span>
+              </p>
+            </div>
+            <div className=" flex flex-col gap-3 py-4">
+              <NavLink className="btn" to="/signup">
+                Sign up
+              </NavLink>
+              <NavLink className="btn--outline">Learn more</NavLink>
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
   );
 }
