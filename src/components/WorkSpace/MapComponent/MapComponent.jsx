@@ -8,7 +8,7 @@ function MapComponent({ mainCompanyPoint }) {
       <APIProvider apiKey={GOOGLE_API_KEY}>
         <Map
           defaultCenter={centerMap}
-          defaultZoom={14}
+          defaultZoom={16}
           gestureHandling={"greedy"}
           disableDefaultUI={true}
           mapId={GOOGLE_API_KEY}

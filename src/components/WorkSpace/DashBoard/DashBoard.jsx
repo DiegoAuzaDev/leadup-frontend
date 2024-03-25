@@ -173,7 +173,9 @@ const DisplayMapSection = ({ selectedCompany, erroData }) => {
           )}
         {selectedCompany != null &&
           Object.keys(selectedCompany).length != 0 &&
-          !erroData && <MapComponent mainCompanyPoint={centerPointSelectedCompany} />}
+          !erroData && (
+            <MapComponent mainCompanyPoint={centerPointSelectedCompany} />
+          )}
       </div>
     </section>
   );
