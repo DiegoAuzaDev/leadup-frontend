@@ -8,7 +8,7 @@ import { useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 function DashBoard() {
   const [userData, companyData, error] = useOutletContext();
-  const [selectedCompany, setSelectedCompany] = useState({});
+  const [selectedCompany, setSelectedCompany] = useState(null);
   const [arrayCompany, setArrayCompany] = useState(null);
   const [errorData, setErrorData] = useState(null);
   useEffect(() => {
@@ -16,6 +16,8 @@ function DashBoard() {
       setArrayCompany(companyData);
       if (companyData.length != 0) {
         setSelectedCompany(companyData[0]);
+      } else {
+        setSelectedCompany({});
       }
     }
     if (error) {
@@ -115,17 +117,15 @@ const ArrayCompanyErrorState = () => {
 };
 
 const DisplayMapSection = ({ selectedCompany, erroData }) => {
-  console.log(selectedCompany);
-  const [centerPointSelectedCompany, setCenterPointSelectedCompany] =
-    useState();
-  useEffect(() => {
-    if (Object.keys(selectedCompany).length != 0) {
-      setCenterPointSelectedCompany({
-        lat: Number(selectedCompany.location.latitude),
-        lng: Number(selectedCompany.location.longitude),
-      });
-    }
-  }, [selectedCompany, erroData]);
+  const [companyPoint, setCompanyPoint] = useState({});
+useEffect(()=>{
+if(selectedCompany != null && Object.keys(selectedCompany).lastIndexOf != 0){
+  setCompanyPoint({
+    lat: Number(selectedCompany.location.latitude),
+    lng: Number(selectedCompany.location.longitude),
+  });
+}
+},[selectedCompany, erroData])
 
   return (
     <section className=" lg:w-2/3  flex  flex-col h-[70vh] lg:h-[auto]">
@@ -160,21 +160,21 @@ const DisplayMapSection = ({ selectedCompany, erroData }) => {
             <p>There was an error</p>
           </div>
         )}
-        {selectedCompany == null && !erroData && (
-          <div className="flex flex-col gap-5">
-            <FontAwesomeIcon
-              icon={faFolderOpen}
-              className=" self-center"
-              style={{ color: "#000", fontSize: "30px" }}
-            />
-            <p>The list of companies is empty</p>
-          </div>
-        )}
+        {selectedCompany &&
+          Object.keys(selectedCompany).length == 0 &&
+          !erroData && (
+            <div className="flex flex-col gap-5">
+              <FontAwesomeIcon
+                icon={faFolderOpen}
+                className=" self-center"
+                style={{ color: "#000", fontSize: "30px" }}
+              />
+              <p>The list of companies is empty</p>
+            </div>
+          )}
         {selectedCompany != null &&
           Object.keys(selectedCompany).length != 0 &&
-          !erroData && (
-            <MapComponent mainCompanyPoint={centerPointSelectedCompany} />
-          )}
+          !erroData && <MapComponent mainCompanyPoint={companyPoint} />}
       </div>
     </section>
   );
