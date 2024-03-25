@@ -4,9 +4,17 @@ import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 import MapComponent from "../MapComponent/MapComponent";
 //
 import { useOutletContext } from "react-router-dom";
+import { useEffect, useState } from "react";
 function DashBoard() {
   const [userData, companyData] = useOutletContext();
-  console.log(companyData)
+  const [selectedCompany, setSelectedCompany] = useState({});
+  useEffect(() => {
+
+    if (companyData.length != 0) {
+      setSelectedCompany(companyData[0]);
+    }
+  }, [companyData]);
+  
   return (
     <>
       <div className=" flex flex-col gap-8 lg:flex-row md:flex-1 md:gap-4">
@@ -74,9 +82,7 @@ function DashBoard() {
               <h3 className="m-0 text-2xl md:text-2xl lg:text-2xl">
                 Your deliveries
               </h3>
-              <small>
-                      Keep your items onder control
-              </small>
+              <small>Keep your items onder control</small>
             </div>
             <div className="bg-gray-200 h-[auto] rounded-md flex-1"></div>
           </div>
@@ -88,7 +94,7 @@ function DashBoard() {
             </h3>
             <small>Find your active deliveries list</small>
           </div>
-          <div className="bg-gray-200 h-[40vh] rounded-md flex justify-center items-center flex-col flex-1 overflow-hidden">
+          <div className="bg-gray-200 h-[40vh] rounded-md flex justify-center items-center flex-col flex-1 overflow-hidden z-[0]">
             {Object.keys(companyData).length === 0 && (
               <div role="status" className=" flex flex-col gap-2">
                 <svg
@@ -122,9 +128,9 @@ function DashBoard() {
                 </>
               )
             )}
-            {companyData && (
-              <MapComponent/>
-            )}
+            {Object.keys(companyData).length != 0 && !companyData.empty ? (
+              <MapComponent />
+            ) : null}
           </div>
         </section>
       </div>

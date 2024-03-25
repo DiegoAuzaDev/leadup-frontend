@@ -1,4 +1,5 @@
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
+import PropTypes from "prop-types";
 
 function MapComponent() {
   const GOOGLE_API_KEY =  import.meta.env.VITE_GOOGLE_MAP_API;
@@ -14,4 +15,9 @@ function MapComponent() {
   );
 }
 
+MapComponent.propTypes = {
+  center: PropTypes.object,
+};
+
 export default MapComponent;
+

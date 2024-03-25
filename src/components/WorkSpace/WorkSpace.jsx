@@ -113,13 +113,13 @@ function WorkSpace() {
               onClick={() => {
                 setIsActive(!isActive);
               }}
-              className={`bg-[#00000048] h-[100vh] fixed w-[100vw] left-[800px] top-0 mobile-nav-workspace-bg-color ${
+              className={` z-[1] bg-[#00000048] h-[100vh] fixed w-[100vw] left-[800px] top-0 mobile-nav-workspace-bg-color ${
                 isActive ? "active" : ""
               } md:hidden`}
             ></div>
             <ul
               role="list"
-              className={`bg-[#F8F9FA]  w-[66%] fixed bottom-0 top-0 left-[800px] h-[100vh] flex flex-col m-0 pb-14 pt-6 justify-between mobile-nav-workspace ${
+              className={` z-20 bg-[#F8F9FA]  w-[66%] fixed bottom-0 top-0 left-[800px] h-[100vh] flex flex-col m-0 pb-14 pt-6 justify-between mobile-nav-workspace ${
                 isActive ? "active" : ""
               } md:hidden `}
             >
