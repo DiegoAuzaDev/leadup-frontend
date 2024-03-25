@@ -23,6 +23,8 @@ function MapComponent({ mainCompanyPoint }) {
         defaultZoom={16}
         defaultCenter={defaultCenter}
         center={centerPoint}
+        maxZoom={20}
+        minZoom={13}
         onCenterChanged={(ev)=>{
           setCenterPoint(ev.detail.center);
         }}
