@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Outlet, useSearchParams, useNavigate } from "react-router-dom";
+import {API_URL} from "../../utils/keys"
 //
 
 //
@@ -18,10 +19,7 @@ function WorkSpace() {
   const [userData, setUserData] = useState(null);
   const [companyData, setCompanyData] = useState(null);
   const [error, setError] = useState(null);
-  // const API_URL = `https://leadup-backend.onrender.com/api`;
-  const API_URL = `http://localhost:3004/api`;
 
-  // get user token if there is no token on the url or session storage it will navigate back to log in
   useEffect(() => {
     const urlToken = searchParams.get("token");
     if (urlToken) {
@@ -52,7 +50,7 @@ function WorkSpace() {
           setCompanyData(data.company);
         })
         .catch((err) => {
-          setError(err.message)
+          setError(err.message);
         });
       return;
     }
