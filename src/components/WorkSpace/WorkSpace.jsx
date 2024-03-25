@@ -1,33 +1,23 @@
 /* eslint-disable no-unused-vars */
-import {
-  Outlet,
-  NavLink,
-  useSearchParams,
-  useNavigate,
-} from "react-router-dom";
+import { Outlet, useSearchParams, useNavigate } from "react-router-dom";
 //
-import Logo from "../../assets/LeadUp.svg";
-import Bars from "../../assets/bars-solid.svg";
-import Close from "../../assets/xmark-solid.svg";
-import LargeNavigator from "./LargeNavigator/LargeNavigator";
 
 //
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { useToken } from "../../context/tokenContext";
 import { useEffect, useState } from "react";
 //
 import "./workSpace.css";
 import "../../button.css";
+import HeaderWorkSpace from "./HeaderWorkSpace/HeaderWorkSpace";
 
 function WorkSpace() {
   const navigate = useNavigate();
   const [token, setToken] = useToken();
   const [searchParams, setSearchParamas] = useSearchParams();
-  const [error, setError] = useState(null);
   // todo
-  const [userData, setuserData] = useState({});
-  const [companyData, setCompanyData] = useState([]);
+  const [userData, setUserData] = useState(null);
+  const [companyData, setCompanyData] = useState(null);
+  const [error, setError] = useState(null);
   // const API_URL = `https://leadup-backend.onrender.com/api`;
   const API_URL = `http://localhost:3004/api`;
 
@@ -53,28 +43,18 @@ function WorkSpace() {
           return response.json();
         })
         .then((data) => {
-
-          setuserData(data.user);
+          setUserData({
+            email: data.user.email,
+            photo: data.user.photo,
+            name: data.user.name,
+            createdAt: data.user.createdAt,
+          });
           setCompanyData(data.company);
-          if(data.company.length == 0){
-            setCompanyData({
-              empty : true
-            })
-          } else { 
-             setCompanyData(data.company);
-          }
-
         })
         .catch((err) => {
-          setError(err.message);
-          setuserData({
-            error : true
-          })
-          setCompanyData({
-            error : true
-          })
+          setError(err.message)
         });
-        return;
+      return;
     }
     if (!token) {
       navigate("/signup");
@@ -86,124 +66,9 @@ function WorkSpace() {
     navigate("/");
   };
 
-  const [isActive, setIsActive] = useState(false);
   return (
     <div className=" md:flex flex-row">
-      <header className=" md:bg-white md:shadow-md">
-        <section className=" md:flex">
-          <nav className="flex justify-between md:hidden bg-white py-4 mb-4 shadow-md">
-            <div className=" container-main flex justify-between">
-              <NavLink to="/workspace/dashboard">
-                <img src={Logo} alt="Leadup logo" className=" h-8" />
-              </NavLink>
-              <button
-                onClick={() => {
-                  setIsActive(!isActive);
-                }}
-              >
-                <img
-                  src={`${!isActive ? Bars : Close}`}
-                  alt=""
-                  className=" h-6"
-                />
-              </button>
-            </div>
-
-            <div
-              onClick={() => {
-                setIsActive(!isActive);
-              }}
-              className={` z-[1] bg-[#00000048] h-[100vh] fixed w-[100vw] left-[800px] top-0 mobile-nav-workspace-bg-color ${
-                isActive ? "active" : ""
-              } md:hidden`}
-            ></div>
-            <ul
-              role="list"
-              className={` z-20 bg-[#F8F9FA]  w-[66%] fixed bottom-0 top-0 left-[800px] h-[100vh] flex flex-col m-0 pb-14 pt-6 justify-between mobile-nav-workspace ${
-                isActive ? "active" : ""
-              } md:hidden `}
-            >
-              <div className="divide-y-2 gap-1">
-                <li className="flex flex-col">
-                  <NavLink
-                    to="/workspace/dashboard"
-                    className=" container-main py-4 flex justify-between hover:bg-gray-200"
-                  >
-                    DashBoard
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      className=" self-center"
-                      style={{ color: "#000" }}
-                    />
-                  </NavLink>
-                </li>
-                <li className="flex">
-                  <NavLink
-                    to="/workspace/employee"
-                    className=" container-main py-4 flex justify-between hover:bg-gray-200"
-                  >
-                    Employee
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      style={{ color: "#000" }}
-                    />
-                  </NavLink>
-                </li>
-                <li className="flex">
-                  <NavLink
-                    to="/workspace/settings"
-                    className=" container-main py-4 flex justify-between hover:bg-gray-200"
-                  >
-                    Settings
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      className=" self-center"
-                      style={{ color: "#000" }}
-                    />
-                  </NavLink>
-                </li>
-                <li className="flex">
-                  <NavLink
-                    to="/workspace/company"
-                    className=" container-main py-4 flex justify-between hover:bg-gray-200"
-                  >
-                    Company
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      className=" self-center"
-                      style={{ color: "#000" }}
-                    />
-                  </NavLink>
-                </li>
-                <li className="flex">
-                  <NavLink
-                    to="/workspace/delivery"
-                    className=" container-main py-4 flex justify-between hover:bg-gray-200"
-                  >
-                    Delivery
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      className=" self-center"
-                      style={{ color: "#000" }}
-                    />
-                  </NavLink>
-                </li>
-              </div>
-              <div className="container-main flex">
-                <button
-                  className=" btn btn--danger block flex-1"
-                  onClick={() => {
-                    doLogout();
-                  }}
-                >
-                  logout
-                </button>
-              </div>
-            </ul>
-          </nav>
-          <LargeNavigator user={userData} logout={doLogout} />
-        </section>
-      </header>
+      <HeaderWorkSpace doLogout={doLogout} userData={userData} error={error} />
       <main className=" md:ml-0 pb-8 md:pb-0 md:my-6 container-main md:flex lg:w-[100em]">
         <Outlet context={[userData, companyData]} />
       </main>

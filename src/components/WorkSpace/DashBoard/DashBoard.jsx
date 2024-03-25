@@ -8,8 +8,8 @@ import { useEffect, useState } from "react";
 function DashBoard() {
   const [userData, companyData] = useOutletContext();
   const [selectedCompany, setSelectedCompany] = useState({});
+  console.log("hello")
   useEffect(() => {
-
     if (companyData.length != 0) {
       setSelectedCompany(companyData[0]);
     }
@@ -95,7 +95,7 @@ function DashBoard() {
             <small>Find your active deliveries list</small>
           </div>
           <div className="bg-gray-200 h-[40vh] rounded-md flex justify-center items-center flex-col flex-1 overflow-hidden z-[0]">
-            {Object.keys(companyData).length === 0 && (
+            {/* {Object.keys(companyData).length === 0 && (
               <div role="status" className=" flex flex-col gap-2">
                 <svg
                   aria-hidden="true"
@@ -129,8 +129,8 @@ function DashBoard() {
               )
             )}
             {Object.keys(companyData).length != 0 && !companyData.empty ? (
-              <MapComponent />
-            ) : null}
+              // <MapComponent centerPoint={selectedCompany.location} />
+            ) : null} */}
           </div>
         </section>
       </div>

@@ -3,10 +3,10 @@ import Logo from "../../../assets/LeadUpBlack.png";
 import { NavLink } from "react-router-dom";
 import ErrorImage from "../../../assets/avatar.png";
 
-function LargeNavigator({ user, logout }) {
+function LargeNavigator({ user, logout, error }) {
   return (
     <nav
-      className={`hidden  md:h-[100vh] md:flex md:flex-col md:py-6 justify-evenly md:px-4 md:min-w-[175px] gap-3 overflow-scroll ${user.error ? "animate-none" : Object.keys(user).length === 0 ? "animate-pulse"  : "animate-none"} `}
+      className={`hidden  md:h-[100vh] md:flex md:flex-col md:py-6 justify-evenly md:px-4 md:min-w-[175px] gap-3 overflow-scroll ${error ? "animate-none" : !user ? "animate-pulse"  : "animate-none"} `}
     >
       <div>
         <img src={Logo} alt="Leadup logo" className=" h-8 mx-3" />
@@ -47,12 +47,12 @@ function LargeNavigator({ user, logout }) {
       </ul>
       <div className=" flex flex-col gap-2">
         <button className="flex justify-center">
-          {Object.keys(user).length === 0 && (
+          {!user &&  (
             <div className="w-12 rounded-full h-12 bg-slate-500"></div>
           )}
-          {Object.keys(user).length != 0 && (
+          {user && (
             <img
-              src={user.error ? ErrorImage : user.photo}
+              src={error ? ErrorImage : user.photo}
               alt="Profile photo"
               className=" w-12 rounded-full h-12"
             />
@@ -66,7 +66,7 @@ function LargeNavigator({ user, logout }) {
             logout();
           }}
         >
-          Settings
+          Logout
         </button>
       </div>
     </nav>
