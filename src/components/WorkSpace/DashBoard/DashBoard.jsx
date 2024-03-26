@@ -45,6 +45,15 @@ function DashBoard() {
               {arrayCompany != null &&
                 arrayCompany.length == 0 &&
                 !errorData && <ArrayCompanyEmptyState />}
+              {arrayCompany != null &&
+                arrayCompany.length != 0 &&
+                !errorData && (
+                  <ArrayCompanyDisplayList
+                    selectedCompany={selectedCompany}
+                    setSelectedCompany={setSelectedCompany}
+                    arrayCompany={arrayCompany}
+                  />
+                )}
             </div>
           </div>
 
@@ -116,16 +125,56 @@ const ArrayCompanyErrorState = () => {
   );
 };
 
+const ArrayCompanyDisplayList = ({
+  selectedCompany,
+  setSelectedCompany,
+  arrayCompany,
+}) => {
+  const handleChange = (ev) => {
+    setSelectedCompany(arrayCompany[ev.target.value])
+  };
+  return (
+    <>
+      <div>
+        <form className=" flex flex-wrap gap-x-4 gap-y-2" onSubmit={(ev)=> {
+          ev.preventDefault()
+        }}>
+          <label
+            htmlFor="company-selected"
+            className=" text-base flex items-center text-black"
+          >
+            Select your target company
+          </label>
+          <select
+            onChange={handleChange}
+            id="company-selected"
+            className="bg-sky-600 border text-sm  rounded-lg p-2.5  flex-1 placeholder-gray-400 text-white  focus:ring-blue-500  focus:border-blue-500"
+          >
+            {arrayCompany.map((element, index) => (
+              <option key={element._id} value={index}>
+                {element.name}
+              </option>
+            ))}
+          </select>
+        </form>
+      </div>
+    </>
+  );
+};
+
 const DisplayMapSection = ({ selectedCompany, erroData }) => {
   const [companyPoint, setCompanyPoint] = useState({});
-useEffect(()=>{
-if(selectedCompany != null && Object.keys(selectedCompany).lastIndexOf != 0){
-  setCompanyPoint({
-    lat: Number(selectedCompany.location.latitude),
-    lng: Number(selectedCompany.location.longitude),
-  });
-}
-},[selectedCompany, erroData])
+  useEffect(() => {
+    if (
+      selectedCompany != null &&
+      Object.keys(selectedCompany).lastIndexOf != 0
+    ) {
+      setCompanyPoint({
+        lat: Number(selectedCompany.location.latitude),
+        lng: Number(selectedCompany.location.longitude),
+      });
+    }
+  }, [selectedCompany, erroData]);
 
   return (
     <section className=" lg:w-2/3  flex  flex-col h-[70vh] lg:h-[auto]">
@@ -133,6 +182,7 @@ if(selectedCompany != null && Object.keys(selectedCompany).lastIndexOf != 0){
         <h3 className="m-0 text-3xl md:text-3xl lg:text-3xl">Your map view</h3>
         <small>Find your active deliveries list</small>
       </div>
+
       <div className="bg-gray-200 h-[40vh] rounded-md flex justify-center items-center flex-col flex-1 overflow-hidden z-[0]">
         {!selectedCompany && !erroData && (
           <div role="status" className=" flex flex-col gap-2">
@@ -178,6 +228,12 @@ if(selectedCompany != null && Object.keys(selectedCompany).lastIndexOf != 0){
       </div>
     </section>
   );
+};
+
+ArrayCompanyDisplayList.propTypes = {
+  selectedCompany: PropTypes.object,
+  setSelectedCompany: PropTypes.func,
+  arrayCompany: PropTypes.array,
 };
 
 DisplayMapSection.propTypes = {

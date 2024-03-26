@@ -17,7 +17,12 @@ function WorkSpace() {
   const [searchParams, setSearchParamas] = useSearchParams();
   // todo
   const [userData, setUserData] = useState(null);
+
+
+  
   const [companyData, setCompanyData] = useState(null);
+
+
   const [error, setError] = useState(null);
 
   useEffect(() => {
