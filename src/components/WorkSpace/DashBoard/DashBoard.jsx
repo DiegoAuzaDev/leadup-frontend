@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
+import { faBuilding, faEnvelope, faFolderOpen, faListCheck, faMapPin } from "@fortawesome/free-solid-svg-icons";
 import MapComponent from "../MapComponent/MapComponent";
 import PropTypes from "prop-types";
 //
@@ -135,10 +135,13 @@ const ArrayCompanyDisplayList = ({
   };
   return (
     <>
-      <div>
-        <form className=" flex flex-wrap gap-x-4 gap-y-2" onSubmit={(ev)=> {
-          ev.preventDefault()
-        }}>
+      <div className="flex flex-col gap-5">
+        <form
+          className=" flex flex-wrap gap-x-4 gap-y-2"
+          onSubmit={(ev) => {
+            ev.preventDefault();
+          }}
+        >
           <label
             htmlFor="company-selected"
             className=" text-base flex items-center text-black"
@@ -157,6 +160,34 @@ const ArrayCompanyDisplayList = ({
             ))}
           </select>
         </form>
+        <section className="border-dashed border-2 border-gray-500 rounded-md p-2 flex flex-col gap-4">
+          <div className="flex gap-3">
+            <FontAwesomeIcon
+              icon={faBuilding}
+              className=" self-center"
+              style={{ color: "#4b5563" }}
+            />
+            <p className="m-0">{selectedCompany.name}</p>
+          </div>
+          <div className="flex gap-3">
+            <FontAwesomeIcon
+              icon={faMapPin}
+              className=""
+              style={{ color: "#4b5563" }}
+            />
+            <p className="m-0">{selectedCompany.address}</p>
+          </div>
+          <div className="flex gap-3">
+            <FontAwesomeIcon
+              icon={faListCheck}
+              className=" self-center"
+              style={{ color: "#4b5563" }}
+            />
+            {selectedCompany.task.length == 0 && (
+              <p className=" m-0">No task to complete</p>
+            )}
+          </div>
+        </section>
       </div>
     </>
   );
@@ -167,7 +198,7 @@ const DisplayMapSection = ({ selectedCompany, erroData }) => {
   useEffect(() => {
     if (
       selectedCompany != null &&
-      Object.keys(selectedCompany).lastIndexOf != 0
+      Object.keys(selectedCompany).length != 0
     ) {
       setCompanyPoint({
         lat: Number(selectedCompany.location.latitude),
@@ -183,7 +214,7 @@ const DisplayMapSection = ({ selectedCompany, erroData }) => {
         <small>Find your active deliveries list</small>
       </div>
 
-      <div className="bg-gray-200 h-[40vh] rounded-md flex justify-center items-center flex-col flex-1 overflow-hidden z-[0]">
+      <div className="bg-gray-200 h-[40vh] rounded-md flex justify-center items-center flex-col flex-1 overflow-hidden z-[0] p-2">
         {!selectedCompany && !erroData && (
           <div role="status" className=" flex flex-col gap-2">
             <svg

@@ -15,7 +15,6 @@ function WorkSpace() {
   const navigate = useNavigate();
   const [token, setToken] = useToken();
   const [searchParams, setSearchParamas] = useSearchParams();
-  // todo
   const [userData, setUserData] = useState(null);
 
 
@@ -46,7 +45,6 @@ function WorkSpace() {
           return response.json();
         })
         .then((data) => {
-          console.log(data);
           setUserData({
             email: data.user.email,
             photo: data.user.photo,

@@ -20,17 +20,17 @@ function MapComponent({ mainCompanyPoint }) {
   return (
     <APIProvider apiKey={GOOGLE_API_KEY}>
       <Map
+        mapId={"1fc0053bbd3b1430"}
         defaultZoom={16}
         defaultCenter={defaultCenter}
         center={centerPoint}
         maxZoom={20}
         minZoom={13}
-        onCenterChanged={(ev)=>{
+        onCenterChanged={(ev) => {
           setCenterPoint(ev.detail.center);
         }}
         gestureHandling={"greedy"}
         disableDefaultUI={true}
-        mapId={GOOGLE_API_KEY}
       >
         {Object.keys(mainCompanyPoint).length != 0 && (
           <AdvancedMarker
