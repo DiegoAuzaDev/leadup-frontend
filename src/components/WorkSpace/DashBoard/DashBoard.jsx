@@ -133,11 +133,12 @@ const ArrayCompanyDisplayList = ({
   const handleChange = (ev) => {
     setSelectedCompany(arrayCompany[ev.target.value])
   };
+  console.log(selectedCompany)
   return (
     <>
       <div className="flex flex-col gap-5">
         <form
-          className=" flex flex-wrap gap-x-4 gap-y-2"
+          className=" flex flex-col gap-x-4 gap-y-2"
           onSubmit={(ev) => {
             ev.preventDefault();
           }}
@@ -176,16 +177,6 @@ const ArrayCompanyDisplayList = ({
               style={{ color: "#4b5563" }}
             />
             <p className="m-0">{selectedCompany.address}</p>
-          </div>
-          <div className="flex gap-3">
-            <FontAwesomeIcon
-              icon={faListCheck}
-              className=" self-center"
-              style={{ color: "#4b5563" }}
-            />
-            {selectedCompany.task.length == 0 && (
-              <p className=" m-0">No task to complete</p>
-            )}
           </div>
         </section>
       </div>
