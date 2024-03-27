@@ -1,10 +1,17 @@
 /* eslint-disable no-unused-vars */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBuilding, faEnvelope, faFolderOpen, faListCheck, faMapPin } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBuilding,
+  faEnvelope,
+  faFileEdit,
+  faFolderOpen,
+  faListCheck,
+  faMapPin,
+} from "@fortawesome/free-solid-svg-icons";
 import MapComponent from "../MapComponent/MapComponent";
 import PropTypes from "prop-types";
 //
-import { useOutletContext } from "react-router-dom";
+import { NavLink, useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 function DashBoard() {
   const [userData, companyData, error] = useOutletContext();
@@ -131,9 +138,9 @@ const ArrayCompanyDisplayList = ({
   arrayCompany,
 }) => {
   const handleChange = (ev) => {
-    setSelectedCompany(arrayCompany[ev.target.value])
+    setSelectedCompany(arrayCompany[ev.target.value]);
   };
-  console.log(selectedCompany)
+  console.log(selectedCompany);
   return (
     <>
       <div className="flex flex-col gap-5">
@@ -152,7 +159,7 @@ const ArrayCompanyDisplayList = ({
           <select
             onChange={handleChange}
             id="company-selected"
-            className="bg-sky-600 border text-sm  rounded-lg p-2.5  flex-1 placeholder-gray-400 text-white  focus:ring-blue-500  focus:border-blue-500"
+            className="bg-sky-500 border cursor-pointer text-sm  font-medium rounded-lg p-2.5  flex-1 placeholder-gray-400 text-sky-950  focus:ring-sky-500  focus:border-blue-500"
           >
             {arrayCompany.map((element, index) => (
               <option key={element._id} value={index}>
@@ -179,6 +186,16 @@ const ArrayCompanyDisplayList = ({
             <p className="m-0">{selectedCompany.address}</p>
           </div>
         </section>
+        <div className="flex lg:justify-end">
+          <NavLink role="button" className="btn  flex-1 lg:flex-none" to="">
+            <FontAwesomeIcon
+              icon={faFileEdit}
+              className=" mx-2"
+              style={{ color: "#082f49" }}
+            />
+            Edit company
+          </NavLink>
+        </div>
       </div>
     </>
   );
@@ -187,10 +204,7 @@ const ArrayCompanyDisplayList = ({
 const DisplayMapSection = ({ selectedCompany, erroData }) => {
   const [companyPoint, setCompanyPoint] = useState({});
   useEffect(() => {
-    if (
-      selectedCompany != null &&
-      Object.keys(selectedCompany).length != 0
-    ) {
+    if (selectedCompany != null && Object.keys(selectedCompany).length != 0) {
       setCompanyPoint({
         lat: Number(selectedCompany.location.latitude),
         lng: Number(selectedCompany.location.longitude),
