@@ -140,7 +140,6 @@ const ArrayCompanyDisplayList = ({
   const handleChange = (ev) => {
     setSelectedCompany(arrayCompany[ev.target.value]);
   };
-  console.log(selectedCompany);
   return (
     <>
       <div className="flex flex-col gap-5">
@@ -187,7 +186,11 @@ const ArrayCompanyDisplayList = ({
           </div>
         </section>
         <div className="flex lg:justify-end">
-          <NavLink role="button" className="btn  flex-1 lg:flex-none" to="">
+          <NavLink
+            role="button"
+            className="btn  flex-1 lg:flex-none"
+            to={`/workspace/company?company=${selectedCompany._id}`}
+          >
             <FontAwesomeIcon
               icon={faFileEdit}
               className=" mx-2"

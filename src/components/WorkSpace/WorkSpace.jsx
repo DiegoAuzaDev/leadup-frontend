@@ -17,10 +17,7 @@ function WorkSpace() {
   const [searchParams, setSearchParamas] = useSearchParams();
   const [userData, setUserData] = useState(null);
 
-
-  
   const [companyData, setCompanyData] = useState(null);
-
 
   const [error, setError] = useState(null);
 
@@ -28,64 +25,21 @@ function WorkSpace() {
     const urlToken = searchParams.get("token");
     if (urlToken) {
       setToken(urlToken);
-      const API_TOKEN = urlToken;
-      let headers = {
-        Authorization: `Bearer ${API_TOKEN}`,
-        "application-type": "application/json",
-      };
-      fetch(API_URL, {
-        method: "GET",
-        mode: "cors",
-        headers: headers,
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(response.status);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setUserData({
-            email: data.user.email,
-            photo: data.user.photo,
-            name: data.user.name,
-            createdAt: data.user.createdAt,
-          });
-          setCompanyData(data.company);
-        })
-        .catch((err) => {
-          setError(err.message);
-        });
+      getData({
+        apiKey: urlToken,
+        setCompanyData: setCompanyData,
+        setError: setError,
+        setUserData: setUserData,
+      });
       return;
     }
     if (token) {
-      let headers = {
-        Authorization: `Bearer ${token}`,
-        "application-type": "application/json",
-      };
-      fetch(API_URL, {
-        method: "GET",
-        mode: "cors",
-        headers: headers,
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(response.status);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setUserData({
-            email: data.user.email,
-            photo: data.user.photo,
-            name: data.user.name,
-            createdAt: data.user.createdAt,
-          });
-          setCompanyData(data.company);
-        })
-        .catch((err) => {
-          setError(err.message);
-        });
+      getData({
+        apiKey: token,
+        setCompanyData: setCompanyData,
+        setError: setError,
+        setUserData: setUserData,
+      });
     }
     if (!token) {
       navigate("/signup");
@@ -106,4 +60,34 @@ function WorkSpace() {
     </div>
   );
 }
+
+const getData = ({ apiKey, setUserData, setCompanyData, setError }) => {
+  const headers = {
+    Authorization: `Bearer ${apiKey}`,
+    "application-type": "application/json",
+  };
+  fetch(API_URL, {
+    method: "GET",
+    mode: "cors",
+    headers: headers,
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setUserData({
+        email: data.user.email,
+        photo: data.user.photo,
+        name: data.user.name,
+        createdAt: data.user.createdAt,
+      });
+      setCompanyData(data.company);
+    })
+    .catch((err) => {
+      setError(err.message);
+    });
+};
 export default WorkSpace;
