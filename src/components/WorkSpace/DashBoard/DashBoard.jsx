@@ -107,7 +107,7 @@ const ArrayCompanyEmptyState = () => {
         </small>
       </div>
       <NavLink
-        to={`/workspace/company?new`}
+        to={`/workspace/company/new`}
         className="btn sm:self-auto  md:self-baseline lg:self-baseline"
       >
         Add new company

@@ -55,14 +55,13 @@ function WorkSpace() {
     <div className=" md:flex flex-row">
       <HeaderWorkSpace doLogout={doLogout} userData={userData} error={error} />
       <main className=" md:ml-0 pb-8 md:pb-0 md:my-6 container-main md:flex lg:w-[100em]">
-        <Outlet context={[{userData, companyData, error}]} />
+        <Outlet context={[{ userData, companyData, error }]} />
       </main>
     </div>
   );
 }
 
 const getData = ({ apiKey, setUserData, setCompanyData, setError }) => {
-
   const headers = {
     Authorization: `Bearer ${apiKey}`,
     "application-type": "application/json",

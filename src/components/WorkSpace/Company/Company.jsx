@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect } from "react";
 import { NavLink, useOutletContext, useSearchParams } from "react-router-dom";
 import { geocodeToAddressKey } from "../../../utils/keys";
@@ -11,14 +12,9 @@ function Company() {
 
   useEffect(() => {
     const companyId = searchParams.get("company");
-    const companyNew = searchParams.get("new");
     if(companyId){
       console.log("edit company")
-    } else if (companyNew) {
-      console.log("new data")
-    } else {
-      console.log("no params")
-    }
+    } 
     // console.log(geocodeToAddressKey())
   });
 
