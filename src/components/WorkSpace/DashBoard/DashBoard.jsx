@@ -14,7 +14,7 @@ import PropTypes from "prop-types";
 import { NavLink, useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 function DashBoard() {
-  const [userData, companyData, error] = useOutletContext();
+  const [{ userData, companyData, error }] = useOutletContext();
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [arrayCompany, setArrayCompany] = useState(null);
   const [errorData, setErrorData] = useState(null);
@@ -99,15 +99,19 @@ const ArrayCompanyEmptyState = () => {
   return (
     <>
       <div>
-        <p className="text-center lg:text-left">Your company list is empty</p>
+        <p className="text-center lg:text-left">
+          Looks like there is no companies added yet
+        </p>
         <small>
-          In order to make use all the advantanges you need to create a new
-          company
+          It is time to take create a new company and lead your team to success
         </small>
       </div>
-      <button className="btn sm:self-auto  md:self-baseline lg:self-baseline">
+      <NavLink
+        to={`/workspace/company?new`}
+        className="btn sm:self-auto  md:self-baseline lg:self-baseline"
+      >
         Add new company
-      </button>
+      </NavLink>
     </>
   );
 };
@@ -258,7 +262,7 @@ const DisplayMapSection = ({ selectedCompany, erroData }) => {
                 className=" self-center"
                 style={{ color: "#000", fontSize: "30px" }}
               />
-              <p>The list of companies is empty</p>
+              <p>getting started with a new company is easier than you think</p>
             </div>
           )}
         {selectedCompany != null &&
