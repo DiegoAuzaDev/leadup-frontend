@@ -2,10 +2,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBuilding,
-  faEnvelope,
   faFileEdit,
   faFolderOpen,
-  faListCheck,
   faMapPin,
 } from "@fortawesome/free-solid-svg-icons";
 import MapComponent from "../MapComponent/MapComponent";
