@@ -97,7 +97,7 @@ const ArrayCompanyEmptyState = () => {
   return (
     <>
       <div>
-        <p className="text-center lg:text-left">
+        <p className="sm:text-center md:text-left">
           Looks like there is no companies added yet
         </p>
         <small>
