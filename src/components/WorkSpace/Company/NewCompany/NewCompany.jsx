@@ -10,25 +10,32 @@ function NewCompany() {
   const [newCompnay, setNewCompany] = useState(null);
   const [error, setError] = useState(null);
   const [companyName, setCompanyName] = useState("");
-  const [companyNameError, setCompanyNameError] = useState("")
+  const [companyNameError, setCompanyNameError] = useState("");
   const [companyLocation, setCompanyLocation] = useState("");
   const [country, setCountry] = useState("CO");
   const [markerCenter, setMarkerCenter] = useState(null);
-  const [isActive, setIsActive] = useState(false); 
+  const [isActive, setIsActive] = useState(false);
+  // todo check location input
 
-  const validCompanyName = (name)=> {
+  const validCompanyName = (name) => {
     if (!name.trim()) {
       return "Name is required";
     } else if (name.length < 3) {
       return "Name must contain at least 3 characters";
     }
     return "";
-  }
+  };
   const handleCompanyName = (ev) => {
     const value = ev.target.value;
-    setCompanyName(value)
-    setCompanyNameError(validCompanyName(value))
+    setCompanyName(value);
+    setCompanyNameError(validCompanyName(value));
   };
+
+  const hanldeCompanyInputLocation = (ev)=>{
+      const value = ev.target.value;
+      setCompanyLocation(value);
+
+  }
 
   const validCompanyLocation = async (location) => {
     let lat = location.lat;
@@ -72,26 +79,49 @@ function NewCompany() {
           <p>Getting started is easier than you expected</p>
         </div>
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-          <fieldset className="mt-4 mb-6">
-            <legend className=" font-semibold text-gray-800">
-              Company Name *
-            </legend>
-            <label className=" flex flex-col gap-2">
-              <small className=" text-gray-600">
-                The name of you comapny must be unique
-              </small>
-              <input
-                required
-                type="text"
-                className="border-gray-400 border-2 rounded-md leading-8 px-2"
-                value={companyName}
-                onChange={handleCompanyName}
-              />
-              {companyNameError && (
-                <small className=" text-red-500">{companyNameError}</small>
-              )}
-            </label>
-          </fieldset>
+          <div>
+            <fieldset className="mt-4 mb-6">
+              <legend className=" font-semibold text-gray-800">
+                Company Name *
+              </legend>
+              <label className=" flex flex-col gap-2">
+                <small className=" text-gray-600">
+                  The name of you comapny must be unique
+                </small>
+                <input
+                  required
+                  type="text"
+                  className="border-gray-400 border-2 rounded-md leading-8 px-2"
+                  value={companyName}
+                  onChange={handleCompanyName}
+                />
+                {companyNameError && (
+                  <small className=" text-red-500">{companyNameError}</small>
+                )}
+              </label>
+            </fieldset>
+            <fieldset className="mt-4 mb-6">
+              <legend className=" font-semibold text-gray-800">
+                Company Address *
+              </legend>
+              <label className=" flex flex-col gap-2">
+                <small className=" text-gray-600">
+                  The company address must contain city or departments
+                </small>
+                <input
+                  required
+                  type="text"
+                  className="border-gray-400 border-2 rounded-md leading-8 px-2"
+                  value={companyLocation}
+                  onChange={hanldeCompanyInputLocation}
+                />
+                {companyNameError && (
+                  <small className=" text-red-500">{companyNameError}</small>
+                )}
+              </label>
+            </fieldset>
+          </div>
+
           <div className="bg-gray-200 p-2">
             <div className="relative mb-3">
               <h6 className="mb-0">
