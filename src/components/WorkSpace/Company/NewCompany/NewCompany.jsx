@@ -8,16 +8,17 @@ import { AdvancedMarker, APIProvider, Map } from "@vis.gl/react-google-maps";
 import { geocodeToAddressKey } from "../../../../utils/keys";
 function NewCompany() {
   const [newCompnay, setNewCompany] = useState(null);
+  const [country, setCountry] = useState("CO");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumerError, setPhoneNumberError] = useState("");
   const [error, setError] = useState(null);
   const [companyName, setCompanyName] = useState("");
   const [companyNameError, setCompanyNameError] = useState("");
   const [companyLocation, setCompanyLocation] = useState("");
   const [companyLocationInputError, setCompanyLocationInputError] =
     useState("");
-  const [country, setCountry] = useState("CO");
   const [markerCenter, setMarkerCenter] = useState(null);
   const [isActive, setIsActive] = useState(false);
-  // todo check location input
 
   const validCompanyName = (name) => {
     if (!name.trim()) {
@@ -27,28 +28,26 @@ function NewCompany() {
     }
     return "";
   };
-const validCompanyInputLocation = (addressInput) => {
-  const locationRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
-  if (!addressInput.trim()) {
-    return "Company location is required";
-  } else if (!locationRegex.test(addressInput)) {
-    return "Invalid location";
-  } else {
-    return "";
-  }
-};
+  const validCompanyInputLocation = (addressInput) => {
+    const locationRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+    if (!addressInput.trim()) {
+      return "Company location is required";
+    } else if (!locationRegex.test(addressInput)) {
+      return "Invalid location";
+    } else {
+      return "";
+    }
+  };
 
   const handleCompanyName = (ev) => {
     const value = ev.target.value;
     setCompanyName(value);
     setCompanyNameError(validCompanyName(value));
   };
-
   const hanldeCompanyInputLocation = (ev) => {
     const value = ev.target.value;
     setCompanyLocation(value);
     setCompanyLocationInputError(validCompanyInputLocation(value));
-    console.log(companyLocationInputError);
   };
 
   const validCompanyLocation = async (location) => {
@@ -74,7 +73,6 @@ const validCompanyInputLocation = (addressInput) => {
       if (data.error_message) {
         throw new Error("Invalid request");
       }
-      console.log(data.results);
       returnResponse = data.results[1].formatted_address;
     } catch (error) {
       returnResponse = new Error(error.message);
@@ -137,6 +135,42 @@ const validCompanyInputLocation = (addressInput) => {
                 )}
               </label>
             </fieldset>
+            <fieldset className="mt-4 mb-6">
+              <legend className=" font-semibold text-gray-800">
+                Phone Number
+              </legend>
+              <label className=" flex flex-col gap-2">
+                <small className=" text-gray-600">
+                  Your employees will use this phone number is they have any
+                  issue
+                </small>
+                <div>
+                  <input
+                    required
+                    type="tel"
+                    className="border-gray-400 border-2 rounded-md leading-8 px-2"
+                    value={phoneNumber}
+                    onChange={(ev) => {
+                      const value = ev.target.value;
+                      const locationRegex = /^\d+$/;
+                      setPhoneNumber(value);
+                      if (value.length < 5) {
+                        setPhoneNumberError(
+                          "Numbers must be longer than 5 characters"
+                        );
+                      } else if (!locationRegex.test(value)) {
+                        setPhoneNumberError("Please enter only digits (0-9)");
+                      } else {
+                        setPhoneNumberError("");
+                      }
+                    }}
+                  />
+                </div>
+                {phoneNumerError && (
+                  <small className=" text-red-500">{phoneNumerError}</small>
+                )}
+              </label>
+            </fieldset>
           </div>
 
           <div className="bg-gray-200 p-2">
@@ -191,7 +225,29 @@ const validCompanyInputLocation = (addressInput) => {
               </div>
             </div>
           </div>
-          <button type="submit" className="btn">
+          <button
+            className={`btn ${
+              !phoneNumerError &&
+              !companyLocationInputError &&
+              !companyNameError
+                ? "btn--outline"
+                : ""
+            }`}
+            onClick={(ev) => {
+              ev.preventDefault();
+              if (
+                !phoneNumerError &&
+                !companyLocationInputError &&
+                !companyNameError
+              ) {
+                console.log({
+                  companyName: companyName,
+                  phoneNumber: phoneNumber,
+                  location: companyLocation,
+                });
+              }
+            }}
+          >
             Create company
           </button>
         </form>
