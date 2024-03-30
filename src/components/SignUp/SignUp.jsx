@@ -63,8 +63,6 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(e);
-
-
   };
 
   function doGoogleAuth() {

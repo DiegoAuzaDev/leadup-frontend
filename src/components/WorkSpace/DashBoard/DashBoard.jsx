@@ -1,13 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBuilding,
+  faFileEdit,
+  faFolderOpen,
+  faMapPin,
+} from "@fortawesome/free-solid-svg-icons";
 import MapComponent from "../MapComponent/MapComponent";
 import PropTypes from "prop-types";
 //
-import { useOutletContext } from "react-router-dom";
+import { NavLink, useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 function DashBoard() {
-  const [userData, companyData, error] = useOutletContext();
+  const [{ userData, companyData, error }] = useOutletContext();
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [arrayCompany, setArrayCompany] = useState(null);
   const [errorData, setErrorData] = useState(null);
@@ -16,13 +21,14 @@ function DashBoard() {
       setArrayCompany(companyData);
       if (companyData.length != 0) {
         setSelectedCompany(companyData[0]);
+      } else {
+        setSelectedCompany({});
       }
     }
     if (error) {
       setErrorData(error);
     }
-  }, [companyData, userData, error, selectedCompany]);
-
+  }, [userData, companyData, error]);
   return (
     <>
       <div className=" flex flex-col gap-8 lg:flex-row md:flex-1 md:gap-4">
@@ -44,6 +50,15 @@ function DashBoard() {
               {arrayCompany != null &&
                 arrayCompany.length == 0 &&
                 !errorData && <ArrayCompanyEmptyState />}
+              {arrayCompany != null &&
+                arrayCompany.length != 0 &&
+                !errorData && (
+                  <ArrayCompanyDisplayList
+                    selectedCompany={selectedCompany}
+                    setSelectedCompany={setSelectedCompany}
+                    arrayCompany={arrayCompany}
+                  />
+                )}
             </div>
           </div>
 
@@ -82,15 +97,19 @@ const ArrayCompanyEmptyState = () => {
   return (
     <>
       <div>
-        <p className="text-center lg:text-left">Your company list is empty</p>
+        <p className="sm:text-center md:text-left">
+          Looks like there is no companies added yet
+        </p>
         <small>
-          In order to make use all the advantanges you need to create a new
-          company
+          It is time to take create a new company and lead your team to success
         </small>
       </div>
-      <button className="btn sm:self-auto  md:self-baseline lg:self-baseline">
+      <NavLink
+        to={`/workspace/company/new`}
+        className="btn sm:self-auto  md:self-baseline lg:self-baseline"
+      >
         Add new company
-      </button>
+      </NavLink>
     </>
   );
 };
@@ -115,24 +134,97 @@ const ArrayCompanyErrorState = () => {
   );
 };
 
+const ArrayCompanyDisplayList = ({
+  selectedCompany,
+  setSelectedCompany,
+  arrayCompany,
+}) => {
+  const handleChange = (ev) => {
+    setSelectedCompany(arrayCompany[ev.target.value]);
+  };
+  return (
+    <>
+      <div className="flex flex-col gap-5">
+        <form
+          className=" flex flex-col gap-x-4 gap-y-2"
+          onSubmit={(ev) => {
+            ev.preventDefault();
+          }}
+        >
+          <label
+            htmlFor="company-selected"
+            className=" text-base flex items-center text-black"
+          >
+            Select your target company
+          </label>
+          <select
+            onChange={handleChange}
+            id="company-selected"
+            className="bg-sky-500 border cursor-pointer text-sm  font-medium rounded-lg p-2.5  flex-1 placeholder-gray-400 text-sky-950  focus:ring-sky-500  focus:border-blue-500"
+          >
+            {arrayCompany.map((element, index) => (
+              <option key={element._id} value={index}>
+                {element.name}
+              </option>
+            ))}
+          </select>
+        </form>
+        <section className="border-dashed border-2 border-gray-500 rounded-md p-2 flex flex-col gap-4">
+          <div className="flex gap-3">
+            <FontAwesomeIcon
+              icon={faBuilding}
+              className=" self-center"
+              style={{ color: "#4b5563" }}
+            />
+            <p className="m-0">{selectedCompany.name}</p>
+          </div>
+          <div className="flex gap-3">
+            <FontAwesomeIcon
+              icon={faMapPin}
+              className=""
+              style={{ color: "#4b5563" }}
+            />
+            <p className="m-0">{selectedCompany.address}</p>
+          </div>
+        </section>
+        <div className="flex lg:justify-end">
+          <NavLink
+            role="button"
+            className="btn  flex-1 lg:flex-none"
+            to={`/workspace/company?company=${selectedCompany._id}`}
+          >
+            <FontAwesomeIcon
+              icon={faFileEdit}
+              className=" mx-2"
+              style={{ color: "#082f49" }}
+            />
+            Edit company
+          </NavLink>
+        </div>
+      </div>
+    </>
+  );
+};
+
 const DisplayMapSection = ({ selectedCompany, erroData }) => {
-  const [centerPointSelectedCompany, setCenterPointSelectedCompany] =
-    useState(null);
+  const [companyPoint, setCompanyPoint] = useState({});
   useEffect(() => {
-    if (selectedCompany != null) {
-      setCenterPointSelectedCompany({
+    if (selectedCompany != null && Object.keys(selectedCompany).length != 0) {
+      setCompanyPoint({
         lat: Number(selectedCompany.location.latitude),
         lng: Number(selectedCompany.location.longitude),
       });
     }
-  }, [selectedCompany]);
+  }, [selectedCompany, erroData]);
+
   return (
     <section className=" lg:w-2/3  flex  flex-col h-[70vh] lg:h-[auto]">
       <div className=" mb-4">
         <h3 className="m-0 text-3xl md:text-3xl lg:text-3xl">Your map view</h3>
         <small>Find your active deliveries list</small>
       </div>
-      <div className="bg-gray-200 h-[40vh] rounded-md flex justify-center items-center flex-col flex-1 overflow-hidden z-[0]">
+
+      <div className="bg-gray-200 h-[40vh] rounded-md flex justify-center items-center flex-col flex-1 overflow-hidden z-[0] p-2">
         {!selectedCompany && !erroData && (
           <div role="status" className=" flex flex-col gap-2">
             <svg
@@ -159,7 +251,7 @@ const DisplayMapSection = ({ selectedCompany, erroData }) => {
             <p>There was an error</p>
           </div>
         )}
-        {selectedCompany != null &&
+        {selectedCompany &&
           Object.keys(selectedCompany).length == 0 &&
           !erroData && (
             <div className="flex flex-col gap-5">
@@ -168,17 +260,21 @@ const DisplayMapSection = ({ selectedCompany, erroData }) => {
                 className=" self-center"
                 style={{ color: "#000", fontSize: "30px" }}
               />
-              <p>The list of companies is empty</p>
+              <p>getting started with a new company is easier than you think</p>
             </div>
           )}
         {selectedCompany != null &&
           Object.keys(selectedCompany).length != 0 &&
-          !erroData && (
-            <MapComponent mainCompanyPoint={centerPointSelectedCompany} />
-          )}
+          !erroData && <MapComponent mainCompanyPoint={companyPoint} />}
       </div>
     </section>
   );
+};
+
+ArrayCompanyDisplayList.propTypes = {
+  selectedCompany: PropTypes.object,
+  setSelectedCompany: PropTypes.func,
+  arrayCompany: PropTypes.array,
 };
 
 DisplayMapSection.propTypes = {

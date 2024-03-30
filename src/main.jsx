@@ -5,11 +5,13 @@ import { BrowserRouter } from "react-router-dom";
 import { TokenProvider } from "./context/tokenContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <TokenProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </TokenProvider>
+  <>
+    <TokenProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </TokenProvider>
+  </>
 );
 
 // Add routes for each button on welcome 
