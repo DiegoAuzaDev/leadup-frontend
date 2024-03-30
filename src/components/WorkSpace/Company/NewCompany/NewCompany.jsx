@@ -1,14 +1,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import PropTypes from "prop-types";
-import CreateNewCompany from "../../../../utils/company/createNewCompany";
+import createNewCompany from "../../../../utils/company/createNewCompany";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { AdvancedMarker, APIProvider, Map } from "@vis.gl/react-google-maps";
 import { geocodeToAddressKey } from "../../../../utils/keys";
+import { useToken } from "../../../../context/tokenContext";
 function NewCompany() {
-  const [newCompany, setNewCompany] = useState(null);
+  const [token, setToken] = useToken();
   const [country, setCountry] = useState("CO");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
@@ -82,15 +83,15 @@ function NewCompany() {
     }
     return returnResponse;
   };
-  const handleSubmit = (ev) => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault();
     const companyObj = {
       name: companyName.trim(),
-      location: companyLocation.trim(),
+      address: companyLocation.trim(),
       country: country,
       phoneNumber: phoneNumber,
     };
-    setNewCompany(companyObj);
+    const newCompanyResponse = await createNewCompany(companyObj, token);
   };
 
   return (
@@ -254,11 +255,14 @@ function NewCompany() {
               ev.preventDefault();
               if (
                 !phoneNumberError &&
+                phoneNumber && 
                 !companyLocationInputError &&
-                !companyNameError
+                companyLocation &&
+                !companyNameError && 
+                companyName
               ) {
                 handleSubmit(ev);
-              }
+              } 
             }}
           >
             Create company
