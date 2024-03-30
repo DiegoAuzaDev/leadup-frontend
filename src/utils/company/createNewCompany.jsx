@@ -4,6 +4,7 @@ import { API_URL } from "../keys";
 
 async function createNewCompany(companyObj, token) {
   const url = API_URL;
+  let returnResponse = null;
   try {
     const createNewCompany = await fetch(url, {
       method: "POST",
@@ -17,9 +18,11 @@ async function createNewCompany(companyObj, token) {
       throw new Error("Error creating new company");
     }
     const response = await createNewCompany.json();
-    console.log(response);
+    returnResponse = response
+    return returnResponse
   } catch (error) {
-    console.error(error);
+    returnResponse = error;
+    return returnResponse;
   }
 }
 
