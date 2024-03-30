@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import CreateNewCompany from "../../../../utils/company/createNewCompany";
@@ -7,10 +8,10 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { AdvancedMarker, APIProvider, Map } from "@vis.gl/react-google-maps";
 import { geocodeToAddressKey } from "../../../../utils/keys";
 function NewCompany() {
-  const [newCompnay, setNewCompany] = useState(null);
+  const [newCompany, setNewCompany] = useState(null);
   const [country, setCountry] = useState("CO");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [phoneNumerError, setPhoneNumberError] = useState("");
+  const [phoneNumberError, setPhoneNumberError] = useState("");
   const [error, setError] = useState(null);
   const [companyName, setCompanyName] = useState("");
   const [companyNameError, setCompanyNameError] = useState("");
@@ -44,7 +45,7 @@ function NewCompany() {
     setCompanyName(value);
     setCompanyNameError(validCompanyName(value));
   };
-  const hanldeCompanyInputLocation = (ev) => {
+  const handleCompanyInputLocation = (ev) => {
     const value = ev.target.value;
     setCompanyLocation(value);
     setCompanyLocationInputError(validCompanyInputLocation(value));
@@ -54,15 +55,17 @@ function NewCompany() {
     let lat = location.lat;
     let lng = location.lng;
     let requestUrl = geocodeToAddressKey(lat, lng);
-    const geopointToAddress = await sendLocationrequest(requestUrl);
+    const geopointToAddress = await sendLocationRequest(requestUrl);
     if (typeof geopointToAddress == "string") {
       setCompanyLocation(geopointToAddress);
       setCompanyLocationInputError("");
+      setError(null);
     } else {
+      console.log(geopointToAddress.message)
       setError(geopointToAddress.message);
     }
   };
-  const sendLocationrequest = async (url) => {
+  const sendLocationRequest = async (url) => {
     let returnResponse = null;
     try {
       const response = await fetch(url);
@@ -81,7 +84,13 @@ function NewCompany() {
   };
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    console.log(ev);
+    const companyObj = {
+      name: companyName.trim(),
+      location: companyLocation.trim(),
+      country: country,
+      phoneNumber: phoneNumber,
+    };
+    setNewCompany(companyObj);
   };
 
   return (
@@ -91,6 +100,14 @@ function NewCompany() {
           <h1>Create a new company</h1>
           <p>Getting started is easier than you expected</p>
         </div>
+        {error && (
+          <div className=" bg-red-400 p-4 rounded-md">
+            <p className="m-0">
+              There was an error creating the company
+            </p>
+            <small>Try again later</small>
+          </div>
+        )}
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <div>
             <fieldset className="mt-4 mb-6">
@@ -99,7 +116,7 @@ function NewCompany() {
               </legend>
               <label className=" flex flex-col gap-2">
                 <small className=" text-gray-600">
-                  The name of you comapny must be unique
+                  The name of your company must be unique
                 </small>
                 <input
                   required
@@ -126,7 +143,7 @@ function NewCompany() {
                   type="text"
                   className="border-gray-400 border-2 rounded-md leading-8 px-2"
                   value={companyLocation}
-                  onChange={hanldeCompanyInputLocation}
+                  onChange={handleCompanyInputLocation}
                 />
                 {companyLocationInputError && (
                   <small className=" text-red-500">
@@ -141,7 +158,7 @@ function NewCompany() {
               </legend>
               <label className=" flex flex-col gap-2">
                 <small className=" text-gray-600">
-                  Your employees will use this phone number is they have any
+                  Your employees will use this phone number if they have any
                   issue
                 </small>
                 <div>
@@ -153,21 +170,21 @@ function NewCompany() {
                     onChange={(ev) => {
                       const value = ev.target.value;
                       const locationRegex = /^\d+$/;
-                      setPhoneNumber(value);
-                      if (value.length < 5) {
+                      setPhoneNumber(value.trim());
+                      if (!locationRegex.test(value)) {
+                        setPhoneNumberError("Please enter only digits (0-9)");
+                      } else if (value.length < 5) {
                         setPhoneNumberError(
                           "Numbers must be longer than 5 characters"
                         );
-                      } else if (!locationRegex.test(value)) {
-                        setPhoneNumberError("Please enter only digits (0-9)");
                       } else {
                         setPhoneNumberError("");
                       }
                     }}
                   />
                 </div>
-                {phoneNumerError && (
-                  <small className=" text-red-500">{phoneNumerError}</small>
+                {phoneNumberError && (
+                  <small className=" text-red-500">{phoneNumberError}</small>
                 )}
               </label>
             </fieldset>
@@ -226,25 +243,21 @@ function NewCompany() {
             </div>
           </div>
           <button
-            className={`btn ${
-              !phoneNumerError &&
+            className={`${
+              !phoneNumberError &&
               !companyLocationInputError &&
               !companyNameError
-                ? "btn--outline"
-                : ""
+                ? "btn"
+                : "btn--outline"
             }`}
             onClick={(ev) => {
               ev.preventDefault();
               if (
-                !phoneNumerError &&
+                !phoneNumberError &&
                 !companyLocationInputError &&
                 !companyNameError
               ) {
-                console.log({
-                  companyName: companyName,
-                  phoneNumber: phoneNumber,
-                  location: companyLocation,
-                });
+                handleSubmit(ev);
               }
             }}
           >
