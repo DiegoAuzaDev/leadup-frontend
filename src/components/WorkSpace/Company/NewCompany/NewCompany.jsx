@@ -112,19 +112,25 @@ function NewCompany() {
     <>
       <section>
         <div>
-          <h1>Create a new company</h1>
+          <h1 className="m-0 text-3xl md:text-3xl lg:text-3xl">
+            Create a new company
+          </h1>
           <p>Getting started is easier than you expected</p>
         </div>
         {error && (
-          <div className=" bg-red-400 p-4 rounded-md">
+          <div className=" bg-red-400  rounded-md py-3 px-2">
             <p className="m-0">{error}</p>
-            <div className="flex flex-col">
-              <small>duplicate name, try a different name</small>
-              <small>Try again later</small>
-            </div>
+              <ul className="m-0 list-disc px-6">
+                <li>
+                  <small>duplicate name, try a different name</small>
+                </li>
+                <li>
+                  <small>Try again later</small>
+                </li>
+              </ul>
           </div>
         )}
-        {isLoading && <LoadingIndicator/>}
+        {isLoading && <LoadingIndicator />}
         {!isLoading && (
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div>
@@ -170,6 +176,59 @@ function NewCompany() {
                   )}
                 </label>
               </fieldset>
+
+              <div className="bg-gray-200 p-2 rounded-md">
+                <div className="relative mb-3">
+                  <h6 className="mb-0">
+                    <a
+                      type="button"
+                      className="relative flex justify-between items-center w-full p-4 font-semibold text-left transition-all ease-in border-b border-solid cursor-pointer border-slate-100 text-slate-700 rounded-t-1 group text-dark-500"
+                      data-collapse-target="collapse-1"
+                      onClick={() => {
+                        setIsActive(!isActive);
+                      }}
+                    >
+                      <span>Pick location on Map</span>
+                      <i>
+                        <FontAwesomeIcon
+                          icon={!isActive ? faChevronDown : faChevronUp}
+                          className=" self-center"
+                          style={{ color: "#4b5563" }}
+                        />
+                      </i>
+                    </a>
+                  </h6>
+                  <div
+                    data-collapse="collapse-1"
+                    className={`${
+                      !isActive ? "h-[0vh]" : "h-[70vh]"
+                    } overflow-hidden transition-all duration-300 ease-in-out`}
+                  >
+                    <div className="h-[inherit] text-sm leading-normal text-blue-gray-500/80 flex flex-col gap-4">
+                      <div className=" flex-1 rounded-md overflow-hidden">
+                        <PickLocationOnMap
+                          setMarkerCenter={setMarkerCenter}
+                          markerCenter={markerCenter}
+                        />
+                      </div>
+                      <a
+                        className={`${
+                          !markerCenter
+                            ? "btn--outline hover:rounded-md focus:rounded-md active:rounded-md"
+                            : "btn"
+                        }`}
+                        onClick={() => {
+                          if (markerCenter) {
+                            validCompanyLocation(markerCenter);
+                          }
+                        }}
+                      >
+                        Find location
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <fieldset className="mt-4 mb-6">
                 <legend className=" font-semibold text-gray-800">
                   Phone Number
@@ -207,59 +266,6 @@ function NewCompany() {
                 </label>
               </fieldset>
             </div>
-
-            <div className="bg-gray-200 p-2">
-              <div className="relative mb-3">
-                <h6 className="mb-0">
-                  <a
-                    type="button"
-                    className="relative flex justify-between items-center w-full p-4 font-semibold text-left transition-all ease-in border-b border-solid cursor-pointer border-slate-100 text-slate-700 rounded-t-1 group text-dark-500"
-                    data-collapse-target="collapse-1"
-                    onClick={() => {
-                      setIsActive(!isActive);
-                    }}
-                  >
-                    <span>Pick location on Map</span>
-                    <i>
-                      <FontAwesomeIcon
-                        icon={!isActive ? faChevronDown : faChevronUp}
-                        className=" self-center"
-                        style={{ color: "#4b5563" }}
-                      />
-                    </i>
-                  </a>
-                </h6>
-                <div
-                  data-collapse="collapse-1"
-                  className={`${
-                    !isActive ? "h-[0vh]" : "h-[70vh]"
-                  } overflow-hidden transition-all duration-300 ease-in-out`}
-                >
-                  <div className="h-[inherit] text-sm leading-normal text-blue-gray-500/80 flex flex-col gap-4">
-                    <div className=" flex-1 rounded-md overflow-hidden">
-                      <PickLocationOnMap
-                        setMarkerCenter={setMarkerCenter}
-                        markerCenter={markerCenter}
-                      />
-                    </div>
-                    <a
-                      className={`${
-                        !markerCenter
-                          ? "btn--outline hover:rounded-md focus:rounded-md active:rounded-md"
-                          : "btn"
-                      }`}
-                      onClick={() => {
-                        if (markerCenter) {
-                          validCompanyLocation(markerCenter);
-                        }
-                      }}
-                    >
-                      Find location
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
             <button
               className={`${
                 !phoneNumberError &&
@@ -293,7 +299,7 @@ function NewCompany() {
 
 function LoadingIndicator() {
   return (
-    <div className="bg-gray-200 p-2 rounded-md flex justify-center flex-col items-center py-7">
+    <div className="bg-gray-200 p-2 rounded-md flex justify-center flex-col items-center py-7 h-3/6">
       <div role="status" className=" h-5 w-5">
         <svg
           aria-hidden="true"
