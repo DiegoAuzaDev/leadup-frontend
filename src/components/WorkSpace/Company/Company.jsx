@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react";
 import { NavLink, useOutletContext, useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBook, faFlag, faLocationDot, faPenToSquare, faPhone, faTrash } from "@fortawesome/free-solid-svg-icons";
 function Company() {
-
   const [searchParams, setSearchParamas] = useSearchParams();
   const [{ companyData }] = useOutletContext();
   const [displayComponent, setDisplayComponent] = useState(
@@ -24,7 +25,8 @@ function Company() {
 }
 
 function ShowGridCompany({ companyDataList }) {
-    const currentDate = new Date();
+  console.log(companyDataList)
+  const currentDate = new Date();
   return (
     <>
       <div className="flex flex-col  mb-8 gap-4">
@@ -49,8 +51,77 @@ function ShowGridCompany({ companyDataList }) {
                 </small>
               </div>
               <div className="px-4 grid grid-flow-col auto-cols-max gap-4">
-                
-                <p className="m-0 text-gray-700">{element.address}</p>
+                <div className=" flex gap-2">
+                  <FontAwesomeIcon
+                    icon={faLocationDot}
+                    className=" self-center"
+                    style={{ color: "#4b5563" }}
+                  />
+                  <p className="m-0 font-medium">Address</p>
+                </div>
+                <p className="m-0 text-gray-700">
+                  {formatAddress(element.address)}
+                </p>
+              </div>
+              <div className="px-4 grid grid-flow-col auto-cols-max gap-4">
+                <div className=" flex gap-2">
+                  <FontAwesomeIcon
+                    icon={faFlag}
+                    className=" self-center"
+                    style={{ color: "#4b5563" }}
+                  />
+                  <p className="m-0 font-medium">Country</p>
+                </div>
+                <p className="m-0 text-gray-700">{element.country}</p>
+              </div>
+              <div className="pl-4 mr-4 grid grid-flow-col auto-cols-max gap-4">
+                <div className=" flex gap-2 items-baseline">
+                  <FontAwesomeIcon
+                    icon={faPhone}
+                    className=" self-baseline"
+                    style={{ color: "#4b5563" }}
+                  />
+                  <p className="m-0 font-medium">Phone numbers</p>
+                </div>
+                <div className=" flex flex-col gap-2">
+                  {element.phoneNumber.map((phoneNumbers, index) => (
+                    <p key={index} className="m-0">
+                      {phoneNumbers}
+                    </p>
+                  ))}
+                </div>
+              </div>
+              <div className="px-4 grid grid-flow-col auto-cols-max gap-4">
+                <div className=" flex gap-2">
+                  <FontAwesomeIcon
+                    icon={faBook}
+                    className=" self-center"
+                    style={{ color: "#4b5563" }}
+                  />
+                  <p className="m-0 font-medium">Last updpate</p>
+                </div>
+                <p className="m-0 text-gray-700">
+                  {formatDate(element.updatedAt)}
+                </p>
+              </div>
+              <div className="px-4 flex justify-end gap-2 mt-[auto]">
+                <NavLink
+                  to={`/workspace/company?company=${element._id}`}
+                  className="btn"
+                >
+                  <FontAwesomeIcon
+                    icon={faPenToSquare}
+                    className=" self-center"
+                    style={{ color: "#4b5563" }}
+                  />
+                </NavLink>
+                <button className="btn btn--danger">
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    className=" self-center"
+                    style={{ color: "#4b5563" }}
+                  />
+                </button>
               </div>
             </li>
           ))}
@@ -86,6 +157,17 @@ function EditCompany() {
   );
 }
 
+function formatAddress(originalAddress) {
+  // Split the original address based on ","
+  const addressParts = originalAddress.split(",");
+
+  // Take the first half of the address
+  const formattedAddress = addressParts[0].trim();
+
+  // Return the formatted address
+  return formattedAddress;
+}
+
 function getDateFromCreation(dataCreated, currentData) {
   // Parse the date strings into Date objects
   const createdDate = new Date(dataCreated);
@@ -107,6 +189,18 @@ function getDateFromCreation(dataCreated, currentData) {
   return `Created ${differenceDays} days ago`;
 }
 
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // Months are zero-based, so add 1
+  const year = date.getFullYear();
+
+  // Format the date
+  const formattedDate = `${day}/${month}/${year}`;
+
+  return formattedDate;
+}
 
 ShowGridCompany.propTypes = {
   companyDataList: PropTypes.array,
