@@ -3,10 +3,17 @@ import { useEffect, useState } from "react";
 import { NavLink, useOutletContext, useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBook, faFlag, faLocationDot, faPenToSquare, faPhone, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBook,
+  faFlag,
+  faLocationDot,
+  faPenToSquare,
+  faPhone,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 function Company() {
   const [searchParams, setSearchParamas] = useSearchParams();
-  const [{ companyData }] = useOutletContext();
+  const [{ companyData, setCompanyData }] = useOutletContext();
   const [displayComponent, setDisplayComponent] = useState(
     <LoadingIndicator />
   );
@@ -25,15 +32,17 @@ function Company() {
 }
 
 function ShowGridCompany({ companyDataList }) {
-  console.log(companyDataList)
+  const [isActive, setIsActive] = useState(true)
+  console.log(companyDataList);
   const currentDate = new Date();
   return (
     <>
-      <div className="flex flex-col  mb-8 gap-4">
+      {isActive && <DeletePopUp setIsActive={setIsActive} />}
+      <div className="flex flex-col  mb-4 gap-4">
         <h2 className="m-0 text-3xl md:text-3xl lg:text-3xl">
           Keep your team in sync with your goals
         </h2>
-        <p>{`Create and update based on your team's goals`}</p>
+        <p>{`Create and update based on your team's goals. With Lead Up, managing your data has never been easier.`}</p>
       </div>
       <section>
         <ul className=" grid grid-cols-1 lg:grid-cols-2 gap-y-4 gap-x-4">
@@ -157,6 +166,18 @@ function EditCompany() {
   );
 }
 
+function DeletePopUp({companyToDelete, setIsActive}) {
+  return (
+    <>
+      <div className=" fixed bg-[#00000082] top-0 h-[100vh] left-0 w-[100vw]" onClick={()=>{
+        setIsActive(false);
+      }}>
+        <p>Are you sure you want to delete</p>
+      </div>
+    </>
+  );
+}
+
 function formatAddress(originalAddress) {
   // Split the original address based on ","
   const addressParts = originalAddress.split(",");
@@ -205,5 +226,10 @@ function formatDate(dateStr) {
 ShowGridCompany.propTypes = {
   companyDataList: PropTypes.array,
 };
+DeletePopUp.propTypes = {
+  companyToDelete: PropTypes.object,
+  setIsActive : PropTypes.func
+};
+
 
 export default Company;
