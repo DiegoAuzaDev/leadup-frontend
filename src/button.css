@@ -31,6 +31,8 @@
 
   .btn--danger {
     @apply 
+    border-[1px]
+    border-sky-950 rounded-md
     bg-red-400
     text-sky-950
     

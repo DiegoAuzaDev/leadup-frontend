@@ -49,27 +49,27 @@ function LargeNavigator({ user, logout, error }) {
       </ul>
       <div className=" flex flex-col gap-2">
         <button className="flex justify-center">
-          {!user && !error && <div className="w-12 rounded-full h-12 bg-slate-500"></div>}
-          {!user &&
-            error && (
-              <img
-                src={ErrorImage}
-                alt="Profile photo"
-                className=" w-12 rounded-full h-12"
-              />
-            )}
-            {user && !error && (
-               <img
-                src={user.photo}
-                alt="Profile photo"
-                className=" w-12 rounded-full h-12"
-              />
-
-            )}
+          {!user && !error && (
+            <div className="w-12 rounded-full h-12 bg-slate-500"></div>
+          )}
+          {!user && error && (
+            <img
+              src={ErrorImage}
+              alt="Profile photo"
+              className=" w-12 rounded-full h-12"
+            />
+          )}
+          {user && !error && (
+            <img
+              src={user.photo}
+              alt="Profile photo"
+              className=" w-12 rounded-full h-12"
+            />
+          )}
         </button>
 
         <button
-          className="py-2 text-center"
+          className="py-2 text-center btn--danger"
           to="/workspace/settings"
           onClick={() => {
             logout();

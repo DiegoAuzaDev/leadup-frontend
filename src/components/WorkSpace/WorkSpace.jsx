@@ -54,7 +54,7 @@ function WorkSpace() {
   return (
     <div className=" md:flex flex-row">
       <HeaderWorkSpace doLogout={doLogout} userData={userData} error={error} />
-      <main className=" md:ml-0 pb-8 md:pb-0 md:my-6 container-main md:flex lg:w-[100em]">
+      <main className=" md:ml-0 pb-8 md:pb-0 md:my-6 md:max-h-[95vh] overflow-scroll container-main md:flex lg:w-[100em]">
         <Outlet context={[{ userData, companyData, setCompanyData, error }]} />
       </main>
     </div>
