@@ -11,7 +11,10 @@ import {
   faPhone,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import deleteCompany from "../../../utils/company/deleteCompany";
+import { useToken } from "../../../context/tokenContext";
 function Company() {
+  const [token, setToken] = useToken();
   const [searchParams, setSearchParamas] = useSearchParams();
   const [{ companyData, setCompanyData }] = useOutletContext();
   const [displayComponent, setDisplayComponent] = useState(
@@ -24,20 +27,26 @@ function Company() {
     } else if (companyData && companyData.length == 0) {
       setDisplayComponent(<EmptyList />);
     } else if (companyData && companyData.length > 0) {
-      setDisplayComponent(<ShowGridCompany companyDataList={companyData} />);
+      setDisplayComponent(<ShowGridCompany companyDataList={companyData} token={token}/>);
     }
   }, [companyData, searchParams]);
 
   return <section>{displayComponent}</section>;
 }
 
-function ShowGridCompany({ companyDataList }) {
-  const [isActive, setIsActive] = useState(true)
-  console.log(companyDataList);
+function ShowGridCompany({ companyDataList, token }) {
+  const [isActive, setIsActive] = useState(false);
+  const [selectedCompany, setSelectedCompany] = useState(null);
   const currentDate = new Date();
   return (
     <>
-      {isActive && <DeletePopUp setIsActive={setIsActive} />}
+      {isActive && (
+        <DeletePopUp
+          setIsActive={setIsActive}
+          companyToDelete={selectedCompany}
+          token={token}
+        />
+      )}
       <div className="flex flex-col  mb-4 gap-4">
         <h2 className="m-0 text-3xl md:text-3xl lg:text-3xl">
           Keep your team in sync with your goals
@@ -124,7 +133,15 @@ function ShowGridCompany({ companyDataList }) {
                     style={{ color: "#4b5563" }}
                   />
                 </NavLink>
-                <button className="btn btn--danger">
+                <button
+                  className="btn btn--danger"
+                  onClick={ async() => {
+                    setIsActive(true);
+                    setSelectedCompany(element);
+                  //  let deleteResponse = await deleteCompany(element._id, token);
+                  //  console.log( await deleteResponse);
+                  }}
+                >
                   <FontAwesomeIcon
                     icon={faTrash}
                     className=" self-center"
@@ -166,13 +183,21 @@ function EditCompany() {
   );
 }
 
-function DeletePopUp({companyToDelete, setIsActive}) {
+function DeletePopUp({ companyToDelete, setIsActive, token }) {
   return (
     <>
-      <div className=" fixed bg-[#00000082] top-0 h-[100vh] left-0 w-[100vw]" onClick={()=>{
-        setIsActive(false);
-      }}>
-        <p>Are you sure you want to delete</p>
+      <div
+        className=" fixed bg-[#00000082] top-0 h-[100vh] left-0 w-[100vw] flex"
+        onClick={() => {
+          setIsActive(false);
+        }}
+      >
+        <div className=" bg-gray-200 max-w-fit m-auto rounded-md">
+          <div className="p-4">
+            <p className="">Are you sure you want to delete</p>
+            <p>{companyToDelete.name + " from your company list"}</p>
+          </div>
+        </div>
       </div>
     </>
   );
@@ -225,11 +250,12 @@ function formatDate(dateStr) {
 
 ShowGridCompany.propTypes = {
   companyDataList: PropTypes.array,
+  token: PropTypes.string,
 };
 DeletePopUp.propTypes = {
   companyToDelete: PropTypes.object,
-  setIsActive : PropTypes.func
+  setIsActive: PropTypes.func,
+  token: PropTypes.string,
 };
-
 
 export default Company;
