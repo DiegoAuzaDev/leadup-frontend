@@ -78,6 +78,7 @@ const getData = ({ apiKey, setUserData, setCompanyData, setError }) => {
       return response.json();
     })
     .then((data) => {
+      console.log(data)
       setUserData({
         email: data.user.email,
         photo: data.user.photo,

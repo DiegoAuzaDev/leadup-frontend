@@ -6,12 +6,14 @@ import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import "./signup.css";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import localSingup from "../../utils/localAuth/signup";
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [passwordType, setPasswordType] = useState("password");
-
+  const [requestError, setRequestError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [nameError, setNameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -59,16 +61,32 @@ function SignUp() {
     setPassword(value);
     setPasswordError(validatePassword(value));
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    console.log("getting credential")
+    setIsLoading(true)
     e.preventDefault();
-    console.log(e);
+    const redirectUrl = "http://localhost:5173/workspace/dashboard";
+    const baseUrl = `http://localhost:3004/auth/signup?redirect_url=${redirectUrl}`;
+    const newLocalUser = {
+      name: name,
+      password: password,
+      email: email,
+      photo:
+        "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*",
+    };
+    const localSingupResponse = await localSingup(baseUrl, newLocalUser)
+    if( typeof localSingupResponse == "string"){
+      setIsLoading(false)
+      location.href = localSingupResponse
+    } else {
+      setIsLoading(false)
+      setRequestError(localSingupResponse);
+    }
   };
 
   function doGoogleAuth() {
     const redirectUrl = "http://localhost:5173/workspace/dashboard";
     const baseUrl = `http://localhost:3004/auth/google?redirect_url=${redirectUrl}`;
-    // const baseUrl = `https://leadup-backend.onrender.com/auth/google?redirect_url=${redirectUrl}`;
     location.href = baseUrl;
   }
 
@@ -112,6 +130,17 @@ function SignUp() {
             <div className=" my-5 flex emial-password">
               <span className=" text-gray-400 text-sm">Email and password</span>
             </div>
+            {requestError && (
+              <div className=" bg-red-400 rounded-md p-4   text-sky-950">
+                <p className="m-0">{`There was and error creating a new user`}</p>
+                <p className="m-0">
+                  {"Error messsage - " + requestError.message}
+                </p>
+                <NavLink to={"/login"} className=" underline font-medium">
+                  Log in now
+                </NavLink>
+              </div>
+            )}
             <fieldset className="mt-4 mb-6">
               <legend className=" font-semibold text-gray-800">
                 Email Address *
@@ -191,8 +220,12 @@ function SignUp() {
             </fieldset>
             <div className=" flex flex-col gap-3 mt-6">
               {/* Need to complete local Auth */}
-              <button className="btn   bg-sky-500 " type="submit">
-                Sign up
+              <button
+                className="btn   bg-sky-500 "
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? "Loading ..." : "Sign up"}
               </button>
               <NavLink className="btn--outline bg-gray-200">Log in</NavLink>
             </div>
