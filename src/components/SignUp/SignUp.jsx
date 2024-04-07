@@ -70,9 +70,7 @@ function SignUp() {
     const newLocalUser = {
       name: name,
       password: password,
-      email: email,
-      photo:
-        "https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*",
+      email: email
     };
     const localSingupResponse = await localSingup(baseUrl, newLocalUser)
     if( typeof localSingupResponse == "string"){
@@ -219,7 +217,6 @@ function SignUp() {
               </label>
             </fieldset>
             <div className=" flex flex-col gap-3 mt-6">
-              {/* Need to complete local Auth */}
               <button
                 className="btn   bg-sky-500 "
                 type="submit"

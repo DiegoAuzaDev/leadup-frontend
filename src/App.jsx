@@ -1,6 +1,6 @@
 import Welcome from "./components/Welcome/Welcome";
 import SignUp from "./components/SignUp/SignUp";
-import LogIn from "./components/Login/LogIn";
+import LogIn from "./components/LogIn/LogIn";
 import { Routes, Route } from "react-router-dom";
 import WorkSpace from "./components/WorkSpace/WorkSpace";
 import DashBoard from "./components/WorkSpace/DashBoard/DashBoard";
