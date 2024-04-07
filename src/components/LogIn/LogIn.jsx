@@ -1,31 +1,24 @@
 import { NavLink } from "react-router-dom";
 import Logo from "../../assets/LeadUpBlack.png";
-import GoogleImg from "../../assets/Google.png";
 import Pattern from "../../assets/pattern.svg";
-import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
-import "./signup.css";
+import GoogleImg from "../../assets/Google.png";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import localSingup from "../../utils/localAuth/signup";
-function SignUp() {
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import localLogin from "../../utils/localAuth/login"
+function doGoogleAuth() {
+  const redirectUrl = "http://localhost:5173/workspace/dashboard";
+  const baseUrl = `http://localhost:3004/auth/google?redirect_url=${redirectUrl}`;
+  location.href = baseUrl;
+}
+function LogIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
   const [passwordType, setPasswordType] = useState("password");
   const [requestError, setRequestError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [emailError, setEmailError] = useState("");
-  const [nameError, setNameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
-  const validateName = (name) => {
-    if (!name.trim()) {
-      return "Name is required";
-    } else if (name.length < 2) {
-      return "Name must contain at least 2 characters";
-    }
-    return "";
-  };
 
   const validateEmail = (email) => {
     if (!email.trim()) {
@@ -35,7 +28,11 @@ function SignUp() {
     }
     return;
   };
-
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    setEmailError(validateEmail(value));
+  };
   const validatePassword = (password) => {
     if (!password.trim()) {
       return "Password is required";
@@ -44,50 +41,29 @@ function SignUp() {
     }
     return;
   };
-
-  const handleNameChange = (e) => {
-    const value = e.target.value;
-    setName(value);
-    setNameError(validateName(value));
-  };
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail(value);
-    setEmailError(validateEmail(value));
-  };
-
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
     setPasswordError(validatePassword(value));
   };
   const handleSubmit = async (e) => {
-    console.log("getting credential")
-    setIsLoading(true)
+    setIsLoading(true);
     e.preventDefault();
     const redirectUrl = "http://localhost:5173/workspace/dashboard";
-    const baseUrl = `http://localhost:3004/auth/signup?redirect_url=${redirectUrl}`;
+    const baseUrl = `http://localhost:3004/auth/login?redirect_url=${redirectUrl}`;
     const newLocalUser = {
-      name: name,
       password: password,
-      email: email
+      email: email,
     };
-    const localSingupResponse = await localSingup(baseUrl, newLocalUser)
-    if( typeof localSingupResponse == "string"){
-      setIsLoading(false)
-      location.href = localSingupResponse
+    const localLogInResponse = await localLogin(baseUrl, newLocalUser)
+    if (typeof localLogInResponse == "string") {
+      setIsLoading(false);
+      location.href = localLogInResponse;
     } else {
-      setIsLoading(false)
-      setRequestError(localSingupResponse);
+      setIsLoading(false);
+      setRequestError(localLogInResponse);
     }
   };
-
-  function doGoogleAuth() {
-    const redirectUrl = "http://localhost:5173/workspace/dashboard";
-    const baseUrl = `http://localhost:3004/auth/google?redirect_url=${redirectUrl}`;
-    location.href = baseUrl;
-  }
-
   return (
     <div className=" flex flex-row h-[100vh]">
       <div className="pt-12 md:mt-0 container-main pb-8 overflow-scroll">
@@ -102,12 +78,12 @@ function SignUp() {
         <main className=" flex flex-col md:items-end">
           <div>
             <h2 className="  md:w-96 font-medium italic text-sky-900  text-[32px] w-96">
-              Create your account
+             Log in with your credentials
             </h2>
             <p className=" font-bold text-[18px]">
-              Have an account?
-              <NavLink to="/login" className="underline text-sky-700 px-1">
-                Log in now
+              Do not you have an account?
+              <NavLink to="/signup" className="underline text-sky-700 px-1">
+                Sign up now
               </NavLink>
             </p>
           </div>
@@ -135,7 +111,7 @@ function SignUp() {
                   {"Error messsage - " + requestError.message}
                 </p>
                 <NavLink to={"/login"} className=" underline font-medium">
-                  Log in now
+                  Sign up here
                 </NavLink>
               </div>
             )}
@@ -144,9 +120,6 @@ function SignUp() {
                 Email Address *
               </legend>
               <label className=" flex flex-col gap-2">
-                <small className=" text-gray-600">
-                  We recommen using your work email
-                </small>
                 <input
                   required
                   className={`border-gray-400 border-2 rounded-md leading-8 px-2 ${
@@ -158,24 +131,6 @@ function SignUp() {
                 />
                 {emailError && (
                   <small className=" text-red-500">{emailError}</small>
-                )}
-              </label>
-            </fieldset>
-            <fieldset className="mt-4 mb-6">
-              <legend className=" font-semibold text-gray-800">Name *</legend>
-              <label className=" flex flex-col gap-2">
-                <input
-                  required
-                  autoComplete="given-name"
-                  className={`border-gray-400 border-2 rounded-md leading-8 px-2 ${
-                    nameError && "focus-visible:outline-red-600"
-                  }`}
-                  type="text"
-                  value={name}
-                  onChange={handleNameChange}
-                />
-                {nameError && (
-                  <small className=" text-red-500">{nameError}</small>
                 )}
               </label>
             </fieldset>
@@ -222,9 +177,11 @@ function SignUp() {
                 type="submit"
                 disabled={isLoading}
               >
-                {isLoading ? "Loading ..." : "Sign up"}
+                {isLoading ? "Loading ..." : "Log in"}
               </button>
-              <NavLink to={'/login'} className="btn--outline bg-gray-200">Log in</NavLink>
+              <NavLink to={"/signup"} className="btn--outline bg-gray-200">
+                Sign up
+              </NavLink>
             </div>
           </form>
         </main>
@@ -236,4 +193,4 @@ function SignUp() {
     </div>
   );
 }
-export default SignUp;
+export default LogIn;

@@ -14,5 +14,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   </>
 );
 
-// Add routes for each button on welcome 
-// Create dashboard component 

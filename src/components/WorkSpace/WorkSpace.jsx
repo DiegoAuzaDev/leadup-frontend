@@ -11,6 +11,43 @@ import "./workSpace.css";
 import "../../button.css";
 import HeaderWorkSpace from "./HeaderWorkSpace/HeaderWorkSpace";
 
+const getData = ({ apiKey, setUserData, setCompanyData, setError }) => {
+  const headers = {
+    Authorization: `Bearer ${apiKey}`,
+    "application-type": "application/json",
+  };
+  fetch(API_URL, {
+    method: "GET",
+    mode: "cors",
+    headers: headers,
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.user.local || data.user.google) {
+        const userData = {
+          email: data.user.local
+            ? data.user.local.email
+            : data.user.google.email,
+          photo: data.user.local
+            ? data.user.local.photo
+            : data.user.google.photo,
+          name: data.user.local ? data.user.local.name : data.user.google.name,
+        };
+
+        setUserData(userData);
+      }
+
+      setCompanyData(data.company);
+    })
+    .catch((err) => {
+      setError(err.message);
+    });
+};
 function WorkSpace() {
   const navigate = useNavigate();
   const [token, setToken] = useToken();
@@ -46,8 +83,18 @@ function WorkSpace() {
     }
   }, [token]);
 
-  const doLogout = () => {
+  const doLogout = async () => {
+    const logouturl = `http://localhost:3004/auth/logout`;
+      const logoutResponse = await fetch(logouturl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(logoutResponse)
     setToken(null);
+
     navigate("/");
   };
 
@@ -61,34 +108,4 @@ function WorkSpace() {
   );
 }
 
-const getData = ({ apiKey, setUserData, setCompanyData, setError }) => {
-  const headers = {
-    Authorization: `Bearer ${apiKey}`,
-    "application-type": "application/json",
-  };
-  fetch(API_URL, {
-    method: "GET",
-    mode: "cors",
-    headers: headers,
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data)
-      setUserData({
-        email: data.user.email,
-        photo: data.user.photo,
-        name: data.user.name,
-        createdAt: data.user.createdAt,
-      });
-      setCompanyData(data.company);
-    })
-    .catch((err) => {
-      setError(err.message);
-    });
-};
 export default WorkSpace;

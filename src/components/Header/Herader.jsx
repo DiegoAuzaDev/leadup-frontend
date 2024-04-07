@@ -47,7 +47,7 @@ function Header() {
               <NavLink className="btn block" to="/signup">
                 Sign up
               </NavLink>
-              <NavLink className=" btn--outline block">Log in</NavLink>
+              <NavLink to={"/login"} className=" btn--outline block">Log in</NavLink>
             </div>
           </ul>
           <button
@@ -97,7 +97,7 @@ function Header() {
               </li>
             </div>
             <div className="container-main">
-              <NavLink className=" btn block my-4">Log in</NavLink>
+              <NavLink to={"/login"} className=" btn block my-4">Log in</NavLink>
               <NavLink className=" btn--outline block" to="/signup">
                 Sign up
               </NavLink>
