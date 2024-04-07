@@ -5,6 +5,7 @@ import GoogleImg from "../../assets/Google.png";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import localLogin from "../../utils/localAuth/login"
 function doGoogleAuth() {
   const redirectUrl = "http://localhost:5173/workspace/dashboard";
   const baseUrl = `http://localhost:3004/auth/google?redirect_url=${redirectUrl}`;
@@ -46,17 +47,15 @@ function LogIn() {
     setPasswordError(validatePassword(value));
   };
   const handleSubmit = async (e) => {
-    console.log("getting credential");
     setIsLoading(true);
     e.preventDefault();
     const redirectUrl = "http://localhost:5173/workspace/dashboard";
-    const baseUrl = `http://localhost:3004/auth/signup?redirect_url=${redirectUrl}`;
+    const baseUrl = `http://localhost:3004/auth/login?redirect_url=${redirectUrl}`;
     const newLocalUser = {
       password: password,
       email: email,
     };
-    console.log(newLocalUser)
-    const localLogInResponse = null; // add function to login;
+    const localLogInResponse = await localLogin(baseUrl, newLocalUser)
     if (typeof localLogInResponse == "string") {
       setIsLoading(false);
       location.href = localLogInResponse;
