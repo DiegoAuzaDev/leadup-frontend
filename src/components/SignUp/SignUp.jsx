@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import Logo from "../../assets/LeadUpBlack.png";
 import GoogleImg from "../../assets/Google.png";
-import Patter from "../../assets/pattern.svg";
+import Pattern from "../../assets/pattern.svg";
 import { faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import "./signup.css";
 import { useState } from "react";
@@ -227,14 +227,14 @@ function SignUp() {
               >
                 {isLoading ? "Loading ..." : "Sign up"}
               </button>
-              <NavLink className="btn--outline bg-gray-200">Log in</NavLink>
+              <NavLink to={'/login'} className="btn--outline bg-gray-200">Log in</NavLink>
             </div>
           </form>
         </main>
       </div>
       <div
         className="md:h-auto md:static  h-4 md:inline-block  md:w-3/5 md:bg-sky-900"
-        style={{ backgroundImage: `url(${Patter})` }}
+        style={{ backgroundImage: `url(${Pattern})` }}
       ></div>
     </div>
   );
