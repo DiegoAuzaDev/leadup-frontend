@@ -80,7 +80,7 @@ NavItem.propTypes = {
 };
 UserPhoto.propTypes = {
   user: PropTypes.object,
-  error: PropTypes.object,
+  error: PropTypes.string,
 };
 
 export default LargeNavigator;
