@@ -78,13 +78,20 @@ const getData = ({ apiKey, setUserData, setCompanyData, setError }) => {
       return response.json();
     })
     .then((data) => {
-      console.log(data)
-      setUserData({
-        email: data.user.email,
-        photo: data.user.photo,
-        name: data.user.name,
-        createdAt: data.user.createdAt,
-      });
+      if (data.user.local || data.user.google) {
+        const userData = {
+          email: data.user.local
+            ? data.user.local.email
+            : data.user.google.email,
+          photo: data.user.local
+            ? data.user.local.photo
+            : data.user.google.photo,
+          name: data.user.local ? data.user.local.name : data.user.google.name,
+        };
+
+        setUserData(userData);
+      }
+
       setCompanyData(data.company);
     })
     .catch((err) => {
