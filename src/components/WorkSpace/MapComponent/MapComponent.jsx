@@ -12,7 +12,7 @@ function MapComponent({ mainCompanyPoint }) {
     lng: -74.09684144291316,
   });
   useEffect(() => {
-    if (Object.keys(mainCompanyPoint).length != 0) {
+    if ( Object.keys(mainCompanyPoint).length != 0) {
       setCenterPoint(mainCompanyPoint);
     }
   }, [mainCompanyPoint]);

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 async function updateCompanyData({ companyId }) {
   const response = await updateCompanyData();

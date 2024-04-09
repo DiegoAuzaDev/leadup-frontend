@@ -73,19 +73,6 @@ function HeaderWorkSpace({ doLogout, userData, error }) {
               </li>
               <li className="flex">
                 <NavLink
-                  to="/workspace/settings"
-                  className=" container-main py-4 flex justify-between hover:bg-gray-200"
-                >
-                  Settings
-                  <FontAwesomeIcon
-                    icon={faChevronRight}
-                    className=" self-center"
-                    style={{ color: "#000" }}
-                  />
-                </NavLink>
-              </li>
-              <li className="flex">
-                <NavLink
                   to="/workspace/company"
                   className=" container-main py-4 flex justify-between hover:bg-gray-200"
                 >
