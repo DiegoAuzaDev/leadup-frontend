@@ -3,7 +3,6 @@ import { AdvancedMarker, APIProvider, Map } from "@vis.gl/react-google-maps";
 
 function PickLocationOnMap({ markerCenter, setMarkerCenter }) {
   const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_MAP_API;
-
   const defaultCenter = {
     lat: 4.671547178629467,
     lng: -74.09684144291316,
@@ -25,6 +24,10 @@ function PickLocationOnMap({ markerCenter, setMarkerCenter }) {
           <AdvancedMarker
             draggable={true}
             onDragEnd={(ev) => {
+              console.log({
+                lat: ev.latLng.lat(),
+                lng: ev.latLng.lng(),
+              });
               setMarkerCenter({
                 lat: ev.latLng.lat(),
                 lng: ev.latLng.lng(),

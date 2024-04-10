@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { NavLink, useOutletContext, useSearchParams } from "react-router-dom";
-import PropTypes from "prop-types";
-import deleteCompany from "../../../utils/company/deleteCompany";
 import { useToken } from "../../../context/tokenContext";
 import EditCompany from "./EditCompany/EditCompany";
 import ShowGridCompany from "./ShowGridCompany/ShowGridCompany";
 import LoadingIndicator from "../LoadingIndicator/LodingIndicator";
 function Company() {
   const [token, setToken] = useToken();
+  const [isEditing, setIsEditing] = useState(false)
   const [searchParams, setSearchParamas] = useSearchParams();
   const [{ companyData, setCompanyData }] = useOutletContext();
   const [displayComponent, setDisplayComponent] = useState(
@@ -17,8 +16,8 @@ function Company() {
 
   const companyId = searchParams.get("company");
   useEffect(() => {
-
     if (companyId && companyData) {
+      setIsEditing(true)
       setDisplayComponent(
         <EditCompany
           selectedCompanyId={companyId}
@@ -37,13 +36,13 @@ function Company() {
         />
       );
     }
-  }, [companyData, searchParams]);
+  }, [companyData, companyId, setCompanyData, token]);
 
   return (
     <div
       className={`${
-        !companyId && !companyData ?  "w-[70vh] flex justify-center" : ""
-      }`}
+         !companyData && !companyId ?  "w-[70vh] flex justify-center" : " flex-1"
+      } ${isEditing ? "flex flex-col" : ""}`}
     >
       {displayComponent}
     </div>
