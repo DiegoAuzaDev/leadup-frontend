@@ -7,9 +7,10 @@ function EditCompany({ companyCollection, selectedCompanyId, setCompanyData }) {
   const findSelectedCompanyById = companyCollection.find(
     ({ _id }) => _id == selectedCompanyId
   );
-  const [newMarkerPosition, setNewMarkerPosition] = useState();
-  console.log(findSelectedCompanyById);
-
+  const [newMarkerPosition, setNewMarkerPosition] = useState({
+    lat: Number(findSelectedCompanyById.location.latitude),
+    lng: Number(findSelectedCompanyById.location.longitude),
+  });
   return (
     <div className="  flex flex-col gap-8 lg:flex-row md:flex-1 md:gap-4 h-[-webkit-fill-available]">
       <section className=" flex  flex-col lg:w-1/2 md:gap-7 md:flex-row lg:flex-col">
@@ -28,7 +29,10 @@ function EditCompany({ companyCollection, selectedCompanyId, setCompanyData }) {
           Drag and drop to select a new location{" "}
         </h3>
         <div className="bg-gray-200 h-[40vh] rounded-md flex justify-center items-center flex-col flex-1 overflow-hidden z-[0] p-2">
-          <PickLocationOnMap />
+          <PickLocationOnMap
+            setMarkerCenter={setNewMarkerPosition}
+            markerCenter={newMarkerPosition}
+          />
         </div>
       </section>
     </div>
