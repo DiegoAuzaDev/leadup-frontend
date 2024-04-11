@@ -10,6 +10,7 @@ import { AdvancedMarker, APIProvider, Map } from "@vis.gl/react-google-maps";
 import { geocodeToAddressKey } from "../../../../utils/keys";
 import { useToken } from "../../../../context/tokenContext";
 import PickLocationOnMap from "../../MapComponent/PickLocationOnMap";
+import sendLocationRequest from "../../../../utils/map/sendLocationRequest";
 function NewCompany() {
   const [{ companyData, setCompanyData }] = useOutletContext();
   const [isLoading, setIsLoading] = useState(false)
@@ -71,23 +72,7 @@ function NewCompany() {
       setError(geopointToAddress.message);
     }
   };
-  const sendLocationRequest = async (url) => {
-    let returnResponse = null;
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      const data = await response.json();
-      if (data.error_message) {
-        throw new Error("Invalid request");
-      }
-      returnResponse = data.results[1].formatted_address;
-    } catch (error) {
-      returnResponse = new Error(error.message);
-    }
-    return returnResponse;
-  };
+
   const handleSubmit = async (ev) => {
     setError(null);
     setIsLoading(true)

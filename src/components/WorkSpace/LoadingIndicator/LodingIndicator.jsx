@@ -2,7 +2,7 @@
 import PropTypes from "prop-types";
 function LoadingIndicator({ loadingText }) {
   return (
-    <div className=" my-12 flex justify-center">
+    <div className=" my-12 h-[90vh] flex justify-center flex-1">
       <div className=" flex flex-col gap-2 self-center">
         <svg
           aria-hidden="true"

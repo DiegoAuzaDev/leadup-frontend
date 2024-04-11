@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { NavLink, useOutletContext, useSearchParams } from "react-router-dom";
-import PropTypes from "prop-types";
-import deleteCompany from "../../../utils/company/deleteCompany";
 import { useToken } from "../../../context/tokenContext";
 import EditCompany from "./EditCompany/EditCompany";
 import ShowGridCompany from "./ShowGridCompany/ShowGridCompany";
 import LoadingIndicator from "../LoadingIndicator/LodingIndicator";
 function Company() {
   const [token, setToken] = useToken();
+  const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchParams, setSearchParamas] = useSearchParams();
   const [{ companyData, setCompanyData }] = useOutletContext();
   const [displayComponent, setDisplayComponent] = useState(
@@ -17,18 +17,25 @@ function Company() {
 
   const companyId = searchParams.get("company");
   useEffect(() => {
-
     if (companyId && companyData) {
+      setIsLoading(false)
+      setIsEditing(true);
       setDisplayComponent(
         <EditCompany
           selectedCompanyId={companyId}
           setCompanyData={setCompanyData}
           companyCollection={companyData}
+          token={token}
         />
       );
-    } else if (companyData && companyData.length == 0) {
+    } 
+    else if (companyData && companyData.length == 0) {
+      setIsEditing(false);
+          setIsLoading(false);
       setDisplayComponent(<EmptyList />);
     } else if (companyData && companyData.length > 0) {
+      setIsEditing(false);
+          setIsLoading(false);
       setDisplayComponent(
         <ShowGridCompany
           companyDataList={companyData}
@@ -37,19 +44,18 @@ function Company() {
         />
       );
     }
-  }, [companyData, searchParams]);
+  }, [companyData, companyId, setCompanyData, token]);
 
   return (
     <div
-      className={`${
-        !companyId && !companyData ?  "w-[70vh] flex justify-center" : ""
-      }`}
+      className={`
+      ${isLoading ? " flex flex-1": ""}
+      ${isEditing ? "flex flex-col" : ""}`}
     >
       {displayComponent}
     </div>
   );
 }
-
 
 function EmptyList() {
   return (
@@ -64,8 +70,5 @@ function EmptyList() {
     </>
   );
 }
-
-
-
 
 export default Company;
