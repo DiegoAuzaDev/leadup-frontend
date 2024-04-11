@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { API_URL } from "../keys";
 async function updateCompanyData(companyId, updatedCompaby, token ) {
-  const url = `${API_URL}/${companyId}/0000`;
+  const url = `${API_URL}/${companyId}`;
   let returnResponse = null;
   try {
     let updateCompany = await fetch(url, {
@@ -19,8 +19,7 @@ async function updateCompanyData(companyId, updatedCompaby, token ) {
     returnResponse = response;
     return returnResponse;
   } catch (err) {
-    console.log(err.message);
-    returnResponse = err;
+    returnResponse = err.message;
     return returnResponse;
   }
 }

@@ -18,7 +18,6 @@ async function deleteCompany(companyId, token) {
      returnResponse = response
     return returnResponse;
   } catch (err) {
-    console.log(err.message)
     returnResponse = err;
     return returnResponse;
   }

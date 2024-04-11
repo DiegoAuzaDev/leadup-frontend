@@ -7,7 +7,12 @@ import { geocodeToAddressKey } from "../../../../utils/keys";
 import sendLocationRequest from "../../../../utils/map/sendLocationRequest";
 import updateCompanyData from "../../../../utils/company/updateCompany";
 
-function EditCompany({ companyCollection, selectedCompanyId, setCompanyData, token }) {
+function EditCompany({
+  companyCollection,
+  selectedCompanyId,
+  setCompanyData,
+  token,
+}) {
   const findSelectedCompanyById = companyCollection.find(
     ({ _id }) => _id == selectedCompanyId
   );
@@ -20,6 +25,7 @@ function EditCompany({ companyCollection, selectedCompanyId, setCompanyData, tok
   });
 
   const [name, setName] = useState(findSelectedCompanyById.name);
+  const [isLoading, setIsLoading] = useState(false)
   const [nameError, setNameError] = useState("");
   const [address, setAddress] = useState(findSelectedCompanyById.address);
   const [addresError, setAdrressError] = useState("");
@@ -31,6 +37,7 @@ function EditCompany({ companyCollection, selectedCompanyId, setCompanyData, tok
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const handleSubmitEvent = async (ev) => {
     ev.preventDefault();
+    setIsLoading(true)
     const initialCompanyData = {
       name: findSelectedCompanyById.name,
       address: findSelectedCompanyById.address,
@@ -46,8 +53,17 @@ function EditCompany({ companyCollection, selectedCompanyId, setCompanyData, tok
     if (JSON.stringify(initialCompanyData) === JSON.stringify(companyObj)) {
       location.href = "/workspace/company";
     } else {
-      const updateResponse = await updateCompanyData(findSelectedCompanyById._id, companyObj, token);
-    // todo check for error
+      const updateResponse = await updateCompanyData(
+        findSelectedCompanyById._id,
+        companyObj,
+        token
+      );
+      if (typeof updateResponse == "string") {
+        setIsLoading(false)
+        setError(updateResponse.message)
+      } if(typeof updateResponse == "object"){
+        location.href = "/workspace/company"
+      }
     }
   };
   const validCompanyName = (name) => {
@@ -84,9 +100,8 @@ function EditCompany({ companyCollection, selectedCompanyId, setCompanyData, tok
     let lng = location.lng;
     setNewMarkerPosition({
       lat,
-      lng
-    }
-    );
+      lng,
+    });
     let requestUrl = geocodeToAddressKey(lat, lng);
     const geopointToAddress = await sendLocationRequest(requestUrl);
     if (typeof geopointToAddress == "string") {
@@ -109,7 +124,7 @@ function EditCompany({ companyCollection, selectedCompanyId, setCompanyData, tok
         </p>
       </div>
       <div
-        className="flex-1 gap-3 flex flex-col lg:flex-row-reverse md:gap-x-10 lg:justify-end"
+        className="flex-1 gap-3 flex flex-col lg:flex-row-reverse md:gap-x-10 lg:justify-between"
         // style={{ justifyContent: "flex-end" }}
       >
         <div className=" h-[50vh] lg:h-auto flex flex-col w-auto lg:w-1/2">
@@ -225,7 +240,9 @@ function EditCompany({ companyCollection, selectedCompanyId, setCompanyData, tok
             >
               Cancel
             </NavLink>
-            <button className="btn grow">Save changes</button>
+            <button className="btn grow" disabled={isLoading}>
+              {isLoading ? "Updating data" : "Save changes"}
+            </button>
           </div>
         </form>
       </div>
@@ -237,7 +254,7 @@ EditCompany.propTypes = {
   companyCollection: PropTypes.array,
   selectedCompanyId: PropTypes.string,
   setCompanyData: PropTypes.func,
-  token : PropTypes.string
+  token: PropTypes.string,
 };
 
 export default EditCompany;

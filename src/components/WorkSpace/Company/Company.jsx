@@ -7,7 +7,8 @@ import ShowGridCompany from "./ShowGridCompany/ShowGridCompany";
 import LoadingIndicator from "../LoadingIndicator/LodingIndicator";
 function Company() {
   const [token, setToken] = useToken();
-  const [isEditing, setIsEditing] = useState(false)
+  const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchParams, setSearchParamas] = useSearchParams();
   const [{ companyData, setCompanyData }] = useOutletContext();
   const [displayComponent, setDisplayComponent] = useState(
@@ -17,7 +18,8 @@ function Company() {
   const companyId = searchParams.get("company");
   useEffect(() => {
     if (companyId && companyData) {
-      setIsEditing(true)
+      setIsLoading(false)
+      setIsEditing(true);
       setDisplayComponent(
         <EditCompany
           selectedCompanyId={companyId}
@@ -26,9 +28,14 @@ function Company() {
           token={token}
         />
       );
-    } else if (companyData && companyData.length == 0) {
+    } 
+    else if (companyData && companyData.length == 0) {
+      setIsEditing(false);
+          setIsLoading(false);
       setDisplayComponent(<EmptyList />);
     } else if (companyData && companyData.length > 0) {
+      setIsEditing(false);
+          setIsLoading(false);
       setDisplayComponent(
         <ShowGridCompany
           companyDataList={companyData}
@@ -41,15 +48,14 @@ function Company() {
 
   return (
     <div
-      className={`${
-         !companyData && !companyId ?  "w-[70vh] flex justify-center" : " flex-1"
-      } ${isEditing ? "flex flex-col" : ""}`}
+      className={`
+      ${isLoading ? " flex flex-1": ""}
+      ${isEditing ? "flex flex-col" : ""}`}
     >
       {displayComponent}
     </div>
   );
 }
-
 
 function EmptyList() {
   return (
@@ -64,8 +70,5 @@ function EmptyList() {
     </>
   );
 }
-
-
-
 
 export default Company;
