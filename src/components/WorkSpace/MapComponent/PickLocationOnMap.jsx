@@ -24,10 +24,6 @@ function PickLocationOnMap({ markerCenter, setMarkerCenter }) {
           <AdvancedMarker
             draggable={true}
             onDragEnd={(ev) => {
-              console.log({
-                lat: ev.latLng.lat(),
-                lng: ev.latLng.lng(),
-              });
               setMarkerCenter({
                 lat: ev.latLng.lat(),
                 lng: ev.latLng.lng(),

@@ -23,6 +23,7 @@ function Company() {
           selectedCompanyId={companyId}
           setCompanyData={setCompanyData}
           companyCollection={companyData}
+          token={token}
         />
       );
     } else if (companyData && companyData.length == 0) {

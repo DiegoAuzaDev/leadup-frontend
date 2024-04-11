@@ -3,8 +3,11 @@ import { useEffect, useState } from "react";
 import PickLocationOnMap from "../../MapComponent/PickLocationOnMap";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
+import { geocodeToAddressKey } from "../../../../utils/keys";
+import sendLocationRequest from "../../../../utils/map/sendLocationRequest";
+import updateCompanyData from "../../../../utils/company/updateCompany";
 
-function EditCompany({ companyCollection, selectedCompanyId, setCompanyData }) {
+function EditCompany({ companyCollection, selectedCompanyId, setCompanyData, token }) {
   const findSelectedCompanyById = companyCollection.find(
     ({ _id }) => _id == selectedCompanyId
   );
@@ -17,23 +20,35 @@ function EditCompany({ companyCollection, selectedCompanyId, setCompanyData }) {
   });
 
   const [name, setName] = useState(findSelectedCompanyById.name);
-  const [nameError, setNameError] = useState();
+  const [nameError, setNameError] = useState("");
   const [address, setAddress] = useState(findSelectedCompanyById.address);
-  const [addresError, setAdrressError] = useState();
-  const [error, setError] = useState();
+  const [addresError, setAdrressError] = useState("");
+  const [error, setError] = useState("");
   const [country, setCountry] = useState(findSelectedCompanyById.country);
   const [phoneNumber, setPhoneNumber] = useState(
     findSelectedCompanyById.phoneNumber[0]
   );
-    const [phoneNumberError, setPhoneNumberError] = useState("");
+  const [phoneNumberError, setPhoneNumberError] = useState("");
   const handleSubmitEvent = async (ev) => {
     ev.preventDefault();
+    const initialCompanyData = {
+      name: findSelectedCompanyById.name,
+      address: findSelectedCompanyById.address,
+      country: findSelectedCompanyById.country,
+      phoneNumber: findSelectedCompanyById.phoneNumber[0],
+    };
     const companyObj = {
       name: name.trim(),
       address: address.trim(),
       country: country,
       phoneNumber: phoneNumber,
     };
+    if (JSON.stringify(initialCompanyData) === JSON.stringify(companyObj)) {
+      location.href = "/workspace/company";
+    } else {
+      const updateResponse = await updateCompanyData(findSelectedCompanyById._id, companyObj, token);
+    // todo check for error
+    }
   };
   const validCompanyName = (name) => {
     if (!name.trim()) {
@@ -63,6 +78,25 @@ function EditCompany({ companyCollection, selectedCompanyId, setCompanyData }) {
       return "";
     }
   };
+
+  const validCompanyLocation = async (location) => {
+    let lat = location.lat;
+    let lng = location.lng;
+    setNewMarkerPosition({
+      lat,
+      lng
+    }
+    );
+    let requestUrl = geocodeToAddressKey(lat, lng);
+    const geopointToAddress = await sendLocationRequest(requestUrl);
+    if (typeof geopointToAddress == "string") {
+      setAddress(geopointToAddress);
+    } else {
+      console.log(geopointToAddress.message);
+      setError(geopointToAddress.message);
+    }
+  };
+
   return (
     <>
       <div>
@@ -88,7 +122,7 @@ function EditCompany({ companyCollection, selectedCompanyId, setCompanyData }) {
           </p>
           <div className="bg-gray-200 rounded-md flex-1 z-[0] p-2 h-11">
             <PickLocationOnMap
-              setMarkerCenter={setNewMarkerPosition}
+              setMarkerCenter={validCompanyLocation}
               markerCenter={newMarkerPosition}
             />
           </div>
@@ -185,13 +219,13 @@ function EditCompany({ companyCollection, selectedCompanyId, setCompanyData }) {
             </label>
           </fieldset>
           <div className="flex gap-2 flex-col md:flex-row ">
-            <button className="btn grow">Save changes</button>
             <NavLink
               className="btn grow btn--outline"
               to={"/workspace/company"}
             >
               Cancel
             </NavLink>
+            <button className="btn grow">Save changes</button>
           </div>
         </form>
       </div>
@@ -203,6 +237,7 @@ EditCompany.propTypes = {
   companyCollection: PropTypes.array,
   selectedCompanyId: PropTypes.string,
   setCompanyData: PropTypes.func,
+  token : PropTypes.string
 };
 
 export default EditCompany;
