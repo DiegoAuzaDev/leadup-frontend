@@ -7,6 +7,8 @@ import "./signup.css";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import localSingup from "../../utils/localAuth/signup";
+import avatar from "../../assets/avatar.png"
+
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,6 +19,26 @@ function SignUp() {
   const [emailError, setEmailError] = useState("");
   const [nameError, setNameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [image, setImage] = useState("");
+
+  const handleInputChange = async (ev) => {
+    const file = ev.target.files[0];
+    const base64 = await convertFileToBase64(file);
+    setImage(base64)
+  };
+
+  const convertFileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (err) => {
+        reject(err);
+      };
+    });
+  };
 
   const validateName = (name) => {
     if (!name.trim()) {
@@ -70,7 +92,8 @@ function SignUp() {
     const newLocalUser = {
       name: name,
       password: password,
-      email: email
+      email: email,
+      photo: image
     };
     const localSingupResponse = await localSingup(baseUrl, newLocalUser)
     if( typeof localSingupResponse == "string"){
@@ -216,6 +239,22 @@ function SignUp() {
                 )}
               </label>
             </fieldset>
+            <fieldset>
+              <legend className=" font-semibold text-gray-800">
+                User Avatar
+              </legend>
+              <label>
+                <img src={image ? image : avatar} alt="User Avatar" className=" h-10" />
+                <input
+                  type="file"
+                  // label="Image"
+                  // name="myFile"
+                  id="file-upload"
+                  accept=".jpeg, .png, .jpg"
+                  onChange={(ev) => handleInputChange(ev)}
+                />
+              </label>
+            </fieldset>
             <div className=" flex flex-col gap-3 mt-6">
               <button
                 className="btn   bg-sky-500 "
@@ -224,7 +263,9 @@ function SignUp() {
               >
                 {isLoading ? "Loading ..." : "Sign up"}
               </button>
-              <NavLink to={'/login'} className="btn--outline bg-gray-200">Log in</NavLink>
+              <NavLink to={"/login"} className="btn--outline bg-gray-200">
+                Log in
+              </NavLink>
             </div>
           </form>
         </main>

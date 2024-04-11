@@ -5,7 +5,7 @@ import GoogleImg from "../../assets/Google.png";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import localLogin from "../../utils/localAuth/login"
+import localLogin from "../../utils/localAuth/login";
 function doGoogleAuth() {
   const redirectUrl = "http://localhost:5173/workspace/dashboard";
   const baseUrl = `http://localhost:3004/auth/google?redirect_url=${redirectUrl}`;
@@ -55,7 +55,7 @@ function LogIn() {
       password: password,
       email: email,
     };
-    const localLogInResponse = await localLogin(baseUrl, newLocalUser)
+    const localLogInResponse = await localLogin(baseUrl, newLocalUser);
     if (typeof localLogInResponse == "string") {
       setIsLoading(false);
       location.href = localLogInResponse;
@@ -78,7 +78,7 @@ function LogIn() {
         <main className=" flex flex-col md:items-end">
           <div>
             <h2 className="  md:w-96 font-medium italic text-sky-900  text-[32px] w-96">
-             Log in with your credentials
+              Log in with your credentials
             </h2>
             <p className=" font-bold text-[18px]">
               Do not you have an account?
@@ -171,6 +171,7 @@ function LogIn() {
                 )}
               </label>
             </fieldset>
+            
             <div className=" flex flex-col gap-3 mt-6">
               <button
                 className="btn   bg-sky-500 "

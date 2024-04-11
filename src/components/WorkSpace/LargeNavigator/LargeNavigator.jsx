@@ -6,7 +6,6 @@ import ErrorImage from "../../../assets/avatar.png";
 
 function LargeNavigator({ user, logout, error }) {
   const isUserLoading = !user && !error;
-
   return (
     <nav
       className={`hidden md:h-[100vh] md:flex md:flex-col md:py-6 justify-evenly md:px-4 md:min-w-[175px] gap-3 overflow-scroll ${
