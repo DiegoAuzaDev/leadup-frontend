@@ -93,7 +93,7 @@ function SignUp() {
       <div className="pt-12 md:mt-0 container-main pb-8 overflow-scroll">
         <div className=" flex flex-col md:items-end">
           <header className="flex mb-8 pt-8 md:w-96">
-            <NavLink to="localhost:" className="">
+            <NavLink to="/" className="">
               <img src={Logo} alt="Leadup logo" className="h-12 object-fill" />
             </NavLink>
           </header>

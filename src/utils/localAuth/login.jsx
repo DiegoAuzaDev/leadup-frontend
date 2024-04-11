@@ -7,12 +7,14 @@ async function localSingup(baseUrl, newLocalUser) {
       },
       body: JSON.stringify(newLocalUser),
     });
-
     if (loginResponse.status == 500) {
       throw new Error("User not found");
     }
     if (loginResponse.status == 401) {
       throw new Error("Invalid Credentials");
+    }
+    if (!loginResponse.ok) {
+      throw new Error("User not found");
     }
     if (loginResponse.url) {
       return loginResponse.url;

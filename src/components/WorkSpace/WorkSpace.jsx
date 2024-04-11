@@ -85,14 +85,13 @@ function WorkSpace() {
 
   const doLogout = async () => {
     const logouturl = `http://localhost:3004/auth/logout`;
-      const logoutResponse = await fetch(logouturl, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(logoutResponse)
+    const logoutResponse = await fetch(logouturl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     setToken(null);
 
     navigate("/");
