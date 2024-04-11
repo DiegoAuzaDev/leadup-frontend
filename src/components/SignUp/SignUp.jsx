@@ -7,7 +7,6 @@ import "./signup.css";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import localSingup from "../../utils/localAuth/signup";
-import avatar from "../../assets/avatar.png"
 
 function SignUp() {
   const [email, setEmail] = useState("");
