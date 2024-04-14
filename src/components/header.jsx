@@ -58,11 +58,14 @@ function Header() {
           </div>
         </ul>
 
-        <ul role="list" className="grid grid-cols-3 lg:hidden z-50">
-          <li className="flex">
+        <ul
+          role="list"
+          className="grid grid-cols-2  md:grid-cols-3 lg:hidden z-50"
+        >
+          <li className=" hidden md:flex">
             <NavLink className="btn block">Sign up</NavLink>
           </li>
-          <li className="flex items-center justify-center">
+          <li className="flex items-center md:justify-center">
             <a href="#home" className="px-[0.5em]">
               <img src={LogoColor} alt="LeadUp Logo" className=" h-[25px]" />
             </a>
@@ -116,6 +119,9 @@ function Header() {
           </li>
           <li>
             <NavLink className="btn--outline block">sign in</NavLink>
+          </li>
+          <li className="md:hidden">
+            <NavLink className="btn block">sign up</NavLink>
           </li>
         </ul>
       </nav>
