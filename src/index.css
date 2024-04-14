@@ -132,7 +132,7 @@
     hover:bg-primary hover:text-primary-light hover:border-primary-light focus:bg-primary focus:text-primary-light focus:border-primary-light;
   }
   .btn--outline {
-    @apply defult--btn bg-transparent text-primary border-2 border-primary
+    @apply defult--btn bg-surface text-primary border-2 border-primary
     hover:bg-primary-light hover:text-primary hover:border-primary  focus:bg-primary-light focus:text-primary focus:border-primary;
   }
   .btn--red {
