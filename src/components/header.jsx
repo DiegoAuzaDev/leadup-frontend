@@ -11,16 +11,16 @@ function Header() {
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <header className="fixed top-0 pt-7 pb-7 w-full px-[1.5rem] header-bg-color ">
+    <header className="fixed top-0 pt-7 pb-7 w-full px-[1.5rem]  fadeInTop">
       <nav
         className={`container-main border-2 border-primary px-[15px] py-[15px] rounded-custom bg-white`}
         style={{ borderBottomRightRadius: `${!isActive ? "20px" : "0px"}` }}
       >
         <ul role="list" className="hidden lg:grid grid-cols-3">
           <li className="flex items-center">
-            <NavLink className=" block">
+            <a href="#home" className=" block">
               <img src={LogoColor} alt="LeadUp Logo" className=" h-[25px]" />
-            </NavLink>
+            </a>
           </li>
           <div className="flex justify-center">
             <li className="text-primary">
@@ -40,7 +40,10 @@ function Header() {
               </a>
             </li>
             <li>
-              <a className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold ">
+              <a
+                href="#contact"
+                className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold "
+              >
                 Contact
               </a>
             </li>
@@ -60,9 +63,9 @@ function Header() {
             <NavLink className="btn block">Sign up</NavLink>
           </li>
           <li className="flex items-center justify-center">
-            <NavLink className="px-[0.5em]">
+            <a href="#home" className="px-[0.5em]">
               <img src={LogoColor} alt="LeadUp Logo" className=" h-[25px]" />
-            </NavLink>
+            </a>
           </li>
           <li className=" flex items-center justify-end">
             <button
@@ -104,7 +107,10 @@ function Header() {
             </a>
           </li>
           <li>
-            <a className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold ">
+            <a
+              href="#contact"
+              className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold "
+            >
               Contact
             </a>
           </li>
