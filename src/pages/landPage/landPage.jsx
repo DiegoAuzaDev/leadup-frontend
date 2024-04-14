@@ -80,7 +80,10 @@ function LandPage() {
                 </div>
               </div>
             </div>
-            <ul className=" grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-[5rem]" role="list">
+            <ul
+              className=" grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-[5rem]"
+              role="list"
+            >
               <li className=" flex flex-col items-center gap-2">
                 <div className=" bg-primary-light inline-block px-5 py-5 rounded-full">
                   <img src={Excel} alt="Excel logo" className=" h-[2.5rem]" />
@@ -117,11 +120,13 @@ function LandPage() {
           </div>
         </section>
         <div className=" container-main  px-[15px] mt-[-10rem] mb-[10rem]">
-          <img
-            src={IphoneImage}
-            className=" max-h-[100vh] mb-[8rem]"
-            alt="Lead up mobile application image"
-          />
+          <div className=" flex justify-center">
+            <img
+              src={IphoneImage}
+              className=" max-h-[100vh] mb-[8rem]"
+              alt="Lead up mobile application image"
+            />
+          </div>
           <div className=" flex flex-col items-center">
             <h3 className=" text-center font-bold text-primary-light">
               Get our mobile application
