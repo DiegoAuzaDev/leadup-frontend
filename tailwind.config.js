@@ -57,6 +57,9 @@ export default {
       md: "45em",
       lg: "60em",
     },
+    borderRadius : {
+      border : "20px"
+    }
   },
   plugins: [],
 };

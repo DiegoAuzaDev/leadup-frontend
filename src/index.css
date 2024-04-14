@@ -29,13 +29,13 @@
 
   ul[role="list"],
   ol[role="list"] {
-    @apply list-none;
+    @apply list-none m-0
   }
 
   /* Set core root defaults */
 
   html {
-    @apply font-body
+    @apply font-body;
   }
   html:focus-within {
     scroll-behavior: smooth;
@@ -102,7 +102,6 @@
   /* Mobile Size*/
   h1 {
     @apply text-[2.027rem] md:text-[2.986rem] lg:text-[3.815rem];
-    
   }
   h2 {
     @apply text-3xl md:text-4xl lg:text-[3.815rem];
@@ -122,4 +121,35 @@
   small {
     @apply text-[0.889rem] md:text-[0.833rem] lg:text-[0.8rem];
   }
+}
+
+@layer components {
+  .defult--btn {
+    @apply  px-[1.5em] py-[0.5em] font-bold text-center rounded-border transition duration-300 ease-in-out tracking-wide;
+  }
+  .btn {
+    @apply defult--btn bg-primary-light text-primary border-2 border-primary 
+    hover:bg-primary hover:text-primary-light hover:border-primary-light focus:bg-primary focus:text-primary-light focus:border-primary-light;
+  }
+  .btn--outline {
+    @apply defult--btn bg-transparent text-primary border-2 border-primary
+    hover:bg-primary-light hover:text-primary hover:border-primary  focus:bg-primary-light focus:text-primary focus:border-primary;
+  }
+  .btn--red {
+    @apply defult--btn bg-red-light text-primary border-2 border-red-light
+    hover:bg-red hover:text-white hover:border-red  focus:bg-red focus:text-white focus:border-red;
+  }
+   .btn--red-outline {
+    @apply defult--btn bg-transparent text-red border-2 border-red
+    hover:bg-red-light hover:text-primary hover:border-primary  focus:bg-red-light focus:text-primary focus:border-red-light;
+  }
+
+  .input{
+    @apply flex border-surface-light rounded-border font-normal border-2 px-[1.5em] py-[0.5em]
+    hover:border-primary active:border-primary focus:border-primary
+  }
+  .input-error{
+    @apply input border-red text-red
+  }
+
 }
