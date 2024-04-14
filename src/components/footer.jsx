@@ -6,15 +6,15 @@ function Footer() {
     <footer className=" bg-primary px-[15px] py-10">
       <nav className="container-main">
         <ul
-          className=" flex flex-col gap-5 md:flex-row md:justify-between"
+          className=" grid grid-cols-1 md:grid-cols-3 gap-5 md:flex-row md:justify-between"
           role="list"
         >
-          <li className=" flex justify-center">
+          <li className=" flex justify-center md:justify-start">
             <button className=" block">
               <img src={LogoWhite} alt="LeadUp Logo" className=" h-[25px]" />
             </button>
           </li>
-          <div className=" text-white font-bold lg:flex">
+          <div className=" text-white font-bold lg:flex justify-center">
             <li className=" flex justify-center">
               <a
                 href=""
@@ -40,7 +40,7 @@ function Footer() {
               </a>
             </li>
           </div>
-          <li className=" flex flex-col gap-[20px] md:justify-between lg:flex-row">
+          <li className=" flex flex-col gap-[20px] md:justify-between lg:flex-row lg:justify-end">
             <NavLink className="block btn">sign up</NavLink>
             <NavLink className="block btn--outline">sign in</NavLink>
           </li>

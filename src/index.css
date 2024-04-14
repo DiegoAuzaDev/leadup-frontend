@@ -29,7 +29,7 @@
 
   ul[role="list"],
   ol[role="list"] {
-    @apply list-none m-0
+    @apply list-none m-0;
   }
 
   /* Set core root defaults */
@@ -125,7 +125,7 @@
 
 @layer components {
   .defult--btn {
-    @apply  px-[1.5em] py-[0.5em] font-bold text-center rounded-border transition duration-300 ease-in-out tracking-wide;
+    @apply px-[1.5em] py-[0.5em] font-bold text-center rounded-border transition duration-300 ease-in-out tracking-wide;
   }
   .btn {
     @apply defult--btn bg-primary-light text-primary border-2 border-primary 
@@ -139,17 +139,25 @@
     @apply defult--btn bg-red-light text-primary border-2 border-red-light
     hover:bg-red hover:text-white hover:border-red  focus:bg-red focus:text-white focus:border-red;
   }
-   .btn--red-outline {
+  .btn--red-outline {
     @apply defult--btn bg-transparent text-red border-2 border-red
     hover:bg-red-light hover:text-primary hover:border-primary  focus:bg-red-light focus:text-primary focus:border-red-light;
   }
 
-  .input{
+  .input {
     @apply flex border-surface-light rounded-border font-normal border-2 px-[1.5em] py-[0.5em]
-    hover:border-primary active:border-primary focus:border-primary
+    hover:border-primary active:border-primary focus:border-primary;
   }
-  .input-error{
-    @apply input border-red text-red
+  .input-error {
+    @apply input border-red text-red;
   }
-
+  .header-bg-color {
+    background: rgb(255, 255, 255);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 1) 75%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
 }
