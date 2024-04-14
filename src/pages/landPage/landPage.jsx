@@ -4,6 +4,9 @@ import { NavLink } from "react-router-dom";
 import ContactImage from "../../assets/contactImg.webp";
 import WorkSpaceImage from "../../assets/placeHolderImage.png";
 import IphoneImage from "../../assets/iphoneMockups.webp"
+import Excel from "../../assets/excelSVG.svg"
+import Net from "../../assets/netSVG.svg"
+import Target from "../../assets/targetSVG.svg"
 
 function LandPage() {
   return (
@@ -77,6 +80,40 @@ function LandPage() {
                 </div>
               </div>
             </div>
+            <ul className=" grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 pt-[5rem]" role="list">
+              <li className=" flex flex-col items-center gap-2">
+                <div className=" bg-primary-light inline-block px-5 py-5 rounded-full">
+                  <img src={Excel} alt="Excel logo" className=" h-[2.5rem]" />
+                </div>
+                <h4 className=" m-0">Save time and effort</h4>
+                <p className=" text-center">
+                  We offer an easy way to get your delivery list ready in less
+                  time with less effort. With Lead Up you can drag and drop your
+                  excel files and we will dynamically distribute the tasks{" "}
+                </p>
+              </li>
+              <li className=" flex flex-col items-center gap-2">
+                <div className=" bg-primary-light inline-block px-5 py-5 rounded-full">
+                  <img src={Net} alt="Net logo" className=" h-[2.5rem]" />
+                </div>
+                <h4 className=" m-0">Expand your team</h4>
+                <p className=" text-center">
+                  With Lead Up you can make grow your team. It do es matter if
+                  your team mates know the path because Lead Up is going to be
+                  design the best route path base on your needs
+                </p>
+              </li>
+              <li className=" flex flex-col items-center gap-2">
+                <div className=" bg-primary-light inline-block px-5 py-5 rounded-full">
+                  <img src={Target} alt="Target logo" className=" h-[2.5rem]" />
+                </div>
+                <h4 className=" m-0">Rich your goals</h4>
+                <p className=" text-center">
+                  With Lead Up you will be saving time at the same time you are
+                  getting closer to rich your final goals.
+                </p>
+              </li>
+            </ul>
           </div>
         </section>
         <div className=" container-main  px-[15px] mt-[-10rem] mb-[10rem]">
