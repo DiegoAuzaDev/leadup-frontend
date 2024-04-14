@@ -13,7 +13,7 @@ function Header() {
   return (
     <header className="fixed top-0 pt-7 pb-7 w-full px-[1.5rem] header-bg-color ">
       <nav
-        className={`container-main border-2 border-primary px-[15px] py-[15px] rounded-border bg-white`}
+        className={`container-main border-2 border-primary px-[15px] py-[15px] rounded-custom bg-white`}
         style={{ borderBottomRightRadius: `${!isActive ? "20px" : "0px"}` }}
       >
         <ul role="list" className="hidden lg:grid grid-cols-3">
@@ -23,18 +23,24 @@ function Header() {
             </NavLink>
           </li>
           <div className="flex justify-center">
-            <li>
-              <a className="px-[1.5em] py-[0.5em] rounded-border hover:bg-surface block font-bold">
+            <li className="text-primary">
+              <a
+                href="#home"
+                className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold"
+              >
                 Home
               </a>
             </li>
             <li>
-              <a className="px-[1.5em] py-[0.5em] rounded-border hover:bg-surface block font-bold">
+              <a
+                href="#services"
+                className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold"
+              >
                 Service
               </a>
             </li>
             <li>
-              <a className="px-[1.5em] py-[0.5em] rounded-border hover:bg-surface block font-bold ">
+              <a className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold ">
                 Contact
               </a>
             </li>
@@ -74,7 +80,7 @@ function Header() {
         </ul>
         <ul
           role="list"
-          className=" lg:hidden  top-[135px] right-[1.5rem] border-2 border-primary px-[15px] py-[15px] rounded-border flex flex-col gap-[20px] z-50 bg-white"
+          className=" lg:hidden  top-[135px] right-[1.5rem] border-2 border-primary px-[15px] py-[15px] rounded-custom flex flex-col gap-[20px] z-50 bg-white"
           style={{
             borderTopRightRadius: `"20px"`,
             position: "absolute",
@@ -82,22 +88,28 @@ function Header() {
           }}
         >
           <li>
-            <a className="px-[1.5em] py-[0.5em] rounded-border hover:bg-surface block font-bold">
+            <a
+              href="#home"
+              className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold"
+            >
               Home
             </a>
           </li>
           <li>
-            <a className="px-[1.5em] py-[0.5em] rounded-border hover:bg-surface block font-bold">
+            <a
+              href="#services"
+              className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold"
+            >
               Service
             </a>
           </li>
           <li>
-            <a className="px-[1.5em] py-[0.5em] rounded-border hover:bg-surface block font-bold ">
+            <a className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold ">
               Contact
             </a>
           </li>
           <li>
-            <NavLink className="btn--outline block">Home</NavLink>
+            <NavLink className="btn--outline block">sign in</NavLink>
           </li>
         </ul>
       </nav>

@@ -17,24 +17,24 @@ function Footer() {
           <div className=" text-white font-bold lg:flex justify-center">
             <li className=" flex justify-center">
               <a
-                href=""
-                className="px-[1.5em] py-[0.5em] rounded-border hover:bg-surface hover:text-primary"
+                href="#home"
+                className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface hover:text-primary"
               >
                 Home
               </a>
             </li>
             <li className=" flex justify-center">
               <a
-                href=""
-                className=" px-[1.5em] py-[0.5em] rounded-border hover:bg-surface hover:text-primary"
+                href="#services"
+                className=" px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface hover:text-primary"
               >
                 Service
               </a>
             </li>
             <li className=" flex justify-center">
               <a
-                href=""
-                className="px-[1.5em] py-[0.5em] rounded-border hover:bg-surface hover:text-primary"
+                href="#contact"
+                className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface hover:text-primary"
               >
                 Contact
               </a>
