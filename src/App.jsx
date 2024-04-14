@@ -1,25 +1,11 @@
-import Welcome from "./components/Welcome/Welcome";
-import SignUp from "./components/SignUp/SignUp";
-import LogIn from "./components/LogIn/LogIn";
 import { Routes, Route } from "react-router-dom";
-import WorkSpace from "./components/WorkSpace/WorkSpace";
-import DashBoard from "./components/WorkSpace/DashBoard/DashBoard";
-import Employee from "./components/WorkSpace/Employee/Employee";
-import Company from "./components/WorkSpace/Company/Company";
-import NewCompany from "./components/WorkSpace/Company/NewCompany/NewCompany";
+import LandPage from "./components/landPage/landPage";
+
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Welcome />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/login" element={<LogIn />} />
-      <Route path="/workspace" element={<WorkSpace />}>
-        <Route path="dashboard" element={<DashBoard />} />
-        <Route path="employee" element={<Employee />} />
-        <Route path="company" element={<Company />} />
-        <Route path="company/new" element={<NewCompany />} />
-      </Route>
+      <Route path="/" element={<LandPage />} />
     </Routes>
   );
 }
