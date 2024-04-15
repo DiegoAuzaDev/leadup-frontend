@@ -17,7 +17,7 @@ function Footer() {
           <div className=" text-white font-bold lg:flex justify-center">
             <li className=" flex justify-center">
               <a
-                href="#home"
+                href="/#home"
                 className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface hover:text-primary"
               >
                 Home
@@ -25,7 +25,7 @@ function Footer() {
             </li>
             <li className=" flex justify-center">
               <a
-                href="#services"
+                href="/#services"
                 className=" px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface hover:text-primary"
               >
                 Service
@@ -33,7 +33,7 @@ function Footer() {
             </li>
             <li className=" flex justify-center">
               <a
-                href="#contact"
+                href="/#contact"
                 className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface hover:text-primary"
               >
                 Contact
@@ -41,8 +41,12 @@ function Footer() {
             </li>
           </div>
           <li className=" flex flex-col gap-[20px] md:justify-between lg:flex-row lg:justify-end">
-            <NavLink className="block btn">sign up</NavLink>
-            <NavLink className="block btn--outline">sign in</NavLink>
+            <NavLink className="block btn" to={"/auth/signUp"}>
+              sign up
+            </NavLink>
+            <NavLink className="block btn--outline" to={"/auth/signIn"}>
+              sign in
+            </NavLink>
           </li>
         </ul>
       </nav>
