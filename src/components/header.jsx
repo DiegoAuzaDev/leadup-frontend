@@ -18,14 +18,14 @@ function Header() {
       >
         <ul role="list" className="hidden lg:grid grid-cols-3">
           <li className="flex items-center">
-            <a href="#home" className=" block">
+            <a href="/#home" className=" block">
               <img src={LogoColor} alt="LeadUp Logo" className=" h-[25px]" />
             </a>
           </li>
           <div className="flex justify-center">
             <li className="text-primary">
               <a
-                href="#home"
+                href="/#home"
                 className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold"
               >
                 Home
@@ -33,7 +33,7 @@ function Header() {
             </li>
             <li>
               <a
-                href="#services"
+                href="/#services"
                 className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold"
               >
                 Service
@@ -41,7 +41,7 @@ function Header() {
             </li>
             <li>
               <a
-                href="#contact"
+                href="/#contact"
                 className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold "
               >
                 Contact
@@ -50,10 +50,14 @@ function Header() {
           </div>
           <div className="flex justify-end gap-[20px]">
             <li>
-              <NavLink className="btn block">Sign up</NavLink>
+              <NavLink className="btn block" to={"/auth/signUp"}>
+                Sign up
+              </NavLink>
             </li>
             <li>
-              <NavLink className="btn--outline block">Sign in</NavLink>
+              <NavLink className="btn--outline block" to={"/auth/signIn"}>
+                Sign in
+              </NavLink>
             </li>
           </div>
         </ul>
@@ -63,10 +67,12 @@ function Header() {
           className="grid grid-cols-2  md:grid-cols-3 lg:hidden z-50"
         >
           <li className=" hidden md:flex">
-            <NavLink className="btn block">Sign up</NavLink>
+            <NavLink className="btn block" to={"/auth/signUp"}>
+              Sign up
+            </NavLink>
           </li>
           <li className="flex items-center md:justify-center">
-            <a href="#home" className="px-[0.5em]">
+            <a href="/#home" className="px-[0.5em]">
               <img src={LogoColor} alt="LeadUp Logo" className=" h-[25px]" />
             </a>
           </li>
@@ -95,7 +101,7 @@ function Header() {
         >
           <li>
             <a
-              href="#home"
+              href="/#home"
               className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold"
             >
               Home
@@ -103,7 +109,7 @@ function Header() {
           </li>
           <li>
             <a
-              href="#services"
+              href="/#services"
               className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold"
             >
               Service
@@ -111,17 +117,21 @@ function Header() {
           </li>
           <li>
             <a
-              href="#contact"
+              href="/#contact"
               className="px-[1.5em] py-[0.5em] rounded-custom hover:bg-surface block font-bold "
             >
               Contact
             </a>
           </li>
           <li>
-            <NavLink className="btn--outline block">sign in</NavLink>
+            <NavLink to={"/auth/signIn"} className="btn--outline block">
+              sign in
+            </NavLink>
           </li>
           <li className="md:hidden">
-            <NavLink className="btn block">sign up</NavLink>
+            <NavLink to={"/auth/signUp"} className="btn block">
+              sign up
+            </NavLink>
           </li>
         </ul>
       </nav>
