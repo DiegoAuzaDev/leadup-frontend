@@ -11,7 +11,7 @@ import Target from "../../assets/targetSVG.svg"
 function LandPage() {
   return (
     <>
-      <Header />
+      <Header isAuth={false} />
       <main id="home" className="pt-[200px]">
         <section className="container-main mb-5">
           <div className="flex flex-col items-center z-0">

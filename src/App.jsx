@@ -11,7 +11,6 @@ function App() {
       <Route path="/auth/signIn" element={<Auth />} />
       <Route path="/auth/signUp" element={<Auth />} />
       <Route path="*" element={<ErrorPage />} />
-      
     </Routes>
   );
 }
