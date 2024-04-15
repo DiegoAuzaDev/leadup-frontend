@@ -13,7 +13,7 @@ function Auth() {
   return (
     <>
       <Header isAuth={true} />
-      <main className="  bg-primary  pt-[300px]">
+      <main className="  bg-primary  pt-[100px]">
         <section className=" container-main grid grid-cols-12">
           {isSignup ? <SignUp /> : <SignIn />}
         </section>
