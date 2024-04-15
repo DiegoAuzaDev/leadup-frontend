@@ -7,8 +7,12 @@ import IphoneImage from "../../assets/iphoneMockups.webp"
 import Excel from "../../assets/excelSVG.svg"
 import Net from "../../assets/netSVG.svg"
 import Target from "../../assets/targetSVG.svg"
+import { useEffect } from "react";
 
 function LandPage() {
+    useEffect(() => {
+      document.body.classList.add("bg-white");
+    }, []);
   return (
     <>
       <Header isAuth={false} />
