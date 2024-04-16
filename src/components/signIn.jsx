@@ -5,6 +5,8 @@ import GoogleLogo from "../assets/GoogleImage.webp";
 import { validateEmail, validatePassword } from "../utils/validateInput";
 import googleAuth from "../utils/googleAuth";
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 function SignIn() {
   useEffect(() => {
@@ -14,6 +16,7 @@ function SignIn() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
+  const [inputType, setInputType] = useState("password")
   const [passwordError, setPasswordError] = useState("");
   const [isInvalidAuth, setIsInvalidAuth] = useState("");
 
@@ -75,22 +78,36 @@ function SignIn() {
           </small>
         </fieldset>
         <fieldset className=" flex flex-col gap-2">
-          <label
-            htmlFor="password"
-            className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
-          >
-            Password *
-            <input
-              autoComplete="password"
-              type="password"
-              id="password"
-              required
-              value={password}
-              onChange={(ev) => passwordValidation(ev)}
-              className={`input ${passwordError ? "input-error" : ""}`}
-              placeholder="Enter your password"
-            />
-          </label>
+          <div>
+            <label
+              htmlFor="password"
+              className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+            >
+              Password *
+              <div className=" flex flex-row">
+                <input
+                  autoComplete="password"
+                  type={inputType}
+                  id="password"
+                  required
+                  value={password}
+                  onChange={(ev) => passwordValidation(ev)}
+                  className={`input ${passwordError ? "input-error" : ""} flex-1`}
+                  placeholder="Enter your password"
+                />
+                <button className=" w-6 mx-2" type="button" onClick={(ev)=>{
+                  ev.stopPropagation()
+                  if(inputType == "password"){
+                    setInputType("text")
+                  } else {
+                    setInputType("password")
+                  }
+                }}>
+                  <FontAwesomeIcon icon={ inputType == "password" ? faEye : faEyeSlash} className=" inline-block text-primary" />
+                </button>
+              </div>
+            </label>
+          </div>
           <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
             {passwordError}
           </small>

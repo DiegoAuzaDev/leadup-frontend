@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { validateEmail, validateName } from "../utils/validateInput";
+import { validateEmail, validateName, validatePassword } from "../utils/validateInput";
 
 function SignUp() {
   useEffect(() => {
@@ -26,7 +26,7 @@ function SignUp() {
 
   const submitForm = (ev) => {
     ev.preventDefault();
-    switch (formState) {
+        switch (formState) { 
       case buttonStateEnum.name:
         setIsEmailActive(true);
         setFormState(buttonStateEnum.email);
@@ -51,6 +51,12 @@ function SignUp() {
     setEmail(email);
     setEmailError(validateEmail(email));
   };
+
+    const passwordValidation = (ev) => {
+      let password = ev.target.value;
+      setPassword(password);
+      setPasswordError(validatePassword(password));
+    };
 
   return (
     <div className="bg-white py-7 px-5 lg:px-[1.5rem] grid col-span-12  col-start-1 md:col-start-2 md:col-span-10 lg:col-start-3 lg:col-span-8 gap-5 mb-[5rem] fadeInBottom rounded-custom text-primary">
@@ -103,13 +109,13 @@ function SignUp() {
                 />
               </label>
               <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
-                {nameError}
+                {emailError}
               </small>
             </>
           )}
         </div>
         <div className=" flex flex-col justify-end items-end col-span-12 md:col-span-2">
-          <button type="submit" className=" btn">
+          <button type="submit" className=" btn" disabled={(nameError || emailError || passwordError)}>
             {formState}
           </button>
         </div>
