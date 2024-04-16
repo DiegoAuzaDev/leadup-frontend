@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { validateEmail, validateName, validatePassword } from "../utils/validateInput";
+import {
+  validateEmail,
+  validateName,
+  validatePassword,
+} from "../utils/validateInput";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 function SignUp() {
   useEffect(() => {
@@ -23,15 +29,18 @@ function SignUp() {
   const [isInvalidAuth, setIsInvalidAuth] = useState("");
   const [formState, setFormState] = useState(buttonStateEnum.name);
   const [isEmailActive, setIsEmailActive] = useState(false);
+  const [isPasswordActive, setIsPasswordActive] = useState(false);
+  const [inputType, setInputType] = useState("password");
 
   const submitForm = (ev) => {
     ev.preventDefault();
-        switch (formState) { 
+    switch (formState) {
       case buttonStateEnum.name:
         setIsEmailActive(true);
         setFormState(buttonStateEnum.email);
         break;
       case buttonStateEnum.email:
+        setIsPasswordActive(true)
         setFormState(buttonStateEnum.password);
         break;
       case buttonStateEnum.password:
@@ -52,11 +61,11 @@ function SignUp() {
     setEmailError(validateEmail(email));
   };
 
-    const passwordValidation = (ev) => {
-      let password = ev.target.value;
-      setPassword(password);
-      setPasswordError(validatePassword(password));
-    };
+  const passwordValidation = (ev) => {
+    let password = ev.target.value;
+    setPassword(password);
+    setPasswordError(validatePassword(password));
+  };
 
   return (
     <div className="bg-white py-7 px-5 lg:px-[1.5rem] grid col-span-12  col-start-1 md:col-start-2 md:col-span-10 lg:col-start-3 lg:col-span-8 gap-5 mb-[5rem] fadeInBottom rounded-custom text-primary">
@@ -113,9 +122,59 @@ function SignUp() {
               </small>
             </>
           )}
+          {isPasswordActive && (
+            <fieldset className=" flex flex-col gap-2">
+              <div>
+                <label
+                  htmlFor="password"
+                  className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+                >
+                  Password *
+                  <div className=" flex flex-row">
+                    <input
+                      autoComplete="password"
+                      type={inputType}
+                      id="password"
+                      required
+                      value={password}
+                      onChange={(ev) => passwordValidation(ev)}
+                      className={`input ${
+                        passwordError ? "input-error" : ""
+                      } flex-1`}
+                      placeholder="Enter your password"
+                    />
+                    <button
+                      className=" w-6 mx-2"
+                      type="button"
+                      onClick={(ev) => {
+                        ev.stopPropagation();
+                        if (inputType == "password") {
+                          setInputType("text");
+                        } else {
+                          setInputType("password");
+                        }
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        icon={inputType == "password" ? faEye : faEyeSlash}
+                        className=" inline-block text-primary"
+                      />
+                    </button>
+                  </div>
+                </label>
+              </div>
+              <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
+                {passwordError}
+              </small>
+            </fieldset>
+          )}
         </div>
         <div className=" flex flex-col justify-end items-end col-span-12 md:col-span-2">
-          <button type="submit" className=" btn" disabled={(nameError || emailError || passwordError)}>
+          <button
+            type="submit"
+            className=" btn"
+            disabled={nameError || emailError || passwordError}
+          >
             {formState}
           </button>
         </div>
