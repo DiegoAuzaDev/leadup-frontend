@@ -30,6 +30,7 @@ function SignUp() {
   const [isPasswordActive, setIsPasswordActive] = useState(false);
   const [inputType, setInputType] = useState("password");
   const [isInvalidAuth, setIsInvalidAuth] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const submitForm = (ev) => {
     ev.preventDefault();
@@ -43,7 +44,7 @@ function SignUp() {
         setFormState(buttonStateEnum.password);
         break;
       case buttonStateEnum.password:
-        console.log("submit data")
+        console.log("submit data");
         break;
       default:
     }
@@ -76,108 +77,175 @@ function SignUp() {
           scale your team
         </p>
       </div>
-      <form onSubmit={submitForm} className=" grid grid-cols-12 gap-5">
-        <div className=" col-span-12 md:col-span-9">
-          <label
-            htmlFor="name"
-            className="flex flex-col text-primary-light font-bold mb-2"
-          >
-            Enter your name *
-            <input
-              autoComplete="name"
-              required
-              type="text"
-              id="name"
-              className={`input ${nameError ? "input-error" : ""}`}
-              placeholder="Enter your name"
-              value={name}
-              onChange={(ev) => nameValidation(ev)}
-            />
-          </label>
-          <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
-            {nameError}
-          </small>
+      {!isLoading && (
+        <form onSubmit={submitForm} className=" grid grid-cols-12 gap-5">
+          <div className=" col-span-12 md:col-span-9">
+            <label
+              htmlFor="name"
+              className="flex flex-col text-primary-light font-bold mb-2"
+            >
+              Enter your name *
+              <input
+                autoComplete="name"
+                required
+                type="text"
+                id="name"
+                className={`input ${nameError ? "input-error" : ""}`}
+                placeholder="Enter your name"
+                value={name}
+                onChange={(ev) => nameValidation(ev)}
+              />
+            </label>
+            <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
+              {nameError}
+            </small>
 
-          {isEmailActive && (
-            <>
-              <label
-                htmlFor="email"
-                className="mt-8 flex flex-col text-primary-light font-bold mb-2 inputFadeIn"
-              >
-                Email address *
-                <input
-                  autoComplete="email"
-                  required
-                  type="text"
-                  id="email"
-                  className={`input ${emailError ? "input-error" : ""}`}
-                  placeholder="LeadUp@example.com"
-                  value={email}
-                  onChange={(ev) => emailValidation(ev)}
-                />
-              </label>
-              <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
-                {emailError}
-              </small>
-            </>
-          )}
-          {isPasswordActive && (
-            <>
-              <div className="mt-8">
+            {isEmailActive && (
+              <>
                 <label
-                  htmlFor="password"
-                  className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+                  htmlFor="email"
+                  className="mt-8 flex flex-col text-primary-light font-bold mb-2 inputFadeIn"
                 >
-                  Password *
-                  <div className="grid grid-cols-12">
-                    <input
-                      autoComplete="password"
-                      type={inputType}
-                      id="password"
-                      required
-                      value={password}
-                      onChange={(ev) => passwordValidation(ev)}
-                      className={`input ${
-                        passwordError ? "input-error" : ""
-                      } col-span-10`}
-                      placeholder="Enter your password"
-                    />
-                    <button
-                      className=" w-6 mx-2"
-                      type="button"
-                      onClick={(ev) => {
-                        ev.stopPropagation();
-                        if (inputType == "password") {
-                          setInputType("text");
-                        } else {
-                          setInputType("password");
-                        }
-                      }}
-                    >
-                      <FontAwesomeIcon
-                        icon={inputType == "password" ? faEye : faEyeSlash}
-                        className=" inline-block text-primary"
-                      />
-                    </button>
-                  </div>
+                  Email address *
+                  <input
+                    autoComplete="email"
+                    required
+                    type="text"
+                    id="email"
+                    className={`input ${emailError ? "input-error" : ""}`}
+                    placeholder="LeadUp@example.com"
+                    value={email}
+                    onChange={(ev) => emailValidation(ev)}
+                  />
                 </label>
-              </div>
-              <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
-                {passwordError}
-              </small>
-            </>
-          )}
-        </div>
-        <div className=" flex flex-col justify-end items-end col-span-12 md:col-span-3">
-          <button
-            type="submit"
-            className=" btn"
-            disabled={nameError || emailError || passwordError}
+                <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
+                  {emailError}
+                </small>
+              </>
+            )}
+            {isPasswordActive && (
+              <>
+                <div className="mt-8 inputFadeIn">
+                  <label
+                    htmlFor="password"
+                    className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+                  >
+                    Password *
+                    <div className="grid grid-cols-12">
+                      <input
+                        autoComplete="password"
+                        type={inputType}
+                        id="password"
+                        required
+                        value={password}
+                        onChange={(ev) => passwordValidation(ev)}
+                        className={`input ${
+                          passwordError ? "input-error" : ""
+                        } col-span-10`}
+                        placeholder="Enter your password"
+                      />
+                      <button
+                        className=" w-6 mx-2"
+                        type="button"
+                        onClick={(ev) => {
+                          ev.stopPropagation();
+                          if (inputType == "password") {
+                            setInputType("text");
+                          } else {
+                            setInputType("password");
+                          }
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          icon={inputType == "password" ? faEye : faEyeSlash}
+                          className=" inline-block text-primary"
+                        />
+                      </button>
+                    </div>
+                  </label>
+                </div>
+                <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
+                  {passwordError}
+                </small>
+              </>
+            )}
+          </div>
+          <div className=" flex flex-col justify-end items-end col-span-12 md:col-span-3">
+            <button
+              type="submit"
+              className=" btn"
+              disabled={nameError || emailError || passwordError}
+            >
+              {formState}
+            </button>
+          </div>
+        </form>
+      )}
+      {isLoading && (
+        <div role="status" className=" flex flex-col items-center gap-4">
+          <svg
+            version="1.1"
+            id="L7"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 100 100"
+            enableBackground="new 0 0 100 100"
+            xmlSpace="preserve"
+            style={{ height: "5rem" }}
           >
-            {formState}
-          </button>
+            <path
+              fill="#082F49"
+              d="M31.6,3.5C5.9,13.6-6.6,42.7,3.5,68.4c10.1,25.7,39.2,38.3,64.9,28.1l-3.1-7.9c-21.3,8.4-45.4-2-53.8-23.3
+  c-8.4-21.3,2-45.4,23.3-53.8L31.6,3.5z"
+            >
+              <animateTransform
+                attributeName="transform"
+                attributeType="XML"
+                type="rotate"
+                dur="2s"
+                from="0 50 50"
+                to="360 50 50"
+                repeatCount="indefinite"
+              />
+            </path>
+            <path
+              fill="#082F49"
+              d="M42.3,39.6c5.7-4.3,13.9-3.1,18.1,2.7c4.3,5.7,3.1,13.9-2.7,18.1l4.1,5.5c8.8-6.5,10.6-19,4.1-27.7
+  c-6.5-8.8-19-10.6-27.7-4.1L42.3,39.6z"
+            >
+              <animateTransform
+                attributeName="transform"
+                attributeType="XML"
+                type="rotate"
+                dur="1s"
+                from="0 50 50"
+                to="-360 50 50"
+                repeatCount="indefinite"
+              />
+            </path>
+            <path
+              fill="#082F49"
+              d="M82,35.7C74.1,18,53.4,10.1,35.7,18S10.1,46.6,18,64.3l7.6-3.4c-6-13.5,0-29.3,13.5-35.3s29.3,0,35.3,13.5
+  L82,35.7z"
+            >
+              <animateTransform
+                attributeName="transform"
+                attributeType="XML"
+                type="rotate"
+                dur="2s"
+                from="0 50 50"
+                to="360 50 50"
+                repeatCount="indefinite"
+              />
+            </path>
+          </svg>
+          <p className="text-[1.424rem] md:text-[1.728rem] lg:text-[1.953rem] text-center font-bold">
+            Creating new user ...
+          </p>
         </div>
-      </form>
+      )}
     </div>
   );
 }
