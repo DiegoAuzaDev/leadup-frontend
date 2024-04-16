@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LogoWhite from "../assets/LeadUpIcon.svg";
 import ContainerMessage from "./containerMessage";
 import GoogleLogo from "../assets/GoogleImage.webp";
@@ -6,8 +6,11 @@ import { validateEmail, validatePassword } from "../utils/validateInput";
 import googleAuth from "../utils/googleAuth";
 import { NavLink } from "react-router-dom";
 
-
 function SignIn() {
+  useEffect(() => {
+    document.body.classList.remove("bg-white");
+    document.body.classList.add("bg-primary");
+  }, []);
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +36,7 @@ function SignIn() {
   };
 
   return (
-    <div className=" bg-white py-7 px-2 ld:px-[1.5rem] grid col-span-12  col-start-1 md:col-start-2 md:col-span-10 lg:col-start-3 lg:col-span-8 gap-5 mb-[5rem] fadeInBottom rounded-custom">
+    <div className=" bg-white py-7 px-2 lg:px-[1.5rem] grid col-span-12  col-start-1 md:col-start-2 md:col-span-10 lg:col-start-3 lg:col-span-8 gap-5 mb-[5rem] fadeInBottom rounded-custom">
       <div className=" flex justify-center">
         <img src={LogoWhite} className=" h-[3.124rem]" alt="Lead Up Logo" />
       </div>
@@ -104,9 +107,12 @@ function SignIn() {
         <small className=" text-center">
           ---- Sign in using your Google account ----
         </small>
-        <button className="btn--outline flex flex-wrap items-center justify-center gap-4" onClick={()=>{
-          googleAuth()
-        }}>
+        <button
+          className="btn--outline flex flex-wrap items-center justify-center gap-4"
+          onClick={() => {
+            googleAuth();
+          }}
+        >
           <img src={GoogleLogo} alt="google logo" className="h-[1.825rem]" />
           <p className="m-0">Sign in with Google</p>
         </button>

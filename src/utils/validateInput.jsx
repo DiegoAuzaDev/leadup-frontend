@@ -28,4 +28,23 @@ const validatePassword = (password) => {
   return "";
 };
 
-export { validateEmail, validatePassword };
+
+const validateName = (name) => {
+  const namePattern = /^[a-zA-Z\s]+$/; // This pattern allows only letters and spaces
+
+  if (name.trim() === "") {
+    return "Name must be provided";
+  }
+
+  if (name.length < 3) {
+    return "Name must be at least 3 characters long";
+  }
+
+  if (!namePattern.test(name)) {
+    return "Name must contain only letters and spaces";
+  }
+
+  return "";
+};
+
+export { validateEmail, validatePassword, validateName };
