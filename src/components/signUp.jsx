@@ -15,9 +15,8 @@ function SignUp() {
 
   const buttonStateEnum = {
     name: "next",
-    email: "next",
-    password: "next",
-    send: "submit",
+    email: "confirm",
+    password: "submit",
   };
 
   const [name, setName] = useState("");
@@ -26,11 +25,11 @@ function SignUp() {
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [isInvalidAuth, setIsInvalidAuth] = useState("");
   const [formState, setFormState] = useState(buttonStateEnum.name);
   const [isEmailActive, setIsEmailActive] = useState(false);
   const [isPasswordActive, setIsPasswordActive] = useState(false);
   const [inputType, setInputType] = useState("password");
+  const [isInvalidAuth, setIsInvalidAuth] = useState("");
 
   const submitForm = (ev) => {
     ev.preventDefault();
@@ -40,11 +39,11 @@ function SignUp() {
         setFormState(buttonStateEnum.email);
         break;
       case buttonStateEnum.email:
-        setIsPasswordActive(true)
+        setIsPasswordActive(true);
         setFormState(buttonStateEnum.password);
         break;
       case buttonStateEnum.password:
-        setFormState(buttonStateEnum.send);
+        console.log("submit data")
         break;
       default:
     }
@@ -78,7 +77,7 @@ function SignUp() {
         </p>
       </div>
       <form onSubmit={submitForm} className=" grid grid-cols-12 gap-5">
-        <div className=" col-span-12 md:col-span-10">
+        <div className=" col-span-12 md:col-span-9">
           <label
             htmlFor="name"
             className="flex flex-col text-primary-light font-bold mb-2"
@@ -111,7 +110,7 @@ function SignUp() {
                   required
                   type="text"
                   id="email"
-                  className={`input ${email ? "input-error" : ""}`}
+                  className={`input ${emailError ? "input-error" : ""}`}
                   placeholder="LeadUp@example.com"
                   value={email}
                   onChange={(ev) => emailValidation(ev)}
@@ -123,14 +122,14 @@ function SignUp() {
             </>
           )}
           {isPasswordActive && (
-            <fieldset className=" flex flex-col gap-2">
-              <div>
+            <>
+              <div className="mt-8">
                 <label
                   htmlFor="password"
                   className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
                 >
                   Password *
-                  <div className=" flex flex-row">
+                  <div className="grid grid-cols-12">
                     <input
                       autoComplete="password"
                       type={inputType}
@@ -140,7 +139,7 @@ function SignUp() {
                       onChange={(ev) => passwordValidation(ev)}
                       className={`input ${
                         passwordError ? "input-error" : ""
-                      } flex-1`}
+                      } col-span-10`}
                       placeholder="Enter your password"
                     />
                     <button
@@ -166,10 +165,10 @@ function SignUp() {
               <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
                 {passwordError}
               </small>
-            </fieldset>
+            </>
           )}
         </div>
-        <div className=" flex flex-col justify-end items-end col-span-12 md:col-span-2">
+        <div className=" flex flex-col justify-end items-end col-span-12 md:col-span-3">
           <button
             type="submit"
             className=" btn"
