@@ -59,6 +59,7 @@ function SignUp() {
 
   const handleResponse = async () => {
     const response = await localSignup(name, email, password);
+    console.log(response)
     if (!response.ok && response.status == 401) {
       setIsLoading(false);
       setIsInvalidAuth({
@@ -67,6 +68,7 @@ function SignUp() {
         routeMessage: "Sig in with your credentials",
         redirect: "/auth/signIn",
       });
+      return 
     }
     if (!response.ok) {
       setIsLoading(false);
@@ -76,6 +78,7 @@ function SignUp() {
         routeMessage: "try again laer",
         redirect: "/",
       });
+      return 
     }
     if (response.ok && response.status == 200 && response.url) {
       window.location = response.url;
