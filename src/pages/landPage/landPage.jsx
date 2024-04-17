@@ -12,6 +12,7 @@ import { useEffect } from "react";
 function LandPage() {
     useEffect(() => {
       document.body.classList.add("bg-white");
+      document.body.classList.remove("bg-primary");
     }, []);
   return (
     <>

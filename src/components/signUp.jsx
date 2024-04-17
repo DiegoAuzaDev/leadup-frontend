@@ -59,7 +59,6 @@ function SignUp() {
 
   const handleResponse = async () => {
     const response = await localSignup(name, email, password);
-    console.log(response)
     if (!response.ok && response.status == 401) {
       setIsLoading(false);
       setIsInvalidAuth({
@@ -69,14 +68,17 @@ function SignUp() {
         redirect: "/auth/signIn",
       });
     }
-    if(!response.ok){
-       setIsLoading(false);
-       setIsInvalidAuth({
-         title: "Server Error",
-         message: "server not OK",
-         routeMessage: "try again laer",
-         redirect: "/",
-       });
+    if (!response.ok) {
+      setIsLoading(false);
+      setIsInvalidAuth({
+        title: "Server Error",
+        message: "server not OK",
+        routeMessage: "try again laer",
+        redirect: "/",
+      });
+    }
+    if (response.ok && response.status == 200 && response.url) {
+      window.location = response.url;
     }
   };
 
