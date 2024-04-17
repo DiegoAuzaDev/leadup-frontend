@@ -9,11 +9,14 @@ import { useState } from "react";
 function Header({ isAuth }) {
   const location = useLocation();
   const isSignup = location.pathname === "/auth/signUp";
+  const isSignin = location.pathname === "/auth/signIn";
   const [isActive, setIsActive] = useState(false);
 
   return (
     <header
-      className={`fixed top-0 pt-7 pb-7 w-full px-[1.5rem]  fadeInTop ${
+      className={`${
+        isSignin || isSignup ? "" : "fixed"
+      } top-0 pt-7 pb-7 w-full px-[1.5rem] fadeInTop  z-50 ${
         isAuth ? " bg-primary" : ""
       }`}
     >
@@ -70,7 +73,7 @@ function Header({ isAuth }) {
 
           <ul
             role="list"
-            className="grid grid-cols-2  md:grid-cols-3 lg:hidden z-50"
+            className="grid grid-cols-2  md:grid-cols-3 lg:hidden"
           >
             <li className=" hidden md:flex">
               <NavLink className="btn block" to={"/auth/signUp"}>
@@ -150,9 +153,8 @@ function Header({ isAuth }) {
                 <img src={Logowhite} alt="LeadUp Logo" className=" h-[25px]" />
               </a>
             </li>
-            <li className=" flex gap-2 text-white justify-center md:justify-end">
+            <li className=" flex gap-2 text-white flex-wrap justify-center md:justify-end">
               <p className=" m-0">
-                {" "}
                 {!isSignup ? "Create your account" : "Already have an account?"}
               </p>
               <a

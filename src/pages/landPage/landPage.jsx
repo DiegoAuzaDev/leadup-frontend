@@ -12,13 +12,14 @@ import { useEffect } from "react";
 function LandPage() {
     useEffect(() => {
       document.body.classList.add("bg-white");
+      document.body.classList.remove("bg-primary");
     }, []);
   return (
     <>
       <Header isAuth={false} />
-      <main id="home" className="pt-[200px]">
+      <main id="home" className="pt-[200px] z-0">
         <section className="container-main mb-5">
-          <div className="flex flex-col items-center z-0">
+          <div className="flex flex-col items-center ">
             <span className="text-primary-light font-bold text-lg">
               Get your team sync
             </span>
@@ -34,7 +35,10 @@ function LandPage() {
                 Gather your team in less than
                 <span className="font-bold"> 5 minutes</span>
               </p>
-              <NavLink className="btn fadeInBottom fadeInLongDelay">
+              <NavLink
+                className="btn fadeInBottom fadeInLongDelay"
+                to={"/auth/signIn"}
+              >
                 Get started now
               </NavLink>
             </div>
