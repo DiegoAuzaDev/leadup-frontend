@@ -1,8 +1,12 @@
 import { NavLink } from "react-router-dom";
 import Footer from "../../components/footer";
 import Header from "../../components/header";
+import { useEffect } from "react";
 
 function ErrorPage() {
+      useEffect(() => {
+        document.body.classList.add("bg-white");
+      }, []);
   return (
     <>
       <Header />

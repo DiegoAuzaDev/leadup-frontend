@@ -6,6 +6,7 @@ import {
 } from "../utils/validateInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { localSignup } from "../utils/localAuth";
 
 function SignUp() {
   useEffect(() => {
@@ -30,9 +31,10 @@ function SignUp() {
   const [isPasswordActive, setIsPasswordActive] = useState(false);
   const [inputType, setInputType] = useState("password");
   const [isInvalidAuth, setIsInvalidAuth] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const submitForm = (ev) => {
+  const submitForm = async (ev) => {
+    let response;
     ev.preventDefault();
     switch (formState) {
       case buttonStateEnum.name:
@@ -44,7 +46,11 @@ function SignUp() {
         setFormState(buttonStateEnum.password);
         break;
       case buttonStateEnum.password:
-        console.log("submit data");
+        setIsLoading(true);
+        response = await localSignup(name, email, password);
+        console.log(response); 
+
+        // todo 
         break;
       default:
     }
