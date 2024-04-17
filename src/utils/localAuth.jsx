@@ -1,7 +1,7 @@
 import { API_URL, DASHBOARD_URL} from "./keys.jsx"
 
 const localSignup = async (name , email, password) => {
-  try {
+
     const reqBody = {
       "name" : name,
       "email" : email,
@@ -18,10 +18,8 @@ const localSignup = async (name , email, password) => {
         body: JSON.stringify(reqBody),
       }
     );
-    console.log(localSignUpRequest)
-  } catch (err) {
-    console.log("error");
-  }
+    return localSignUpRequest
+
 };
 const localSignin = (email, password) => {};
 

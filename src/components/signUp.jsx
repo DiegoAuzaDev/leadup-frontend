@@ -7,6 +7,10 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { localSignup } from "../utils/localAuth";
+import googleAuth from "../utils/googleAuth";
+import GoogleLogo from "../assets/GoogleImage.webp";
+import { NavLink } from "react-router-dom";
+import ContainerMessage from "./containerMessage";
 
 function SignUp() {
   useEffect(() => {
@@ -30,11 +34,10 @@ function SignUp() {
   const [isEmailActive, setIsEmailActive] = useState(false);
   const [isPasswordActive, setIsPasswordActive] = useState(false);
   const [inputType, setInputType] = useState("password");
-  const [isInvalidAuth, setIsInvalidAuth] = useState("");
+  const [isInvalidAuth, setIsInvalidAuth] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const submitForm = async (ev) => {
-    let response;
     ev.preventDefault();
     switch (formState) {
       case buttonStateEnum.name:
@@ -46,13 +49,34 @@ function SignUp() {
         setFormState(buttonStateEnum.password);
         break;
       case buttonStateEnum.password:
+        setIsInvalidAuth(null);
         setIsLoading(true);
-        response = await localSignup(name, email, password);
-        console.log(response); 
-
-        // todo 
+        handleResponse();
         break;
       default:
+    }
+  };
+
+  const handleResponse = async () => {
+    const response = await localSignup(name, email, password);
+    console.log(response)
+    if (!response.ok && response.status == 401) {
+      setIsLoading(false);
+      setIsInvalidAuth({
+        title: "Email is already on use",
+        message: response.statusText,
+        routeMessage: "Sig in with your credentials",
+        redirect: "/auth/signIn",
+      });
+    }
+    if(!response.ok){
+       setIsLoading(false);
+       setIsInvalidAuth({
+         title: "Server Error",
+         message: "server not OK",
+         routeMessage: "try again laer",
+         redirect: "/",
+       });
     }
   };
 
@@ -83,6 +107,15 @@ function SignUp() {
           scale your team
         </p>
       </div>
+      {isInvalidAuth && (
+        <ContainerMessage
+          title={isInvalidAuth.title}
+          message={isInvalidAuth.message}
+          routeMessage={isInvalidAuth.routeMessage}
+          redirect={isInvalidAuth.redirect}
+        />
+      )}
+
       {!isLoading && (
         <form onSubmit={submitForm} className=" grid grid-cols-12 gap-5">
           <div className=" col-span-12 md:col-span-9">
@@ -252,6 +285,26 @@ function SignUp() {
           </p>
         </div>
       )}
+      <div className=" flex flex-wrap flex-col mt-5">
+        <p className=" text-center">
+          ----- Sign up with your Google account -----
+        </p>
+        <button
+          className="btn--outline flex flex-wrap items-center justify-center gap-4"
+          onClick={() => {
+            googleAuth();
+          }}
+        >
+          <img src={GoogleLogo} alt="google logo" className="h-[1.825rem]" />
+          <p className="m-0">Sign up with Google</p>
+        </button>
+        <NavLink
+          to={"/auth/signUp"}
+          className="font-bold underline text-primary-light text-center my-4"
+        >
+          Sign in with your credentials
+        </NavLink>
+      </div>
     </div>
   );
 }
