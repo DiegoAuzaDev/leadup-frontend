@@ -301,7 +301,7 @@ function SignUp() {
           <p className="m-0">Sign up with Google</p>
         </button>
         <NavLink
-          to={"/auth/signUp"}
+          to={"/auth/signIn"}
           className="font-bold underline text-primary-light text-center my-4"
         >
           Sign in with your credentials
