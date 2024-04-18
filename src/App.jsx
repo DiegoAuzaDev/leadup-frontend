@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import LandPage from "./pages/landPage/landPage";
 import Auth from "./pages/authenticationPage/auth";
-import DashBoard from "./pages/dashboard/dashboard";
+import Workspace from "./pages/workspace/workspace";
 import ErrorPage from "./pages/erro/error";
 
 
@@ -11,7 +11,9 @@ function App() {
       <Route path="/" element={<LandPage />} />
       <Route path="/auth/signIn" element={<Auth />} />
       <Route path="/auth/signUp" element={<Auth />} />
-      <Route path="/leadUp/dashboard" element={<DashBoard />} />
+      <Route path="/leadUp/workspace" element={<Workspace />}>
+        {/* <Route path="/" element /> */}
+      </Route>
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );

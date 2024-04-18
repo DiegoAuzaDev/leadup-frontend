@@ -3,12 +3,12 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useToken } from "../../context/tokenContext";
 
-function DashBoard() {
+function Workspace() {
   const [searchParams, _setSearchParams] = useSearchParams();
   const [token, setToken] = useToken();
   const navigate = useNavigate();
   const urlToken = searchParams.get("token");
-  
+
   useEffect(() => {
     document.body.classList.remove("bg-primary");
     document.body.classList.add("bg-white");
@@ -23,7 +23,9 @@ function DashBoard() {
     }
   }, [navigate, setToken, token, urlToken]);
 
-  return <h1>This is dasborad</h1>;
+  return (
+    <div className="grid grid-cols-12 grid-rows-2 h-[100vh] w-[100vw]"></div>
+  );
 }
 
-export default DashBoard;
+export default Workspace;
