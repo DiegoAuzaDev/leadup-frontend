@@ -2,6 +2,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useToken } from "../../context/tokenContext";
+import HeaderWorkSpace from "../../components/workspace/header";
 
 function Workspace() {
   const [searchParams, _setSearchParams] = useSearchParams();
@@ -24,7 +25,9 @@ function Workspace() {
   }, [navigate, setToken, token, urlToken]);
 
   return (
-    <div className="grid grid-cols-12 grid-rows-2 h-[100vh] w-[100vw]"></div>
+    <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-2 gap-x-3 gap-y-5 h-[100vh] w-[100vw]">
+      <HeaderWorkSpace />
+    </div>
   );
 }
 

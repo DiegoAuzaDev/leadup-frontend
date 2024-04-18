@@ -168,6 +168,30 @@
     -webkit-animation: 0.5s ease-in-out inputFadeIn;
   }
 
+  /* Header Work Space */
+
+  /* NavLinks CSS  */
+
+  .navlink { 
+    @apply 
+    transition duration-300 ease-in-out
+    px-[1.5em] py-[0.5em]
+    flex rounded-custom 
+    md:justify-center 
+    md:items-center lg:justify-between 
+    hover:bg-white hover:text-primary 
+    active:bg-white active:text-primary
+  }
+  .navlink.active{ 
+    @apply bg-white text-primary
+  }
+  .navlink div { 
+    @apply flex justify-center items-center gap-3
+  }
+  .navlink div p {
+    @apply md:hidden lg:block truncate
+  }
+
   @keyframes fadeInBottom {
     from {
       transform: translateY(100px);
@@ -224,4 +248,6 @@
       -o-transform: translateY(0px);
     }
   }
+
+
 }

@@ -11,7 +11,7 @@ export default {
       surface: {
         light: "#F2F2F2",
         DEFAULT: "#E0E0E0",
-        dark: "#505050",
+        dark: "#8D8D8D",
       },
       secondary: {
         DEFAULT: "#387bb2",

@@ -11,7 +11,7 @@ function App() {
       <Route path="/" element={<LandPage />} />
       <Route path="/auth/signIn" element={<Auth />} />
       <Route path="/auth/signUp" element={<Auth />} />
-      <Route path="/leadUp/workspace" element={<Workspace />}>
+      <Route path="/leadUp/workspace/*" element={<Workspace />}>
         {/* <Route path="/" element /> */}
       </Route>
       <Route path="*" element={<ErrorPage />} />
