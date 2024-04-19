@@ -10,7 +10,7 @@ import { localSignup } from "../../utils/localAuth";
 import googleAuth from "../../utils/googleAuth";
 import GoogleLogo from "../../assets/GoogleImage.webp";
 import { NavLink } from "react-router-dom";
-import ContainerMessage from "../containerMessage";
+import ContainerMessage from "../ui/containerMessage";
 
 function SignUp() {
   useEffect(() => {

@@ -92,6 +92,11 @@ function HeaderWorkSpace() {
               </NavLink>
             </li>
           </div>
+          <li className="">
+            <NavLink>
+              this si logo
+            </NavLink>
+          </li>
         </ul>
       </nav>
     </header>

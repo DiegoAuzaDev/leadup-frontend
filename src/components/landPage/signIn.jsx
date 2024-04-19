@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import LogoWhite from "../../assets/LeadUpIcon.svg";
-import ContainerMessage from "../containerMessage";
+import ContainerMessage from "../ui/containerMessage";
 import GoogleLogo from "../../assets/GoogleImage.webp";
 import { validateEmail, validatePassword } from "../../utils/validateInput";
 import googleAuth from "../../utils/googleAuth";
