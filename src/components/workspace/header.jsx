@@ -3,14 +3,16 @@ import LeadUpWhite from "../../assets/LeadUpWhite.svg";
 import LeadUpIconWhite from "../../assets/LeadUpIconWhite.svg"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCalendarDays, faGear, faHeadphones, faPeopleGroup, faTableList, faTruckFront } from "@fortawesome/free-solid-svg-icons";
+// import UserAvatar from "../ui/userAvatar";
 
 function HeaderWorkSpace() {
   return (
     <header
       className=" 
+    absolute
+    md:relative
     md:grid
     md:px-3 md:py-5
-    lg:px-3
     md:row-span-2 md:col-span-2
     border-2 border-y-0 border-r-surface-dark border-l-0 
     md:bg-primary 
