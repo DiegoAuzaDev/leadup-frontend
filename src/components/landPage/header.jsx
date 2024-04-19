@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { NavLink, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import LogoColor from "../assets/LeadUp.svg";
-import Logowhite from "../assets/LeadUpWhite.svg";
+import LogoColor from "../../assets/LeadUp.svg";
+import Logowhite from "../../assets/LeadUpWhite.svg";
 import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 

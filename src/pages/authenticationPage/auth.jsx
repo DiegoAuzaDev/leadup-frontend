@@ -1,7 +1,8 @@
 import { useLocation } from "react-router-dom";
-import Header from "../../components/header";
-import SignUp from "../../components/signUp";
-import SignIn from "../../components/signIn";
+
+import Header from "../../components/landPage/header";
+import SignUp from "../../components/landPage/signUp";
+import SignIn from "../../components/landPage/signIn";
 
 function Auth() {
   const location = useLocation();

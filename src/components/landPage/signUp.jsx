@@ -3,14 +3,14 @@ import {
   validateEmail,
   validateName,
   validatePassword,
-} from "../utils/validateInput";
+} from "../../utils/validateInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { localSignup } from "../utils/localAuth";
-import googleAuth from "../utils/googleAuth";
-import GoogleLogo from "../assets/GoogleImage.webp";
+import { localSignup } from "../../utils/localAuth";
+import googleAuth from "../../utils/googleAuth";
+import GoogleLogo from "../../assets/GoogleImage.webp";
 import { NavLink } from "react-router-dom";
-import ContainerMessage from "./containerMessage";
+import ContainerMessage from "../containerMessage";
 
 function SignUp() {
   useEffect(() => {

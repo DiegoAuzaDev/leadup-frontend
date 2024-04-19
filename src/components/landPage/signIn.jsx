@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import LogoWhite from "../assets/LeadUpIcon.svg";
-import ContainerMessage from "./containerMessage";
-import GoogleLogo from "../assets/GoogleImage.webp";
-import { validateEmail, validatePassword } from "../utils/validateInput";
-import googleAuth from "../utils/googleAuth";
+import LogoWhite from "../../assets/LeadUpIcon.svg";
+import ContainerMessage from "../containerMessage";
+import GoogleLogo from "../../assets/GoogleImage.webp";
+import { validateEmail, validatePassword } from "../../utils/validateInput";
+import googleAuth from "../../utils/googleAuth";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { localSignin } from "../utils/localAuth";
+import { localSignin } from "../../utils/localAuth";
 
 function SignIn() {
   useEffect(() => {

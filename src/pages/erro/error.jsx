@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
-import Footer from "../../components/footer";
-import Header from "../../components/header";
 import { useEffect } from "react";
+import Header from "../../components/landPage/header";
+import Footer from "../../components/landPage/footer";
 
 function ErrorPage() {
       useEffect(() => {
