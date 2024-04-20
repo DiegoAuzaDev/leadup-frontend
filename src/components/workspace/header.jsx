@@ -9,14 +9,7 @@ function HeaderWorkSpace() {
   return (
     <header
       className=" 
-    absolute
-    md:relative
-    md:grid
-    md:px-3 md:py-5
-    md:row-span-2 md:col-span-2
-    border-2 border-y-0 border-r-surface-dark border-l-0 
-    md:bg-primary 
-    text-white"
+    absolute md:relative md:grid md:px-3 md:py-5 md:row-span-2 md:col-span-2 border-2 border-y-0 border-r-surface-dark border-l-0 md:bg-primary text-white"
     >
       <nav className=" hidden md:flex flex-col justify-between">
         <ul
