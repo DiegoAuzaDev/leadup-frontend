@@ -1,11 +1,12 @@
 import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
 import LeadUpWhite from "../../assets/LeadUpWhite.svg";
 import LeadUpIconWhite from "../../assets/LeadUpIconWhite.svg"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCalendarDays, faGear, faHeadphones, faPeopleGroup, faTableList, faTruckFront } from "@fortawesome/free-solid-svg-icons";
-// import UserAvatar from "../ui/userAvatar";
+import UserAvatar from "../ui/userAvatar";
 
-function HeaderWorkSpace() {
+function HeaderWorkSpace({user}) {
   return (
     <header
       className=" 
@@ -67,9 +68,9 @@ function HeaderWorkSpace() {
         </ul>
         <ul
           role="list"
-          className="m-0 md:grid md:grid-cols-1 md:divide-y md:gap-7"
+          className="m-0 md:grid md:grid-cols-1 md:divide-y md:gap-2"
         >
-          <div className="md:py-7 md:flex flex-col gap-3">
+          <div className="md:py-2 md:flex flex-col gap-3">
             <li>
               <NavLink className="navlink" to="/leadUp/workspace/settings">
                 <div>
@@ -87,9 +88,9 @@ function HeaderWorkSpace() {
               </NavLink>
             </li>
           </div>
-          <li className="">
-            <NavLink>
-              this si logo
+          <li className="py-3" id={user.id}>
+            <NavLink className="flex items-center justify-center">
+              <UserAvatar img={user.photo} name={user.name} />
             </NavLink>
           </li>
         </ul>
@@ -98,4 +99,8 @@ function HeaderWorkSpace() {
   );
 }
 
+
+HeaderWorkSpace.propTypes = {
+  user: PropTypes.object,
+};
 export default HeaderWorkSpace;

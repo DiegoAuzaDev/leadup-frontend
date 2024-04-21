@@ -172,25 +172,25 @@
 
   /* NavLinks CSS  */
 
-  .navlink { 
-    @apply 
-    transition duration-300 ease-in-out
+  .navlink {
+    @apply transition duration-300 ease-in-out
     px-[1.5em] py-[0.5em]
     flex rounded-custom 
     md:justify-center 
     md:items-center lg:justify-between 
     hover:bg-white hover:text-primary 
-    active:bg-white active:text-primary
+    active:bg-white active:text-primary;
   }
-  .navlink.active{ 
-    @apply bg-white text-primary
+  .navlink.active {
+    @apply bg-white text-primary;
   }
-  .navlink div { 
-    @apply flex justify-center items-center gap-3
+  .navlink div {
+    @apply flex justify-center items-center gap-3;
   }
   .navlink div p {
-    @apply md:hidden lg:block truncate
+    @apply md:hidden lg:block truncate;
   }
+
 
   @keyframes fadeInBottom {
     from {
@@ -248,6 +248,12 @@
       -o-transform: translateY(0px);
     }
   }
-
-
+  @keyframes rotateAnimation {
+    from {
+      transform: rotate(0deg); /* Start rotation from 0 degrees */
+    }
+    to {
+      transform: rotate(360deg); /* End rotation at 360 degrees */
+    }
+  }
 }
