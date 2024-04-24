@@ -1,17 +1,15 @@
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import LeadUpWhite from "../../assets/LeadUpWhite.svg";
 import LeadUpIconWhite from "../../assets/LeadUpIconWhite.svg"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import {faCalendarDays, faGear, faHeadphones, faPeopleGroup, faTableList, faTruckFront } from "@fortawesome/free-solid-svg-icons";
 import UserAvatar from "../ui/userAvatar";
 
 function HeaderWorkSpace({user}) {
   return (
-    <header
-      className=" 
-    absolute md:relative md:grid md:px-3 md:py-5 md:row-span-2 md:col-span-2 border-2 border-y-0 border-r-surface-dark border-l-0 md:bg-primary text-white"
-    >
+    <header className="overflow-hidden  md:relative md:grid md:px-3 md:py-5 md:row-span-2 md:col-span-2 md:border-2 md:border-y-0 md:border-r-surface-dark md:border-l-0 md:bg-primary text-white">
       <nav className=" hidden md:flex flex-col justify-between">
         <ul
           role="list"

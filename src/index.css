@@ -99,6 +99,7 @@
     margin: 0 auto;
     padding-inline: 1.5rem;
   }
+
   /* Mobile Size*/
   h1 {
     @apply text-[2.027rem] md:text-[2.986rem] lg:text-[3.815rem];

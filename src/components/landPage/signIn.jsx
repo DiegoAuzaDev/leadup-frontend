@@ -46,7 +46,7 @@ function SignIn() {
         title: "Invalid email or password",
         message: jsonResponse.message,
       });
-      return 
+      return;
     }
     if (!response.ok && response.status == 404) {
       setIsloading(false);
@@ -57,7 +57,7 @@ function SignIn() {
         routeMessage: "Create your account",
         redirect: "/auth/signUp",
       });
-      return 
+      return;
     }
     if (response.ok) {
       setIsloading(false);
