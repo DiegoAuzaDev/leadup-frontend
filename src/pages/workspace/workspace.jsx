@@ -45,7 +45,7 @@ function Workspace() {
     try {
       const response = await requestuserData(token);
       if (response.ok && response.status == 200) {
-        // setIsLoading(false);
+        setIsLoading(false);
         const body = await response.json();
         setUser(body.user.google || body.user.local)
       }
@@ -56,7 +56,7 @@ function Workspace() {
         throw new Error("Server Error, Error status : 500");
       }
     } catch (err) {
-      // setIsLoading(false);
+      setIsLoading(false);
       setError(true);
       setErrorMessage(err.message);
     }

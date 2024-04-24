@@ -1,6 +1,6 @@
 function LoadingWorkSpace (){
     return (
-      <div className=" col-span-12 md:pr-3 grid grid-cols-1 gap-3 mt-20 md:py-5 md:m-0 md:col-span-10 md:grid-cols-12 md:grid-rows-2 md:row-span-2 animate-pulse">
+      <div className="sm:pt-10  col-span-12 md:pr-3 grid grid-cols-1 gap-3 mt-20 md:py-5 md:m-0 md:col-span-10 md:grid-cols-12 md:grid-rows-2 md:row-span-2 animate-pulse">
         <div
           role="status"
           className=" flex flex-col border-surface  border-2 rounded-custom md:col-span-12 p-2 h-[30vh] md:h-auto gap-5"

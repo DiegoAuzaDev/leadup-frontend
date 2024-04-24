@@ -2,14 +2,27 @@ import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import LeadUpWhite from "../../assets/LeadUpWhite.svg";
-import LeadUpIconWhite from "../../assets/LeadUpIconWhite.svg"
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-import {faCalendarDays, faGear, faHeadphones, faPeopleGroup, faTableList, faTruckFront } from "@fortawesome/free-solid-svg-icons";
+import LeadUpIconWhite from "../../assets/LeadUpIconWhite.svg";
+import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarDays,
+  faGear,
+  faHeadphones,
+  faPeopleGroup,
+  faTableList,
+  faTruckFront,
+} from "@fortawesome/free-solid-svg-icons";
 import UserAvatar from "../ui/userAvatar";
+import { useState } from "react";
 
-function HeaderWorkSpace({user}) {
+function HeaderWorkSpace({ user }) {
+  const [isActive, setIsActive] = useState(false);
+
   return (
-    <header className="overflow-hidden  md:relative md:grid md:px-3 md:py-5 md:row-span-2 md:col-span-2 md:border-2 md:border-y-0 md:border-r-surface-dark md:border-l-0 md:bg-primary text-white">
+    <header
+      style={{ width: "-webkit-fill-available" }}
+      className=" sm:absolute sm:mr-3 sm:col-span-12 sm:rounded-custom md:m-0 md:rounded-none px-3 py-5  md:relative md:grid md:px-3 md:py-5 md:row-span-2 md:col-span-2 md:border-2 md:border-y-0 md:border-r-surface-dark md:border-l-0 bg-primary text-white"
+    >
       <nav className=" hidden md:flex flex-col justify-between">
         <ul
           role="list"
@@ -93,10 +106,31 @@ function HeaderWorkSpace({user}) {
           </li>
         </ul>
       </nav>
+      <nav className=" md:hidden">
+        <ul role="list" className=" flex flex-row justify-between">
+          <li>
+            <NavLink className="">
+              <img className=" h-10 " src={LeadUpIconWhite} alt="LeadUp Logo" />
+            </NavLink>
+          </li>
+          <li>
+            <button
+              onClick={(ev) => {
+                ev.preventDefault();
+                setIsActive(!isActive);
+              }}
+            >
+              <FontAwesomeIcon
+                icon={isActive ? faBars : faClose}
+                className=" text-[2.5rem]"
+              />
+            </button>
+          </li>
+        </ul>
+      </nav>
     </header>
   );
 }
-
 
 HeaderWorkSpace.propTypes = {
   user: PropTypes.object,
