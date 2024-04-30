@@ -38,30 +38,40 @@ function SignIn() {
     setIsloading(true);
     ev.preventDefault();
     setIsInvalidAuth(null);
-    const response = await localSignin(email, password);
-    if (!response.ok && response.status == 401) {
+    try {
+      const response = await localSignin(email, password);
+      if (!response.ok && response.status == 401) {
+        setIsloading(false);
+        const jsonResponse = await response.json();
+        setIsInvalidAuth({
+          title: "Invalid email or password",
+          message: jsonResponse.message,
+        });
+        return;
+      }
+      if (!response.ok && response.status == 404) {
+        setIsloading(false);
+        const jsonResponse = await response.json();
+        setIsInvalidAuth({
+          title: "User not found",
+          message: jsonResponse.message,
+          routeMessage: "Create your account",
+          redirect: "/auth/signUp",
+        });
+        return;
+      }
+      if (response.ok) {
+        setIsloading(false);
+        window.location = response.url;
+      }
+    } catch (err) {
       setIsloading(false);
-      const jsonResponse = await response.json();
       setIsInvalidAuth({
-        title: "Invalid email or password",
-        message: jsonResponse.message,
+        title: "Server Error",
+        message: "server not OK",
+        routeMessage: "try again laer",
+        redirect: "/",
       });
-      return;
-    }
-    if (!response.ok && response.status == 404) {
-      setIsloading(false);
-      const jsonResponse = await response.json();
-      setIsInvalidAuth({
-        title: "User not found",
-        message: jsonResponse.message,
-        routeMessage: "Create your account",
-        redirect: "/auth/signUp",
-      });
-      return;
-    }
-    if (response.ok) {
-      setIsloading(false);
-      window.location = response.url;
     }
   };
 
