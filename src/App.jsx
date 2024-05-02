@@ -3,6 +3,12 @@ import LandPage from "./pages/landPage/landPage";
 import Auth from "./pages/authenticationPage/auth";
 import Workspace from "./pages/workspace/workspace";
 import ErrorPage from "./pages/erro/error";
+import Settings from "./components/workspace/settings";
+import Dashboard from "./components/workspace/dashboard"
+import Calendar from "./components/workspace/Calendar"
+import Team from "./components/workspace/Team";
+import Vehicles from "./components/workspace/Vehicles";
+import Support from "./components/workspace/Support";
 
 
 function App() {
@@ -11,8 +17,13 @@ function App() {
       <Route path="/" element={<LandPage />} />
       <Route path="/auth/signIn" element={<Auth />} />
       <Route path="/auth/signUp" element={<Auth />} />
-      <Route path="/leadUp/workspace/*" element={<Workspace />}>
-        {/* <Route path="/" element /> */}
+      <Route path="/leadUp/workspace/" element={<Workspace />}>
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="calendar" element={<Calendar />} />
+        <Route path="team" element={<Team />} />
+        <Route path="vehicles" element={<Vehicles />} />
+        <Route path="settings" element={<Settings />} />
+        <Route path="support" element={<Support />} />
       </Route>
       <Route path="*" element={<ErrorPage />} />
     </Routes>

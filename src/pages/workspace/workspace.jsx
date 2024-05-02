@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Outlet, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useToken } from "../../context/tokenContext";
 import HeaderWorkSpace from "../../components/workspace/header";
@@ -25,18 +25,21 @@ function Workspace() {
   }, []);
 
   useEffect(() => {
+    // Delete this line when working online 
+    getUserData()
+    // 
     if (urlToken) {
       setToken(urlToken);
-      getUserData(urlToken);
+      getUserData();
       return;
     }
     if (token) {
-      getUserData(token);
+      getUserData();
       return;
     }
-    if (!token && !urlToken) {
-      navigate("/");
-    }
+    // if (!token && !urlToken) {
+    //   navigate("/");
+    // }
   }, [token]);
 
   const getUserData = async () => {
@@ -56,19 +59,24 @@ function Workspace() {
         throw new Error("Server Error, Error status : 500");
       }
     } catch (err) {
-      setIsLoading(false);
-      setError(true);
-      setErrorMessage(err.message);
+      // this lines only works on offline mode 
+      setIsLoading(false)
+      setError(false)
+
+
+      // this lines must be uncommented when working online
+      // setIsLoading(false);
+      // setError(true);
+      // setErrorMessage(err.message);
     }
   };
 
   return (
     <div className="grid grid-cols-12  px-3 py-5  md:px-0 md:py-0 grid-rows-1 gap-0 md:grid-cols-12 md:grid-rows-2 md:gap-x-3 md:gap-y-5 h-[100vh] w-[100vw] ">
       <HeaderWorkSpace user={user} />
-      {isLoading && (
-       <LoadingWorkSpace/> 
-      )}
+      {isLoading && <LoadingWorkSpace />}
       {error && <ErrorWorkspace message={errorMessage} />}
+      {!isLoading && !error && <Outlet />}
     </div>
   );
 }
