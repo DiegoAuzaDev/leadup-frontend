@@ -6,7 +6,6 @@ import LeadUpIconWhite from "../../assets/LeadUpIconWhite.svg";
 import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarDays,
-  faGear,
   faHeadphones,
   faPeopleGroup,
   faTableList,
@@ -82,14 +81,6 @@ function HeaderWorkSpace({ user }) {
           className="m-0 md:grid md:grid-cols-1 md:divide-y md:gap-2"
         >
           <div className="md:py-2 md:flex flex-col gap-3">
-            <li>
-              <NavLink className="navlink" to="/leadUp/workspace/settings">
-                <div>
-                  <FontAwesomeIcon icon={faGear} />
-                  <p className=" m-0">Settings</p>
-                </div>
-              </NavLink>
-            </li>
             <li>
               <NavLink className="navlink" to="/leadUp/workspace/support">
                 <div>
@@ -167,14 +158,6 @@ function HeaderWorkSpace({ user }) {
               <div>
                 <FontAwesomeIcon icon={faTruckFront} />
                 <p className=" m-0">Vehicles</p>
-              </div>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink className="navlink" to="/leadUp/workspace/settings">
-              <div>
-                <FontAwesomeIcon icon={faGear} />
-                <p className=" m-0">Settings</p>
               </div>
             </NavLink>
           </li>

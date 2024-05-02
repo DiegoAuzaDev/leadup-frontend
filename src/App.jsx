@@ -3,7 +3,6 @@ import LandPage from "./pages/landPage/landPage";
 import Auth from "./pages/authenticationPage/auth";
 import Workspace from "./pages/workspace/workspace";
 import ErrorPage from "./pages/erro/error";
-import Settings from "./components/workspace/settings";
 import Dashboard from "./components/workspace/dashboard"
 import Calendar from "./components/workspace/Calendar"
 import Team from "./components/workspace/Team";
@@ -22,7 +21,6 @@ function App() {
         <Route path="calendar" element={<Calendar />} />
         <Route path="team" element={<Team />} />
         <Route path="vehicles" element={<Vehicles />} />
-        <Route path="settings" element={<Settings />} />
         <Route path="support" element={<Support />} />
       </Route>
       <Route path="*" element={<ErrorPage />} />
