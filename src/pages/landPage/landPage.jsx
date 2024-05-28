@@ -1,5 +1,4 @@
-import Header from "../../components/header";
-import Footer from "../../components/footer";
+
 import { NavLink } from "react-router-dom";
 import ContactImage from "../../assets/contactImg.webp";
 import WorkSpaceImage from "../../assets/placeHolderImage.png";
@@ -8,6 +7,8 @@ import Excel from "../../assets/excelSVG.svg"
 import Net from "../../assets/netSVG.svg"
 import Target from "../../assets/targetSVG.svg"
 import { useEffect } from "react";
+import Header from "../../components/landPage/header";
+import Footer from "../../components/landPage/footer";
 
 function LandPage() {
     useEffect(() => {

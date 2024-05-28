@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import LogoWhite from "../assets/LeadUpIcon.svg";
-import ContainerMessage from "./containerMessage";
-import GoogleLogo from "../assets/GoogleImage.webp";
-import { validateEmail, validatePassword } from "../utils/validateInput";
-import googleAuth from "../utils/googleAuth";
+import LogoWhite from "../../assets/LeadUpIcon.svg";
+import ContainerMessage from "../ui/containerMessage";
+import GoogleLogo from "../../assets/GoogleImage.webp";
+import { validateEmail, validatePassword } from "../../utils/validateInput";
+import googleAuth from "../../utils/googleAuth";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { localSignin } from "../utils/localAuth";
+import { localSignin } from "../../utils/localAuth";
 
 function SignIn() {
   useEffect(() => {
@@ -38,30 +38,40 @@ function SignIn() {
     setIsloading(true);
     ev.preventDefault();
     setIsInvalidAuth(null);
-    const response = await localSignin(email, password);
-    if (!response.ok && response.status == 401) {
+    try {
+      const response = await localSignin(email, password);
+      if (!response.ok && response.status == 401) {
+        setIsloading(false);
+        const jsonResponse = await response.json();
+        setIsInvalidAuth({
+          title: "Invalid email or password",
+          message: jsonResponse.message,
+        });
+        return;
+      }
+      if (!response.ok && response.status == 404) {
+        setIsloading(false);
+        const jsonResponse = await response.json();
+        setIsInvalidAuth({
+          title: "User not found",
+          message: jsonResponse.message,
+          routeMessage: "Create your account",
+          redirect: "/auth/signUp",
+        });
+        return;
+      }
+      if (response.ok) {
+        setIsloading(false);
+        window.location = response.url;
+      }
+    } catch (err) {
       setIsloading(false);
-      const jsonResponse = await response.json();
       setIsInvalidAuth({
-        title: "Invalid email or password",
-        message: jsonResponse.message,
+        title: "Server Error",
+        message: "server not OK",
+        routeMessage: "try again laer",
+        redirect: "/",
       });
-      return 
-    }
-    if (!response.ok && response.status == 404) {
-      setIsloading(false);
-      const jsonResponse = await response.json();
-      setIsInvalidAuth({
-        title: "User not found",
-        message: jsonResponse.message,
-        routeMessage: "Create your account",
-        redirect: "/auth/signUp",
-      });
-      return 
-    }
-    if (response.ok) {
-      setIsloading(false);
-      window.location = response.url;
     }
   };
 

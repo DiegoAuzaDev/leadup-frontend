@@ -3,14 +3,14 @@ import {
   validateEmail,
   validateName,
   validatePassword,
-} from "../utils/validateInput";
+} from "../../utils/validateInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { localSignup } from "../utils/localAuth";
-import googleAuth from "../utils/googleAuth";
-import GoogleLogo from "../assets/GoogleImage.webp";
+import { localSignup } from "../../utils/localAuth";
+import googleAuth from "../../utils/googleAuth";
+import GoogleLogo from "../../assets/GoogleImage.webp";
 import { NavLink } from "react-router-dom";
-import ContainerMessage from "./containerMessage";
+import ContainerMessage from "../ui/containerMessage";
 
 function SignUp() {
   useEffect(() => {
@@ -58,19 +58,32 @@ function SignUp() {
   };
 
   const handleResponse = async () => {
-    const response = await localSignup(name, email, password);
-    console.log(response)
-    if (!response.ok && response.status == 401) {
-      setIsLoading(false);
-      setIsInvalidAuth({
-        title: "Email is already on use",
-        message: response.statusText,
-        routeMessage: "Sig in with your credentials",
-        redirect: "/auth/signIn",
-      });
-      return 
-    }
-    if (!response.ok) {
+    try {
+      const response = await localSignup(name, email, password);
+      if (!response.ok && response.status == 401) {
+        setIsLoading(false);
+        setIsInvalidAuth({
+          title: "Email is already on use",
+          message: response.statusText,
+          routeMessage: "Sig in with your credentials",
+          redirect: "/auth/signIn",
+        });
+        return;
+      }
+      if (!response.ok) {
+        setIsLoading(false);
+        setIsInvalidAuth({
+          title: "Server Error",
+          message: "server not OK",
+          routeMessage: "try again laer",
+          redirect: "/",
+        });
+        return;
+      }
+      if (response.ok && response.status == 200 && response.url) {
+        window.location = response.url;
+      }
+    } catch (err) {
       setIsLoading(false);
       setIsInvalidAuth({
         title: "Server Error",
@@ -78,10 +91,6 @@ function SignUp() {
         routeMessage: "try again laer",
         redirect: "/",
       });
-      return 
-    }
-    if (response.ok && response.status == 200 && response.url) {
-      window.location = response.url;
     }
   };
 
