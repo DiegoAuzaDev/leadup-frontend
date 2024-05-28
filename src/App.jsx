@@ -4,10 +4,10 @@ import Auth from "./pages/authenticationPage/auth";
 import Workspace from "./pages/workspace/workspace";
 import ErrorPage from "./pages/erro/error";
 import Dashboard from "./components/workspace/dashboard"
-import Calendar from "./components/workspace/Calendar"
+import Calendar from "./components/workspace/calendar"
 import Team from "./components/workspace/Team";
 import Vehicles from "./components/workspace/Vehicles";
-import Support from "./components/workspace/Support";
+import Support from "./components/workspace/support";
 
 
 function App() {

@@ -12,5 +12,4 @@ async function requestuserData(token) {
   return userResponse
 }
 
-
 export { requestuserData}
