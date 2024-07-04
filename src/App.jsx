@@ -3,7 +3,7 @@ import LandPage from "./pages/landPage/landPage";
 import Auth from "./pages/authenticationPage/auth";
 import Workspace from "./pages/workspace/workspace";
 import ErrorPage from "./pages/erro/error";
-import Dashboard from "./components/workspace/dashboard"
+import Dashboard from "./components/workspace/dashboard";
 import Vehicles from "./components/workspace/vehicles";
 import Calendar from "./components/workspace/calendar";
 import Support from "./components/workspace/support";

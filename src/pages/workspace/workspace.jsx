@@ -6,6 +6,7 @@ import HeaderWorkSpace from "../../components/workspace/header";
 import { requestuserData } from "../../utils/workspace/user";
 import ErrorWorkspace from "../../components/workspace/error";
 import LoadingWorkSpace from "../../components/ui/loading";
+import { useUserContext } from "../../context/userContext";
 
 function Workspace() {
   const [searchParams, _setSearchParams] = useSearchParams();
@@ -15,7 +16,8 @@ function Workspace() {
 
   // user data
   const [isLoading, setIsLoading] = useState(true);
-  const [ user, setUser] = useState({})
+  const [user, setUser] = useState({});
+  const [userContext, setUserContext] = useUserContext();
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -25,9 +27,9 @@ function Workspace() {
   }, []);
 
   useEffect(() => {
-    // Delete this line when working online 
-    getUserData()
-    // 
+    // Delete this line when working online
+    getUserData();
+    //
     if (urlToken) {
       setToken(urlToken);
       getUserData();
@@ -37,9 +39,9 @@ function Workspace() {
       getUserData();
       return;
     }
-    // if (!token && !urlToken) {
-    //   navigate("/");
-    // }
+    if (!token && !urlToken) {
+      navigate("/");
+    }
   }, [token]);
 
   const getUserData = async () => {
@@ -50,7 +52,8 @@ function Workspace() {
       if (response.ok && response.status == 200) {
         setIsLoading(false);
         const body = await response.json();
-        setUser(body.user.google || body.user.local)
+        setUser(body.user.google || body.user.local);
+        setUserContext(body.user.google || body.user.local);
       }
       if (!response.ok && response.status == 401) {
         throw new Error("Unauthorized, Error status : 401");
@@ -59,25 +62,26 @@ function Workspace() {
         throw new Error("Server Error, Error status : 500");
       }
     } catch (err) {
-      // this lines only works on offline mode 
-      setIsLoading(false)
-      setError(false)
-
+      // this lines only works on offline mode
+      // setIsLoading(false)
+      // setError(false)
 
       // this lines must be uncommented when working online
-      // setIsLoading(false);
-      // setError(true);
-      // setErrorMessage(err.message);
+      setIsLoading(false);
+      setError(true);
+      setErrorMessage(err.message);
     }
   };
 
   return (
-    <div className="grid grid-cols-12  px-3 py-5  md:px-0 md:py-0 grid-rows-1 gap-0 md:grid-cols-12 md:grid-rows-2 md:gap-x-3 md:gap-y-5 h-[100vh] w-[100vw] ">
-      <HeaderWorkSpace user={user} />
-      {isLoading && <LoadingWorkSpace />}
-      {error && <ErrorWorkspace message={errorMessage} />}
-      {!isLoading && !error && <Outlet />}
-    </div>
+
+      <div className="grid grid-cols-12  px-3 py-5  md:px-0 md:py-0 grid-rows-1 gap-0 md:grid-cols-12 md:grid-rows-2 md:gap-x-3 md:gap-y-5 h-[100vh] w-[100vw] ">
+        <HeaderWorkSpace user={user} />
+        {isLoading && <LoadingWorkSpace />}
+        {error && <ErrorWorkspace message={errorMessage} />}
+        {!isLoading && !error && <Outlet />}
+      </div>
+
   );
 }
 
