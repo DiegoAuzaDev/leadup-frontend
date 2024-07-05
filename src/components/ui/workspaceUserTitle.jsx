@@ -7,7 +7,7 @@ function WorkspaceUserTitle({name, photo, email}){
         <div className="flex items-center">
           <UserAvatar name={name} img={photo} />
           <div>
-            <p className=" capitalize m-0 font-bold">{name}</p>
+            <p className="capitalize m-0 font-bold">{name}</p>
             <p className=" m-0">{email}</p>
           </div>
         </div>
