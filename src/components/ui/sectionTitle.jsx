@@ -12,7 +12,7 @@ function SectionTitle({ title, icon, mainRedirect, mainButton, button, buttonRed
       <NavLink to={mainRedirect} className="btn--outline inline-block capitalize">
        {mainButton}
       </NavLink>
-      {button ?? <NavLink to={buttonRedirect}>{button}</NavLink>}
+      {button ? <NavLink to={buttonRedirect}>{button}</NavLink> : null }
     </div>
   );
 }
