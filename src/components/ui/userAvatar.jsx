@@ -19,7 +19,7 @@ function getFirstTwoLetters(name) {
 
 function UserAvatar({name, img}) {
   return (
-    <div className=" bg-surface w-8 h-8 md:w-12 md:h-12 rounded-full flex items-center justify-center border-2  border-surface hover:bg-primary hover:text-surface text-primary transition duration-300 ease-in-out overflow-hidden font-bold">
+    <div className=" bg-surface w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center border-2  border-surface hover:bg-primary hover:text-surface text-primary transition duration-300 ease-in-out overflow-hidden font-bold">
       {!name && !img && (
         <FontAwesomeIcon icon={faUser} className=" inline-block text-lg" />
       )}
