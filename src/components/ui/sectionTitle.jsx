@@ -7,12 +7,17 @@ function SectionTitle({ title, icon, mainRedirect, mainButton, button, buttonRed
     <div className="flex flex-col gap-4 md:flex-row justify-between border-b-2 p-2 border-surface-dark">
       <div className="flex items-center gap-2 text-primary-dark">
         <FontAwesomeIcon icon={icon} />
-        <p className=" m-0 capitalize font-bold text-center">{title || "Missing title"}</p>
+        <p className=" m-0 capitalize font-bold text-center">
+          {title || "Missing title"}
+        </p>
       </div>
-      <NavLink to={mainRedirect} className="btn--outline inline-block capitalize">
-       {mainButton}
+      <NavLink
+        to={`/leadUp/workspace/${mainRedirect}`}
+        className="btn--outline inline-block capitalize"
+      >
+        {mainButton}
       </NavLink>
-      {button ? <NavLink to={buttonRedirect}>{button}</NavLink> : null }
+      {button ? <NavLink to={buttonRedirect}>{button}</NavLink> : null}
     </div>
   );
 }
