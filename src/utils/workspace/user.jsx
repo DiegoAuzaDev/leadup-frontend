@@ -1,15 +1,15 @@
 import { API_URL } from "../keys";
 
-async function requestuserData(token) {
+async function requestUserData(token) {
   const userResponse = await fetch(`${API_URL}/api`, {
     method: "GET",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + token,
+      Authorization: "Bearer " + token,
     },
   });
-  return userResponse
+  return userResponse;
 }
 
-export { requestuserData}
+export { requestUserData };

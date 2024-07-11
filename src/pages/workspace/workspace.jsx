@@ -3,11 +3,12 @@ import { Outlet, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useToken } from "../../context/tokenContext";
 import HeaderWorkSpace from "../../components/workspace/header";
-import { requestuserData } from "../../utils/workspace/user";
+import { requestUserData } from "../../utils/workspace/user";
 import ErrorWorkspace from "../../components/workspace/error";
 import LoadingWorkSpace from "../../components/ui/loading";
 import { useUserContext } from "../../context/userContext";
 import { useEmployeesContext } from "../../context/employeesContext";
+import { useCompanyContext } from "../../context/companyContext";
 
 function Workspace() {
   const [searchParams, _setSearchParams] = useSearchParams();
@@ -20,6 +21,7 @@ function Workspace() {
   const [user, setUser] = useState({});
   const [userContext, setUserContext] = useUserContext();
   const [employeesContext, setEmployeeContext] = useEmployeesContext();
+  const [companyContext, setCompanyContext] = useCompanyContext();
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -38,6 +40,7 @@ function Workspace() {
     if (token) {
       getUserData();
       getEmployees();
+    
       return;
     }
     if (!token && !urlToken) {
@@ -46,17 +49,19 @@ function Workspace() {
   }, [token]);
 
   const getEmployees = async () => {
-    // Add employee logic
+    
   };
 
   const getUserData = async () => {
     setError(null);
     setErrorMessage("");
     try {
-      const response = await requestuserData(token);
+      const response = await requestUserData(token);
       if (response.ok && response.status == 200) {
         setIsLoading(false);
         const body = await response.json();
+        setCompanyContext(body.company)
+        console.log(body)
         setUser(body.user.google || body.user.local);
         setUserContext(body.user.google || body.user.local);
       }
@@ -67,11 +72,6 @@ function Workspace() {
         throw new Error("Server Error, Error status : 500");
       }
     } catch (err) {
-      // this lines only works on offline mode
-      // setIsLoading(false)
-      // setError(false)
-
-      // this lines must be uncommented when working online
       setIsLoading(false);
       setError(true);
       setErrorMessage(err.message);

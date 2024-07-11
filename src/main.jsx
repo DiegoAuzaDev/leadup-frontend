@@ -6,6 +6,7 @@ import { TokenProvider } from "./context/tokenContext.jsx";
 import { UserContextProvider } from "./context/userContext.jsx";
 import { APIProvider } from "@vis.gl/react-google-maps";
 import { EmployeesContextProvider } from "./context/employeesContext.jsx";
+import { CompanyContextProvider } from "./context/companyContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>
@@ -14,7 +15,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <BrowserRouter>
           <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAP_API}>
             <EmployeesContextProvider>
+              <CompanyContextProvider >
               <App />
+              </CompanyContextProvider>
             </EmployeesContextProvider>
           </APIProvider>
         </BrowserRouter>

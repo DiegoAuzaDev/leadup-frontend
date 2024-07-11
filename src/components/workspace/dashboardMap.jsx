@@ -6,6 +6,7 @@ function DashboardMap(){
        <Map
          defaultCenter={{ lat: 4.66197, lng: -74.12087 }}
          defaultZoom={12}
+         minZoom={6}
          gestureHandling={"greedy"}
          disableDefaultUI={true}
        />
