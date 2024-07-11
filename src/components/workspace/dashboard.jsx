@@ -13,7 +13,6 @@ import { useEmployeesContext } from "../../context/employeesContext";
 function Dashboard() {
   const [user] = useUserContext();
   const [employees] = useEmployeesContext();
-
   return (
     <>
       <section className=" overflow-scroll flex flex-col row-span-2 col-span-full mt-10 md:col-span-10 md:my-5 md:mr-5 lg:grid lg:grid-cols-12 lg:grid-rows-12 lg:gap-5">
@@ -50,14 +49,14 @@ function Dashboard() {
         </div>
 
         {/* EMPLOYEE STATUS  */}
-        <div className="border-2 rounded-custom border-surface-dark mb-8 lg:col-span-8 lg:row-span-6 lg:m-0 overflow-scroll">
+        <div className="min-h-[25rem] lg:min-h-fit lg:h-auto border-2 rounded-custom border-surface-dark mb-8 lg:col-span-8 lg:row-span-6 lg:m-0 overflow-scroll">
           <SectionTitle
             title={"Team"}
             icon={faPeopleGroup}
             mainButton={"see all"}
             mainRedirect={"team"}
           />
-          <div className=" min-h-32">
+          <div>
             {employees.map((employee) => (
               <EmployeeStatus
                 key={employee.id}

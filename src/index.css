@@ -198,6 +198,21 @@
     @apply md:hidden lg:block truncate;
   }
 
+  /* Employee Status  */
+
+
+  .status {
+    @apply px-[1em] py-[0.25em] md:px-[1em] md:py-[0.35em] font-bold text-center  rounded-custom transition duration-300 ease-in-out tracking-wide;
+  }
+  .activeStatus {
+    @apply status bg-success-light
+  } 
+  .inactiveStatus {
+
+  }
+
+
+
   @keyframes fadeInBottom {
     from {
       transform: translateY(100px);
