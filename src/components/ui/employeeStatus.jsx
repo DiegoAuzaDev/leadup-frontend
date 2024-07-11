@@ -33,7 +33,7 @@ function EmployeeStatus({
   }
 
   return (
-    <div className=" flex gap-3 m-2 justify-between">
+    <div className=" flex gap-3 m-2 justify-between flex-wrap">
       <div className="flex gap-3">
         <UserAvatar img={employeePhoto} name={employeeName} />
         <div>
