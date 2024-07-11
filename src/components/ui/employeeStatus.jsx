@@ -3,7 +3,7 @@ import employeeStatus from "../../utils/workspace/employeeStatus";
 import { useEffect } from "react";
 import UserAvatar from "./userAvatar";
 
-function EmployeeStatus({ status, employeePhoto, employeeName, employeeId }) {
+function EmployeeStatus({ active, employeePhoto, employeeName, employeeId, updated }) {
   return (
     <div>
       <UserAvatar img={employeePhoto} name={employeeName} />
@@ -12,10 +12,11 @@ function EmployeeStatus({ status, employeePhoto, employeeName, employeeId }) {
 }
 
 EmployeeStatus.propTypes = {
-  status: PropTypes.string,
+  active: PropTypes.bool,
   employeeName: PropTypes.string,
   employeeId: PropTypes.string,
   employeePhoto: PropTypes.string,
+  updated: PropTypes.string,
 };
 
 export default EmployeeStatus;

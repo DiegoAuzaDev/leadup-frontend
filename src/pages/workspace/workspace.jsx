@@ -7,6 +7,7 @@ import { requestuserData } from "../../utils/workspace/user";
 import ErrorWorkspace from "../../components/workspace/error";
 import LoadingWorkSpace from "../../components/ui/loading";
 import { useUserContext } from "../../context/userContext";
+import { useEmployeesContext } from "../../context/employeesContext";
 
 function Workspace() {
   const [searchParams, _setSearchParams] = useSearchParams();
@@ -18,6 +19,7 @@ function Workspace() {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState({});
   const [userContext, setUserContext] = useUserContext();
+  const [employeesContext, setEmployeeContext] = useEmployeesContext();
   const [error, setError] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -27,22 +29,76 @@ function Workspace() {
   }, []);
 
   useEffect(() => {
-    // Delete this line when working online
-    getUserData();
-    //
     if (urlToken) {
       setToken(urlToken);
       getUserData();
+      getEmployees();
       return;
     }
     if (token) {
       getUserData();
+      getEmployees();
       return;
     }
     if (!token && !urlToken) {
       navigate("/");
     }
   }, [token]);
+
+  const getEmployees = async()=>{
+      const employees = [
+        {
+          name: "Diego Auza",
+          photo:
+            "https://cdn.vox-cdn.com/thumbor/7u-vFaqxvGqKAdvY21ZDAK4Z9Fw=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/22870860/Bubble_gum_gamerpic.jpg",
+          id: "107650123123120507",
+          email: "auzajuan1@gmail.com",
+          dob: "10/04/2004",
+          active: false,
+          updated: "10/10/2024",
+        },
+        {
+          name: "Luis Carlos Auza",
+          photo: "",
+          id: "1076500507asdfasdf",
+          email: "auzajuan1@gmail.com",
+          dob: "10/04/2004",
+          active: false,
+          updated: "10/10/2024",
+        },
+        {
+          name: "Julie",
+          photo:"",
+          id: "107650051231231we34342307",
+          email: "auzajuan1@gmail.com",
+          dob: "10/04/2004",
+          active: false,
+          updated: "10/10/2024",
+        },
+        {
+          name: "Juan David",
+          photo:
+            "https://steamuserimages-a.akamaihd.net/ugc/786371856221183225/2F04B32CA10AD1ADBC01CE5D4DC6F7AF0E96AE6C/?imw=512&imh=512&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true",
+          id: "107650051231231svvadasda34342307",
+          email: "auzajuan1@gmail.com",
+          dob: "10/04/2004",
+          active: false,
+          updated: "10/10/2024",
+        },
+        {
+          name: "Marcos Pedro",
+          photo: "",
+          id: "10765005123123134gg342307",
+          email: "auzajuan1@gmail.com",
+          dob: "10/04/2004",
+          active: false,
+          updated: "10/10/2024",
+        },
+      ];
+      setEmployeeContext(employees)
+
+  }
+
 
   const getUserData = async () => {
     setError(null);
