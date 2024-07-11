@@ -1,23 +1,23 @@
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function SectionTitle({ title, icon, mainRedirect, mainButton, button, buttonRedirect }) {
   return (
     <div className="flex flex-col gap-4 md:flex-row justify-between border-b-2 p-2 border-surface-dark">
       <div className="flex items-center gap-2 text-primary-dark">
         <FontAwesomeIcon icon={icon} />
-        <p className=" m-0 capitalize font-bold text-center">
+        <h2 className=" m-0 capitalize font-bold text-center text-base md:text-[1.05rem] lg:text-[1.1rem]">
           {title || "Missing title"}
-        </p>
+        </h2>
       </div>
-      <NavLink
+      <Link
         to={`/leadUp/workspace/${mainRedirect}`}
         className="btn--outline inline-block capitalize"
       >
         {mainButton}
-      </NavLink>
-      {button ? <NavLink to={buttonRedirect}>{button}</NavLink> : null}
+      </Link>
+      {button ? <Link to={buttonRedirect}>{button}</Link> : null}
     </div>
   );
 }

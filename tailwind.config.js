@@ -6,7 +6,7 @@ export default {
     colors: {
       primary: {
         light: "#0CA5E9",
-        DEFAULT: "#082F49",
+        DEFAULT: "#082F48",
         dark: "#13161a",
       },
       surface: {
@@ -15,7 +15,7 @@ export default {
         dark: "#8D8D8D",
       },
       secondary: {
-        DEFAULT: "#387bb2",
+        DEFAULT: "#387bb1",
         dark: "#2c6593",
       },
       success: {

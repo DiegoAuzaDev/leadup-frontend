@@ -9,6 +9,7 @@ import WorkspaceUserTitle from "../ui/workspaceUserTitle";
 import EmployeeStatus from "../ui/employeeStatus";
 import DashboardMap from "./dashboardMap";
 import { useEmployeesContext } from "../../context/employeesContext";
+import EmptyList from "../ui/emptyList";
 
 function Dashboard() {
   const [user] = useUserContext();
@@ -30,7 +31,7 @@ function Dashboard() {
             mainButton={"see all"}
             mainRedirect={"vehicles"}
           />
-          <div className="h-96 rounded-ee-custom overflow-hidden">
+          <div className=" h-80 md:h-[30em] lg:h-full rounded-b-custom overflow-hidden">
             <DashboardMap />
           </div>
         </div>
@@ -56,18 +57,30 @@ function Dashboard() {
             mainButton={"see all"}
             mainRedirect={"team"}
           />
-          <div>
-            {employees.map((employee) => (
-              <EmployeeStatus
-                key={employee.id}
-                active={employee.active}
-                employeeId={employee.id}
-                employeeName={employee.name}
-                employeePhoto={employee.photo}
-                updated={employee.updated}
+          {employees.length != 0 ? (
+            <div>
+              {employees.map((employee) => (
+                <EmployeeStatus
+                  key={employee.id}
+                  active={employee.active}
+                  employeeId={employee.id}
+                  employeeName={employee.name}
+                  employeePhoto={employee.photo}
+                  updated={employee.updated}
+                />
+              ))}
+            </div>
+          ) : null}
+          {employees.length == 0 ? (
+            <div className="flex justify-center mt-8">
+              <EmptyList
+                title={"Your employee list is empty"}
+                text={"get your team ready"}
+                redirectText={"Add team member"}
+                redirect={"/leadUp/workspace/team"}
               />
-            ))}
-          </div>
+            </div>
+          ) : null}
         </div>
       </section>
     </>
