@@ -7,11 +7,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import WorkspaceUserTitle from "../ui/workspaceUserTitle";
 import EmployeeStatus from "../ui/employeeStatus";
+import { Map } from "@vis.gl/react-google-maps";
 
 function Dashboard() {
   const [user, _setUser] = useUserContext();
-
-  console.log(user);
+  const mapKey = import.meta.env.VITE_GOOGLE_MAP_API;
   return (
     <>
       <section className="flex flex-col row-span-2 col-span-full mt-10 md:col-span-10 md:my-5 md:mr-5 lg:grid lg:grid-cols-12 lg:grid-rows-12 lg:gap-5">
@@ -21,7 +21,7 @@ function Dashboard() {
           email={user.email}
         />
 
-        <div className="border-2 rounded-custom border-surface-dark mb-8 md:col-span-6 lg:col-span-8 lg:row-span-6 lg:m-0">
+        <div className="border-2 rounded-custom border-surface-dark mb-8 md:col-span-6 lg:col-span-8 lg:row-span-6 lg:m-0 lg:overflow-hidden">
           {/* MAP CONTAINER  */}
           <SectionTitle
             title={"Manage your deliveries"}
@@ -30,7 +30,14 @@ function Dashboard() {
             // TODO set redirect address
             mainRedirect={"vehicles"}
           />
-          <div className="min-h-[20rem] lg:h-full"></div>
+          <div className="h-96 rounded-ee-custom overflow-hidden">
+            <Map
+              defaultCenter={{ lat: 4.66197, lng: -74.12087 }}
+              defaultZoom={12}
+              gestureHandling={"greedy"}
+              disableDefaultUI={true}
+            />
+          </div>
         </div>
 
         {/* CALENDAR  */}
@@ -55,8 +62,7 @@ function Dashboard() {
             // TODO set redirect address
             mainRedirect={"team"}
           />
-          <div className=" min-h-32">
-          </div>
+          <div className=" min-h-32"></div>
         </div>
       </section>
     </>
@@ -64,13 +70,3 @@ function Dashboard() {
 }
 
 export default Dashboard;
-
-{
-  /* <SectionTitle
-  title={"Manage yout deliveries"}
-  icon={faNetworkWired}
-  mainButton={"see all"}
-/>; */
-}
-
-// className=" border-2 rounded-custom border-surface-dark row-span-2"

@@ -4,13 +4,16 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { TokenProvider } from "./context/tokenContext.jsx";
 import { UserContextProvider } from "./context/userContext.jsx";
+import { APIProvider } from "@vis.gl/react-google-maps";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>
     <TokenProvider>
       <UserContextProvider>
         <BrowserRouter>
-          <App />
+          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAP_API}>
+            <App />
+          </APIProvider>
         </BrowserRouter>
       </UserContextProvider>
     </TokenProvider>
