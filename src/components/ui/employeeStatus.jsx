@@ -1,7 +1,37 @@
 import PropTypes from "prop-types";
 import UserAvatar from "./userAvatar";
+import getTime from "../../utils/workspace/getTime";
+import { useEffect, useState } from "react";
 
-function EmployeeStatus({ active, employeePhoto, employeeName, employeeId, updated }) {
+function EmployeeStatus({
+  active,
+  employeePhoto,
+  employeeName,
+  employeeId,
+  updated,
+}) {
+
+  const [awayTime, setAwayTime] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+  });
+  useEffect(() => {
+    setAwayTime(getTime(updated));
+  }, [updated]);
+
+  const manageAway = ()=>{
+    if(awayTime.days > 0){
+      return "away"
+    }
+    if(awayTime.hours > 1  ){
+      return awayTime.hours + " hours";
+    }
+    if(awayTime.hours < 1 ){
+      return awayTime.minutes + " minutes";
+    }
+  }
+
   return (
     <div className=" flex gap-3 m-2 justify-between">
       <div className="flex gap-3">
@@ -11,8 +41,12 @@ function EmployeeStatus({ active, employeePhoto, employeeName, employeeId, updat
           <p className=" font-light m-0">{employeeId}</p>
         </div>
       </div>
-      <p className="status capitalize status activeStatus">
-        {active ? "active" : "away"}
+      <p
+        className={`status status ${
+          active ? "activeStatus" : "inactiveStatus"
+        }`}
+      >
+        {active ? "active" : manageAway()}
       </p>
     </div>
   );

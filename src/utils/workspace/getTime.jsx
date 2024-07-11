@@ -1,6 +1,7 @@
 function getTime(time) {
   const today = new Date();
-  const differenceInMs = today - time;
+  const newTime = new Date(time)
+  const differenceInMs = today - newTime;
 
   const days = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
   const hours = Math.floor(

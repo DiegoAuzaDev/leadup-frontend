@@ -55,7 +55,27 @@ function Workspace() {
           email: "auzajuan1@gmail.com",
           dob: "10/04/2004",
           active: true,
-          updated: "10/10/2024",
+          updated: "2024-07-10T23:45:55.789+00:00",
+        },
+        {
+          name: "Diegfo Auza",
+          photo:
+            "https://cdn.vox-cdn.com/thumbor/7u-vFaqxvGqKAdvY21ZDAK4Z9Fw=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/22870860/Bubble_gum_gamerpic.jpg",
+          id: "0111ff1",
+          email: "auzajuan1@gmail.com",
+          dob: "10/04/2004",
+          active: true,
+          updated: "2024-07-10T23:45:38.789+00:00",
+        },
+        {
+          name: "Diego Auza",
+          photo:
+            "https://cdn.vox-cdn.com/thumbor/7u-vFaqxvGqKAdvY21ZDAK4Z9Fw=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/22870860/Bubble_gum_gamerpic.jpg",
+          id: "0111fdfdf1",
+          email: "auzajuan1@gmail.com",
+          dob: "10/04/2004",
+          active: false,
+          updated: "2024-07-11T16:45:55.789+00:00",
         },
         {
           name: "Luis Carlos Auza",
@@ -64,7 +84,7 @@ function Workspace() {
           email: "auzajuan1@gmail.com",
           dob: "10/04/2004",
           active: false,
-          updated: "10/10/2024",
+          updated: "2024-07-11T10:45:55.789+00:00",
         },
         {
           name: "Julie",
@@ -73,7 +93,7 @@ function Workspace() {
           email: "auzajuan1@gmail.com",
           dob: "10/04/2004",
           active: false,
-          updated: "2024-05-31T00:05:49.656+00:00",
+          updated: "2024-07-01T00:05:49.656+00:00",
         },
         {
           name: "Juan David",
@@ -83,7 +103,7 @@ function Workspace() {
           email: "auzajuan1@gmail.com",
           dob: "10/04/2004",
           active: false,
-          updated: "10/10/2024",
+          updated: "2024-07-09T12:05:40.101+00:00",
         },
         {
           name: "Marcos Pedro",
@@ -92,7 +112,7 @@ function Workspace() {
           email: "auzajuan1@gmail.com",
           dob: "10/04/2004",
           active: true,
-          updated: "10/10/2024",
+          updated: "2024-07-02T22:25:35.404+00:00",
         },
         {
           name: "Carlos Pedro",
@@ -101,7 +121,7 @@ function Workspace() {
           email: "auzajuan1@gmail.com",
           dob: "10/04/2004",
           active: true,
-          updated: "10/10/2024",
+          updated: "2024-07-11T13:35:25.707+00:00",
         },
         {
           name: "Luis Palma",
@@ -110,7 +130,7 @@ function Workspace() {
           email: "auzajuan1@gmail.com",
           dob: "10/04/2004",
           active: false,
-          updated: "10/10/2024",
+          updated: "2024-07-11T05:55:45.505+00:00",
         },
       ];
       setEmployeeContext(employees)
