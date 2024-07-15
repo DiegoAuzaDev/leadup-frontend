@@ -28,7 +28,6 @@ function Dashboard() {
   },[company.length])
   return (
     <>
-    {isNewUser && <NewUser/>}
       <section className="overflow-scroll flex flex-col row-span-2 col-span-full mt-10 md:col-span-10 md:my-5 md:mr-5 lg:grid lg:grid-cols-12 lg:grid-rows-12 lg:gap-2">
         <WorkspaceUserTitle
           name={user.name}
@@ -96,6 +95,7 @@ function Dashboard() {
           ) : null}
         </div>
       </section>
+      {isNewUser && <NewUser />}
     </>
   );
 }

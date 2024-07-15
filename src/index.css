@@ -213,9 +213,24 @@
   /*  Pop up - Modal */
 
   .modal {
-    animation: 0.35s ease-in popup;
-    -webkit-animation: 0.35s ease-in popup;
+    animation: 0.45s cubic-bezier(0.76, 0.02, 0.02, 1.01) popup;
+    -webkit-animation: 0.45s cubic-bezier(0.76, 0.02, 0.02, 1.01) popup;
+  }
+
+  .modal-welcome {
+  opacity: 1;
+  transition: all 2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  animation: 1.5s cubic-bezier(0.76, 0.02, 0.02, 1.01) fadeInBottom;
+  -webkit-transition: all 2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -moz-transition: all 2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -ms-transition: all 2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -o-transition: all 2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -webkit-animation: 1.5s cubic-bezier(0.76, 0.02, 0.02, 1.01) fadeInBottom;
 }
+  .modal-exit { transform: translateX(-60px); opacity: 0; -webkit-transition: translateX(); -moz-transition: translateX(); -ms-transition: translateX(); -o-transition: translateX(); -webkit-transform: translateX(-60px); -moz-transform: translateX(-60px); -ms-transform: translateX(-60px); -o-transform: translateX(-60px);
+}
+  .modal-pop {
+  }
 
   @keyframes popup {
     from {
