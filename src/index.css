@@ -200,18 +200,31 @@
 
   /* Employee Status  */
 
-
   .status {
     @apply px-[1em] py-[0.25em] md:px-[1em] md:py-[0.35em] font-semibold text-center  rounded-custom transition duration-300 ease-in-out tracking-wide;
   }
   .activeStatus {
-    @apply status bg-success-light
-  } 
-  .inactiveStatus { 
-    @apply status bg-surface 
+    @apply status bg-success-light;
+  }
+  .inactiveStatus {
+    @apply status bg-surface;
   }
 
+  /*  Pop up - Modal */
 
+  .modal {
+    animation: 0.35s ease-in popup;
+    -webkit-animation: 0.35s ease-in popup;
+}
+
+  @keyframes popup {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 0.7;
+    }
+  }
 
   @keyframes fadeInBottom {
     from {

@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import LeadUpWhite from "../../assets/LeadUpWhite.svg";
-import LeadUpIconWhite from "../../assets/LeadUpIconWhite.svg";
+import LeadUpWhite from "../../assets/LeadUpWhite.webp";
+import LeadUpIconWhite from "../../assets/LeadUpIconWhite.webp";
 import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarDays,

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import LogoWhite from "../../assets/LeadUpWhite.svg";
+import LogoWhite from "../../assets/LeadUpWhite.webp";
 
 function Footer() {
   return (

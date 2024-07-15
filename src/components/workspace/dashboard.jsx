@@ -12,7 +12,8 @@ import { useEmployeesContext } from "../../context/employeesContext";
 import EmptyList from "../ui/emptyList";
 import { useEffect, useState } from "react";
 import { useCompanyContext } from "../../context/companyContext";
-import PopupContainer from "../ui/popup";
+import NewUser from "../ui/newUser";
+
 
 function Dashboard() {
   const [user] = useUserContext();
@@ -27,7 +28,7 @@ function Dashboard() {
   },[company.length])
   return (
     <>
-    {isNewUser && <PopupContainer/>}
+    {isNewUser && <NewUser/>}
       <section className="overflow-scroll flex flex-col row-span-2 col-span-full mt-10 md:col-span-10 md:my-5 md:mr-5 lg:grid lg:grid-cols-12 lg:grid-rows-12 lg:gap-2">
         <WorkspaceUserTitle
           name={user.name}
