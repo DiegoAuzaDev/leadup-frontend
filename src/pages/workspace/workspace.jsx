@@ -61,6 +61,7 @@ function Workspace() {
         setIsLoading(false);
         const body = await response.json();
         setCompanyContext(body.company)
+        // TODO test body - company and user
         console.log(body)
         setUser(body.user.google || body.user.local);
         setUserContext(body.user.google || body.user.local);

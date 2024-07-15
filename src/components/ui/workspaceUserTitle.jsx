@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 function WorkspaceUserTitle({name, photo, email}){
     return (
-      <div className=" flex flex-wrap items-center justify-between gap-4 my-6 md:my-2 lg:col-span-full">
+      <div className=" flex flex-wrap items-center justify-between gap-2 my-6 md:my-2 lg:col-span-full">
         <div className="flex items-center gap-2">
           <UserAvatar name={name} img={photo} />
           <div>
