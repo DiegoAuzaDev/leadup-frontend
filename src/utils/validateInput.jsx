@@ -11,7 +11,7 @@ const validateEmail = (email) => {
 };
 
 const validateAddress = (address)=>{
-const addressPattern = /^[a-zA-Z0-9\s#]+$/;
+const addressPattern = /^[a-zA-Z0-9\s-#]+$/;
 
  if (address.trim() === "") {
    return "Address must be provided";
