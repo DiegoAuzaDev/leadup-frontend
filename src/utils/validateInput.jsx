@@ -10,6 +10,24 @@ const validateEmail = (email) => {
   }
 };
 
+const validateAddress = (address)=>{
+const addressPattern = /^[a-zA-Z0-9\s#]+$/;
+
+ if (address.trim() === "") {
+   return "Address must be provided";
+ }
+
+ if (address.length < 8) {
+   return "Address must be at least 8 characters long";
+ }
+
+ if (!addressPattern.test(address)) {
+   return "Address must contain only letters,spaces, number or #";
+ }
+
+ return "";
+}
+
 const validatePassword = (password) => {
   if (password.length < 6) {
     return "Password must be at least 6 characters long";
@@ -47,4 +65,4 @@ const validateName = (name) => {
   return "";
 };
 
-export { validateEmail, validatePassword, validateName };
+export { validateEmail, validatePassword, validateName, validateAddress };

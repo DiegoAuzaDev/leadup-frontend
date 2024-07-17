@@ -218,27 +218,41 @@
   }
 
   .modal-welcome {
-  opacity: 1;
-  transition: all 2s cubic-bezier(0.165, 0.84, 0.44, 1);
-  animation: 1.5s cubic-bezier(0.76, 0.02, 0.02, 1.01) fadeInBottom;
-  -webkit-transition: all 2s cubic-bezier(0.165, 0.84, 0.44, 1);
-  -moz-transition: all 2s cubic-bezier(0.165, 0.84, 0.44, 1);
-  -ms-transition: all 2s cubic-bezier(0.165, 0.84, 0.44, 1);
-  -o-transition: all 2s cubic-bezier(0.165, 0.84, 0.44, 1);
-  -webkit-animation: 1.5s cubic-bezier(0.76, 0.02, 0.02, 1.01) fadeInBottom;
+    opacity: 1;
+    transition: all 1.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    animation: 2s cubic-bezier(0.76, 0.02, 0.02, 1.01) fadeInBottom;
+    -webkit-transition: all 1.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    -moz-transition: all 1.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    -ms-transition: all 1.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    -o-transition: all 1.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+    -webkit-animation: 2s cubic-bezier(0.76, 0.02, 0.02, 1.01) fadeInBottom;
 }
-  .modal-exit { transform: translateX(-60px); opacity: 0; -webkit-transition: translateX(); -moz-transition: translateX(); -ms-transition: translateX(); -o-transition: translateX(); -webkit-transform: translateX(-60px); -moz-transform: translateX(-60px); -ms-transform: translateX(-60px); -o-transform: translateX(-60px);
-}
-  .modal-pop {
+  .modal-exit {
+    transform: translateX(-60px);
+    opacity: 0;
   }
+  .modal-slide {
+    animation: 2s cubic-bezier(0.76, 0.02, 0.02, 1.01) slide;
+    -webkit-animation: 2s cubic-bezier(0.76, 0.02, 0.02, 1.01) slide;
+}
 
-  @keyframes popup {
+  @keyframes slide {
     from {
       opacity: 0;
+      transform: translateX(4rem);
+      -webkit-transform: translateX(4rem);
+      -moz-transform: translateX(4rem);
+      -ms-transform: translateX(4rem);
+      -o-transform: translateX(4rem);
     }
     to {
-      opacity: 0.7;
-    }
+      opacity: 1;
+      transform: translateX(0rem);
+      -webkit-transform: translateX(0rem);
+      -moz-transform: translateX(0rem);
+      -ms-transform: translateX(0rem);
+      -o-transform: translateX(0rem);
+}
   }
 
   @keyframes fadeInBottom {
