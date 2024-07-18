@@ -24,6 +24,8 @@ function Dashboard() {
   useEffect(()=>{
     if(company.length == 0){
       setIsNewUser(true)
+    } else { 
+      setIsNewUser(false)
     }
   },[company.length])
   return (

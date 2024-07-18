@@ -12,4 +12,16 @@ async function requestUserData(token) {
   return userResponse;
 }
 
-export { requestUserData };
+async function createCompanyNewUser(company, token) {
+  const response = await fetch(`${API_URL}/api`, {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    body : JSON.stringify(company)
+  });
+  return response;
+}
+export { requestUserData, createCompanyNewUser };

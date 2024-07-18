@@ -2,7 +2,13 @@ import PropTypes from "prop-types";
 import { Country, State, City } from "country-state-city";
 import { useEffect, useState } from "react";
 import leadupLogoWhite from "../../assets/LeadUpIconWhite.webp";
-import { validateAddress, validateName, validatePhoneNumber } from "../../utils/validateInput";
+import {
+  validateAddress,
+  validateName,
+  validatePhoneNumber,
+} from "../../utils/validateInput";
+import { useToken } from "../../context/tokenContext";
+import { createCompanyNewUser } from "../../utils/workspace/user";
 
 function NewUser() {
   const [step, setStep] = useState(1);
@@ -57,14 +63,14 @@ const Welcome = ({ step, setStep }) => {
 };
 
 const CreateCompany = ({ step, setStep }) => {
+  const [token] = useToken();
   const [stay, setStay] = useState(true);
   const [companyNameError, setCompanyNameError] = useState("");
-  const [companyNumber, setCompanyNumber] = useState("")
   const [companyName, setCompanyName] = useState("");
   const [companyAddress, setCompanyAddress] = useState("");
   const [companyAddressError, setCompanyAddressError] = useState("");
-  const [companyPhoneNumber, setCompanyPhoneNumber] = useState("")
-  const [companyPhoneNumberError, setCompanyPhoneNumberError] = useState("")
+  const [companyPhoneNumber, setCompanyPhoneNumber] = useState("");
+  const [companyPhoneNumberError, setCompanyPhoneNumberError] = useState("");
 
   const country = Country.getCountryByCode("CO");
   const allStates = State.getStatesOfCountry(country.isoCode);
@@ -74,13 +80,24 @@ const CreateCompany = ({ step, setStep }) => {
   const [allCity, setAllCity] = useState(
     City.getCitiesOfState(country.isoCode, selectedEventState)
   );
-  // TODO
   const [selectedStateName, setSelectedStateName] = useState("");
-  const [selectedEventCity, setSelectedEventCity] = useState("")
+  const [selectedEventCity, setSelectedEventCity] = useState("");
+
+  const companyData = {
+    numberExtension : 57,
+    country : "CO",
+    name: companyName,
+    address: `${companyAddress} ${selectedEventCity}, ${selectedStateName}`,
+    phoneNumber: [companyPhoneNumber],
+  };
 
   useEffect(() => {
     setAllCity(City.getCitiesOfState(country.isoCode, selectedEventState));
   }, [country.isoCode, selectedEventState]);
+
+  useEffect(() => {
+    setSelectedEventCity(allCity[0].name);
+  }, [allCity]);
 
   const companyNameValidation = (ev) => {
     let companyName = ev.target.value;
@@ -88,17 +105,26 @@ const CreateCompany = ({ step, setStep }) => {
     setCompanyNameError(validateName(companyName));
   };
 
-  const companyPhoneNumberValidation = (ev)=>{
+  const companyPhoneNumberValidation = (ev) => {
     let number = ev.target.value;
     setCompanyPhoneNumber(number);
-    setCompanyPhoneNumberError(validatePhoneNumber(number))
-  }
+    setCompanyPhoneNumberError(validatePhoneNumber(number));
+  };
   const companyAddressValidation = (ev) => {
     let address = ev.target.value;
     setCompanyAddress(address);
     setCompanyAddressError(validateAddress(address));
   };
 
+  const hanldeForm = async () => {
+  try {
+    const response = await createCompanyNewUser(companyData, token);
+    const body = await response.json()
+    console.log(body)
+  }  catch(err){
+    console.log(err)
+  }
+  };
   return (
     <div
       className={`rounded-custom  bg-white relative pb-6  flex flex-col gap-4 overflow-hidden m-4 modal-slide ${
@@ -108,13 +134,20 @@ const CreateCompany = ({ step, setStep }) => {
       <div className=" bg-primary-light py-4 px-10">
         <h4 className=" text-white font-bold m-0">Create your company</h4>
       </div>
-      <form action="" className="px-4 gap-2 flex flex-col">
+      <form
+        onSubmit={(ev) => {
+          ev.preventDefault();
+          hanldeForm();
+        }}
+        className="px-4 gap-2 flex flex-col"
+      >
         <label
           htmlFor="companyName"
           className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
         >
-          Company Name
+          Company Name *
           <input
+            required
             type="text"
             value={companyName}
             onChange={(ev) => {
@@ -127,27 +160,45 @@ const CreateCompany = ({ step, setStep }) => {
         <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
           {companyNameError}
         </small>
-        <label htmlFor="state-select" className="flex flex-col gap-2 mb-2">
-          Select State
+        <label
+          htmlFor="state-select"
+          className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+        >
+          Select State *
           <select
             name="State"
             id="state-select"
             onChange={(ev) => {
-              setSelectedEventState(ev.target.value);
+              const state = ev.target.value.split("|");
+              setSelectedStateName(state[0]);
+              setSelectedEventState(state[1]);
             }}
           >
             {allStates.map((state) => (
-              <option value={state.isoCode} key={`${state.name}`}>
+              <option
+                value={`${state.name}|${state.isoCode}`}
+                key={`${state.name}`}
+              >
                 {state.name}
               </option>
             ))}
           </select>
         </label>
-        <label htmlFor="state-city" className="flex flex-col gap-2 mb-2">
-          Select City
-          <select name="City" id="state-city">
+        <label
+          htmlFor="state-city"
+          className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+        >
+          Select City *
+          <select
+            name="City"
+            id="state-city"
+            onChange={(ev) => {
+              setSelectedEventCity(ev.target.value);
+              console.log(ev.target.value);
+            }}
+          >
             {allCity.map((city) => (
-              <option value={city} key={`${city.latitude}-${city.name}`}>
+              <option value={city.name} key={`${city.latitude}-${city.name}`}>
                 {city.name}
               </option>
             ))}
@@ -157,8 +208,9 @@ const CreateCompany = ({ step, setStep }) => {
           htmlFor="companyAddress"
           className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
         >
-          Company Address
+          Company Address *
           <input
+            required
             type="text"
             value={companyAddress}
             onChange={(ev) => {
@@ -175,20 +227,22 @@ const CreateCompany = ({ step, setStep }) => {
           htmlFor="companyNumber"
           className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
         >
-          Company Number
+          Company Number *
           <input
+            required
             type="text"
             value={companyPhoneNumber}
             onChange={(ev) => {
               companyPhoneNumberValidation(ev);
             }}
             id="companyNumber"
-            placeholder="Add the number of your number"
+            placeholder="Add the number of your company"
           />
         </label>
         <small className="text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
           {companyPhoneNumberError}
         </small>
+        <button disabled={companyNameError || companyAddressError || companyPhoneNumberError} className="btn mt-2">Create Company</button>
       </form>
     </div>
   );
