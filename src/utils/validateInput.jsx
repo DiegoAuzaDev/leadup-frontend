@@ -65,4 +65,29 @@ const validateName = (name) => {
   return "";
 };
 
-export { validateEmail, validatePassword, validateName, validateAddress };
+const validatePhoneNumber = (phoneNumber) => {
+  const phoneNumberPattern = /^\d+$/; // This pattern allows only digits
+  const requiredLength = 10; // Required length of the phone number
+
+  if (phoneNumber.trim() === "") {
+    return "Phone number must be provided";
+  }
+
+  if (!phoneNumberPattern.test(phoneNumber)) {
+    return "Phone number must contain only numbers";
+  }
+
+  if (phoneNumber.length !== requiredLength) {
+    return `Phone number must be exactly ${requiredLength} digits long`;
+  }
+
+  return "";
+};
+
+export {
+  validateEmail,
+  validatePassword,
+  validateName,
+  validateAddress,
+  validatePhoneNumber,
+};

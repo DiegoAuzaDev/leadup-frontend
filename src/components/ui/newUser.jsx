@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { Country, State, City } from "country-state-city";
+import { useEffect, useState } from "react";
 import leadupLogoWhite from "../../assets/LeadUpIconWhite.webp";
-import truck from "../../assets/truck.webp";
-import { validateAddress, validateName } from "../../utils/validateInput";
+import { validateAddress, validateName, validatePhoneNumber } from "../../utils/validateInput";
 
 function NewUser() {
   const [step, setStep] = useState(1);
-
   return (
     <section className="modal absolute h-full w-full bg-primary-dark bg-opacity-60 z-50 left-0 top-0 flex items-center justify-center">
       {<Welcome setStep={setStep} step={step} />}
@@ -60,22 +59,45 @@ const Welcome = ({ step, setStep }) => {
 const CreateCompany = ({ step, setStep }) => {
   const [stay, setStay] = useState(true);
   const [companyNameError, setCompanyNameError] = useState("");
+  const [companyNumber, setCompanyNumber] = useState("")
   const [companyName, setCompanyName] = useState("");
-  const [companyAddress, setCompanyAddress] = useState("")
-  const [companyAddressError, setCompanyAddressError] = useState("")
+  const [companyAddress, setCompanyAddress] = useState("");
+  const [companyAddressError, setCompanyAddressError] = useState("");
+  const [companyPhoneNumber, setCompanyPhoneNumber] = useState("")
+  const [companyPhoneNumberError, setCompanyPhoneNumberError] = useState("")
+
+  const country = Country.getCountryByCode("CO");
+  const allStates = State.getStatesOfCountry(country.isoCode);
+  const [selectedEventState, setSelectedEventState] = useState(
+    State.getStatesOfCountry(country.isoCode)[0].isoCode
+  );
+  const [allCity, setAllCity] = useState(
+    City.getCitiesOfState(country.isoCode, selectedEventState)
+  );
+  // TODO
+  const [selectedStateName, setSelectedStateName] = useState("");
+  const [selectedEventCity, setSelectedEventCity] = useState("")
+
+  useEffect(() => {
+    setAllCity(City.getCitiesOfState(country.isoCode, selectedEventState));
+  }, [country.isoCode, selectedEventState]);
 
   const companyNameValidation = (ev) => {
     let companyName = ev.target.value;
     setCompanyName(companyName);
-    setCompanyNameError(validateName(companyName))
+    setCompanyNameError(validateName(companyName));
   };
 
-  const companyAddressValidation = (ev)=>{
-    let address = ev.target.value;
-    setCompanyAddress(address)
-    setCompanyAddressError(validateAddress(address))
+  const companyPhoneNumberValidation = (ev)=>{
+    let number = ev.target.value;
+    setCompanyPhoneNumber(number);
+    setCompanyPhoneNumberError(validatePhoneNumber(number))
   }
-
+  const companyAddressValidation = (ev) => {
+    let address = ev.target.value;
+    setCompanyAddress(address);
+    setCompanyAddressError(validateAddress(address));
+  };
 
   return (
     <div
@@ -105,8 +127,34 @@ const CreateCompany = ({ step, setStep }) => {
         <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
           {companyNameError}
         </small>
+        <label htmlFor="state-select" className="flex flex-col gap-2 mb-2">
+          Select State
+          <select
+            name="State"
+            id="state-select"
+            onChange={(ev) => {
+              setSelectedEventState(ev.target.value);
+            }}
+          >
+            {allStates.map((state) => (
+              <option value={state.isoCode} key={`${state.name}`}>
+                {state.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label htmlFor="state-city" className="flex flex-col gap-2 mb-2">
+          Select City
+          <select name="City" id="state-city">
+            {allCity.map((city) => (
+              <option value={city} key={`${city.latitude}-${city.name}`}>
+                {city.name}
+              </option>
+            ))}
+          </select>
+        </label>
         <label
-          htmlFor="companyName"
+          htmlFor="companyAddress"
           className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
         >
           Company Address
@@ -116,12 +164,30 @@ const CreateCompany = ({ step, setStep }) => {
             onChange={(ev) => {
               companyAddressValidation(ev);
             }}
-            id="companyName"
+            id="companyAddress"
             placeholder="Add the address of your company"
           />
         </label>
-        <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
+        <small className="text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
           {companyAddressError}
+        </small>
+        <label
+          htmlFor="companyNumber"
+          className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+        >
+          Company Number
+          <input
+            type="text"
+            value={companyPhoneNumber}
+            onChange={(ev) => {
+              companyPhoneNumberValidation(ev);
+            }}
+            id="companyNumber"
+            placeholder="Add the number of your number"
+          />
+        </label>
+        <small className="text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
+          {companyPhoneNumberError}
         </small>
       </form>
     </div>
