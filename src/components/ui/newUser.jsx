@@ -9,6 +9,7 @@ import {
 } from "../../utils/validateInput";
 import { useToken } from "../../context/tokenContext";
 import { createCompanyNewUser } from "../../utils/workspace/user";
+import { useCompanyContext } from "../../context/companyContext";
 
 function NewUser() {
   const [step, setStep] = useState(1);
@@ -62,9 +63,10 @@ const Welcome = ({ step, setStep }) => {
   );
 };
 
-const CreateCompany = ({ step, setStep }) => {
+const CreateCompany = () => {
   const [token] = useToken();
   const [stay, setStay] = useState(true);
+  const [creatingError, setCreatingError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [companyNameError, setCompanyNameError] = useState("");
   const [companyName, setCompanyName] = useState("");
@@ -72,6 +74,7 @@ const CreateCompany = ({ step, setStep }) => {
   const [companyAddressError, setCompanyAddressError] = useState("");
   const [companyPhoneNumber, setCompanyPhoneNumber] = useState("");
   const [companyPhoneNumberError, setCompanyPhoneNumberError] = useState("");
+  const [company, setCompany] = useCompanyContext();
 
   const country = Country.getCountryByCode("CO");
   const allStates = State.getStatesOfCountry(country.isoCode);
@@ -118,20 +121,21 @@ const CreateCompany = ({ step, setStep }) => {
 
   const hanldeForm = async () => {
     setIsLoading(true);
+    setCreatingError(false)
     try {
       const response = await createCompanyNewUser(companyData, token);
       if (response.ok && response.status == 201) {
-        console.log("created successfully");
         const body = await response.json();
-        console.log(body);
+        setCompany([body])
         setIsLoading(false);
+        setStay(false)
       }
       if (!response.ok && response.status == 400) {
         throw new Error("Error creating new company, Error status : 400");
       }
     } catch (err) {
       setIsLoading(false);
-      console.log(err.message);
+      setCreatingError(true)
     }
   };
   return (
@@ -205,7 +209,6 @@ const CreateCompany = ({ step, setStep }) => {
                 id="state-city"
                 onChange={(ev) => {
                   setSelectedEventCity(ev.target.value);
-                  console.log(ev.target.value);
                 }}
               >
                 {allCity.map((city) => (
@@ -266,6 +269,11 @@ const CreateCompany = ({ step, setStep }) => {
             >
               Create Company
             </button>
+            {creatingError && (
+              <p className="m-0 text-red-700 font-bold text-center">
+                There was an error creating your company, try again
+              </p>
+            )}
           </form>
         </>
       ) : (

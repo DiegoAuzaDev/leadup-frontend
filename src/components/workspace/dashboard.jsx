@@ -28,6 +28,7 @@ function Dashboard() {
       setIsNewUser(false)
     }
   },[company.length])
+
   return (
     <>
       <section className="overflow-scroll flex flex-col row-span-2 col-span-full mt-10 md:col-span-10 md:my-5 md:mr-5 lg:grid lg:grid-cols-12 lg:grid-rows-12 lg:gap-2">
@@ -37,7 +38,7 @@ function Dashboard() {
           email={user.email}
         />
 
-        <div className="border-2 rounded-custom border-surface-dark mb-8 md:col-span-6 lg:col-span-8 lg:row-span-6 lg:m-0 lg:overflow-hidden">
+        <div className=" flex flex-col border-2 rounded-custom border-surface-dark mb-8 md:col-span-6 lg:col-span-8 lg:row-span-6 lg:m-0 lg:overflow-hidden">
           {/* MAP CONTAINER  */}
           <SectionTitle
             title={"Manage your deliveries"}
@@ -46,7 +47,7 @@ function Dashboard() {
             mainRedirect={"vehicles"}
           />
           <div className=" h-80 md:h-[30em] lg:h-full rounded-b-custom overflow-hidden">
-            <DashboardMap />
+            <DashboardMap userCompanyList={company} />
           </div>
         </div>
 
