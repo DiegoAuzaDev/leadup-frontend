@@ -12,10 +12,27 @@ import {
   faTruckFront,
 } from "@fortawesome/free-solid-svg-icons";
 import UserAvatar from "../ui/userAvatar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useCompanyContext } from "../../context/companyContext";
 
 function HeaderWorkSpace({ user }) {
   const [isActive, setIsActive] = useState(false);
+  const [company] = useCompanyContext();
+  const [isNewUser, setIsNewUser] = useState(true);
+
+  useEffect(() => {
+    if (company.length == 0) {
+      setIsNewUser(true);
+    } else {
+      setIsNewUser(false);
+    }
+  }, [company.length]);
+
+  const handleClick = (e) => {
+    if (isNewUser) {
+      e.preventDefault();
+    }
+  };
 
   return (
     <header
@@ -28,7 +45,7 @@ function HeaderWorkSpace({ user }) {
           className="m-0 md:grid md:grid-cols-1 md:divide-y md:gap-7"
         >
           <li>
-            <NavLink className=" flex justify-center">
+            <NavLink className=" flex justify-center" onClick={handleClick}>
               <img
                 className=" hidden lg:h-8 lg:inline-block"
                 src={LeadUpWhite}
@@ -43,7 +60,11 @@ function HeaderWorkSpace({ user }) {
           </li>
           <div className="md:py-7 md:flex flex-col gap-3">
             <li>
-              <NavLink className="navlink" to="/leadUp/workspace/dashboard">
+              <NavLink
+                className="navlink"
+                to="/leadUp/workspace/dashboard"
+                onClick={handleClick}
+              >
                 <div>
                   <FontAwesomeIcon icon={faTableList} />
                   <p className=" m-0">Dashboard</p>
@@ -51,7 +72,11 @@ function HeaderWorkSpace({ user }) {
               </NavLink>
             </li>
             <li>
-              <NavLink className="navlink" to="/leadUp/workspace/calendar">
+              <NavLink
+                className="navlink"
+                to="/leadUp/workspace/calendar"
+                onClick={handleClick}
+              >
                 <div>
                   <FontAwesomeIcon icon={faCalendarDays} />
                   <p className=" m-0">Calendar</p>
@@ -59,7 +84,11 @@ function HeaderWorkSpace({ user }) {
               </NavLink>
             </li>
             <li>
-              <NavLink className="navlink" to="/leadUp/workspace/team">
+              <NavLink
+                className="navlink"
+                to="/leadUp/workspace/team"
+                onClick={handleClick}
+              >
                 <div>
                   <FontAwesomeIcon icon={faPeopleGroup} />
                   <p className=" m-0">Team</p>
@@ -67,7 +96,11 @@ function HeaderWorkSpace({ user }) {
               </NavLink>
             </li>
             <li>
-              <NavLink className="navlink" to="/leadUp/workspace/vehicles">
+              <NavLink
+                className="navlink"
+                to="/leadUp/workspace/vehicles"
+                onClick={handleClick}
+              >
                 <div>
                   <FontAwesomeIcon icon={faTruckFront} />
                   <p className=" m-0">Vehicles</p>
@@ -82,7 +115,11 @@ function HeaderWorkSpace({ user }) {
         >
           <div className="md:py-2 md:flex flex-col gap-3">
             <li>
-              <NavLink className="navlink" to="/leadUp/workspace/support">
+              <NavLink
+                className="navlink"
+                to="/leadUp/workspace/support"
+                onClick={handleClick}
+              >
                 <div>
                   <FontAwesomeIcon icon={faHeadphones} />
                   <p className=" m-0">Support</p>
@@ -91,7 +128,10 @@ function HeaderWorkSpace({ user }) {
             </li>
           </div>
           <li className="py-3" id={user.id}>
-            <NavLink className="flex items-center justify-center">
+            <NavLink
+              className="flex items-center justify-center "
+              onClick={handleClick}
+            >
               <UserAvatar img={user.photo} name={user.name} />
             </NavLink>
           </li>
@@ -100,7 +140,7 @@ function HeaderWorkSpace({ user }) {
       <nav className=" md:hidden">
         <ul role="list" className=" flex flex-row justify-between items-center">
           <li>
-            <NavLink className="">
+            <NavLink className="" onClick={handleClick}>
               <img
                 className=" h-[1.5rem] "
                 src={LeadUpIconWhite}
@@ -130,7 +170,11 @@ function HeaderWorkSpace({ user }) {
           } `}
         >
           <li>
-            <NavLink className="navlink" to="/leadUp/workspace/dashboard">
+            <NavLink
+              className="navlink"
+              to="/leadUp/workspace/dashboard"
+              onClick={handleClick}
+            >
               <div>
                 <FontAwesomeIcon icon={faTableList} />
                 <p className=" m-0">Dashboard</p>
@@ -138,7 +182,11 @@ function HeaderWorkSpace({ user }) {
             </NavLink>
           </li>
           <li>
-            <NavLink className="navlink" to="/leadUp/workspace/calendar">
+            <NavLink
+              className="navlink"
+              to="/leadUp/workspace/calendar"
+              onClick={handleClick}
+            >
               <div>
                 <FontAwesomeIcon icon={faCalendarDays} />
                 <p className=" m-0">Calendar</p>
@@ -146,7 +194,11 @@ function HeaderWorkSpace({ user }) {
             </NavLink>
           </li>
           <li>
-            <NavLink className="navlink" to="/leadUp/workspace/team">
+            <NavLink
+              className="navlink"
+              to="/leadUp/workspace/team"
+              onClick={handleClick}
+            >
               <div>
                 <FontAwesomeIcon icon={faPeopleGroup} />
                 <p className=" m-0">Team</p>
@@ -154,7 +206,11 @@ function HeaderWorkSpace({ user }) {
             </NavLink>
           </li>
           <li>
-            <NavLink className="navlink" to="/leadUp/workspace/vehicles">
+            <NavLink
+              className="navlink"
+              to="/leadUp/workspace/vehicles"
+              onClick={handleClick}
+            >
               <div>
                 <FontAwesomeIcon icon={faTruckFront} />
                 <p className=" m-0">Vehicles</p>
