@@ -1,6 +1,7 @@
 import { AdvancedMarker, Map, Marker, Pin } from "@vis.gl/react-google-maps";
 import PropTypes from "prop-types";
 import { useEffect, useMemo, useState } from "react";
+import HeadquartersMarker from "../ui/headquartersMarker";
 
 // TODO this component need to be refactor after working with multiple companies
 function DashboardMap({ userCompanyList }) {
@@ -38,30 +39,19 @@ function DashboardMap({ userCompanyList }) {
     <Map
       mapId={"1fc0053bbd3b1430"}
       center={mapCenter}
-      defaultZoom={12}
+      defaultZoom={15}
       minZoom={6}
       onCenterChanged={(ev) => handleCenterChanged(ev.map)}
       gestureHandling={"greedy"}
       options={options}
     >
       {companyList.map((company) => (
-        <AdvancedMarker
-          key={company._id}
-          position={{
-            lat: Number(company.location.latitude),
-            lng: Number(company.location.longitude),
-          }}
-        >
-          <Pin
-            background={"#0f9d58"}
-            borderColor={"#006425"}
-            glyphColor={"#60d98f"}
-          />
-        </AdvancedMarker>
+        <HeadquartersMarker key={company._id} headerquarter={company} />
       ))}
     </Map>
   );
 }
+
 
 DashboardMap.propTypes = {
   userCompanyList: PropTypes.array,
