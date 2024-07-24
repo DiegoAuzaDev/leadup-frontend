@@ -134,9 +134,13 @@
   .defult--btn {
     @apply px-[1em] py-[0.25em] md:px-[1em] md:py-[0.35em] font-bold text-center  rounded-custom transition duration-300 ease-in-out tracking-wide;
   }
+ 
   .btn {
     @apply defult--btn bg-primary-light text-primary border-2 border-primary 
     hover:bg-primary hover:text-primary-light hover:border-primary-light focus:bg-primary focus:text-primary-light focus:border-primary-light;
+  }
+   .selected { 
+    @apply bg-primary-light text-primary border-0 border-primary 
   }
   .btn--outline {
     @apply defult--btn bg-white text-primary border-2 border-primary

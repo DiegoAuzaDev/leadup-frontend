@@ -8,6 +8,8 @@ import Vehicles from "./components/workspace/vehicles";
 import Calendar from "./components/workspace/calendar";
 import Support from "./components/workspace/support";
 import Team from "./components/workspace/team";
+import OverViewVehicle from "./components/workspace/vehicle/overview";
+import AboutVehicle from "./components/workspace/vehicle/about";
 
 function App() {
   return (
@@ -19,7 +21,10 @@ function App() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="calendar" element={<Calendar />} />
         <Route path="team" element={<Team />} />
-        <Route path="vehicles" element={<Vehicles />} />
+        <Route path="vehicles/" element={<Vehicles />}>
+          <Route path="overview" element={<OverViewVehicle />} />
+          <Route path="about" element={<AboutVehicle />} />
+        </Route>
         <Route path="support" element={<Support />} />
       </Route>
       <Route path="*" element={<ErrorPage />} />
