@@ -10,6 +10,17 @@
     @apply box-border;
   }
 
+  input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px; /* Set the size of the thumb */
+  height: 20px;
+  background: #0CA5E9; /* Set the color of the thumb */
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid #082F48; 
+}
+
   /* Remove default margin */
   h1,
   h2,
@@ -154,6 +165,7 @@
     @apply defult--btn bg-transparent text-red border-2 border-red
     hover:bg-red-light hover:text-primary hover:border-primary  focus:bg-red-light focus:text-primary focus:border-red-light;
   }
+
 
   .input {
     @apply flex border-surface-light rounded-custom font-normal border-2 px-[1.5em] py-[0.5em]

@@ -1,13 +1,20 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import FuelVehicle from "../ui/fuelVehicle";
+import vehicleImg from "../../assets/truck.webp";
+import SelecteColor from "../ui/selectColor";
+
 function Vehicles() {
   const [createIsActive, setCreateIsActive] = useState(false);
   const [fuel, setFuel] = useState("");
+  const [length, setLenght] = useState(5)
+  const [color, setColor] = useState("");
 
+  const handleRangeChange = (ev) => {
+    setLenght(ev.target.value);
+  };
   const createModal = () => {
     setCreateIsActive(!createIsActive);
-    console.log(createIsActive);
   };
   return (
     <>
@@ -51,7 +58,59 @@ function Vehicles() {
                 capacity and so on.
               </p>
             </div>
-            <FuelVehicle fuel={fuel} setFuel={setFuel}/>
+            <FuelVehicle fuel={fuel} setFuel={setFuel} />
+            <div className={"grid md:grid-cols-2 grid-cols-1 gap-2"}>
+              <div className={"grid grid-cols-1 md:grid-cols-2 gap-2"}>
+                <label
+                  htmlFor="make"
+                  className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+                >
+                  Vehicle Make
+                  <input
+                    maxLength={10}
+                    className={"input"}
+                    placeholder={"Add Vehicle make"}
+                    type="text"
+                    id={"make"}
+                  />
+                </label>
+                <label
+                  htmlFor="color"
+                  className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+                >
+                  Vehicle Color
+                  <SelecteColor setColor={setColor} />
+                </label>
+                <label
+                  htmlFor="length"
+                  className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+                >
+                Vehicle Length <span className="py-2 text-primary font-bold">Selected Value : {length}</span>
+                  <div className=" rounded-custom bg-white py-2 px-2">
+                    <input
+                      value={length}
+                      type="range"
+                      id="length"
+                      step={1}
+                      onChange={handleRangeChange}
+                      className=" my-2 transparent h-[4px] w-full cursor-pointer appearance-none border-transparent bg-surface-dark"
+                      min={5}
+                      max={12}
+                    />
+                  </div>
+                  <div className=" flex justify-between">
+                    <span>5</span>
+                    <span>12</span>
+                  </div>
+                </label>
+              </div>
+
+              <img
+                className={" w-[50%] md:w-[80%] m-auto"}
+                src={vehicleImg}
+                alt="Image of a truck"
+              />
+            </div>
             <div className=" flex flex-wrap gap-5">
               <button className="btn--outline">Cancel</button>
               <button className="btn">Create Vehicle</button>
