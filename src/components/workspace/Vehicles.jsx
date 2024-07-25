@@ -78,6 +78,7 @@ function Vehicles() {
             <FuelVehicle fuel={fuel} setFuel={setFuel} />
             <div className={"grid md:grid-cols-2 grid-cols-1 gap-4"}>
               <div className={"grid grid-cols-1 md:grid-cols-2 gap-4"}>
+                <p className=" m-0 col-span-full font-bold text-primary-light">Vehicle Specifications</p>
                 <label
                   htmlFor="make"
                   className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
