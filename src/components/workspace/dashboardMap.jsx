@@ -1,4 +1,4 @@
-import { AdvancedMarker, Map, Marker, Pin } from "@vis.gl/react-google-maps";
+import {  Map } from "@vis.gl/react-google-maps";
 import PropTypes from "prop-types";
 import { useEffect, useMemo, useState } from "react";
 import HeadquartersMarker from "../ui/headquartersMarker";

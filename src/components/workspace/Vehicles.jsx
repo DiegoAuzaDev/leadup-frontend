@@ -3,14 +3,19 @@ import { Outlet } from "react-router-dom";
 import FuelVehicle from "../ui/fuelVehicle";
 import vehicleImg from "../../assets/truck.webp";
 import SelecteColor from "../ui/selectColor";
+import SelectRange from "../ui/selectRange";
 
 function Vehicles() {
   const [createIsActive, setCreateIsActive] = useState(false);
   const [fuel, setFuel] = useState("");
-  const [length, setLenght] = useState(5)
+  const MAX_LENGTH = 12;
+  const MIN_LENGTH = 3;
+  const MAX_WIDTH = 2.5;
+  const MIN_WIDTH = 1.5;
+  const [length, setLenght] = useState(3);
   const [color, setColor] = useState("");
 
-  const handleRangeChange = (ev) => {
+  const handleRangeChangeLenght = (ev) => {
     setLenght(ev.target.value);
   };
   const createModal = () => {
@@ -85,23 +90,13 @@ function Vehicles() {
                   htmlFor="length"
                   className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
                 >
-                Vehicle Length <span className="py-2 text-primary font-bold">Selected Value : {length}</span>
-                  <div className=" rounded-custom bg-white py-2 px-2">
-                    <input
-                      value={length}
-                      type="range"
-                      id="length"
-                      step={1}
-                      onChange={handleRangeChange}
-                      className=" my-2 transparent h-[4px] w-full cursor-pointer appearance-none border-transparent bg-surface-dark"
-                      min={5}
-                      max={12}
-                    />
-                  </div>
-                  <div className=" flex justify-between">
-                    <span>5</span>
-                    <span>12</span>
-                  </div>
+                  Vehicle Length
+                  <SelectRange
+                    min={MIN_LENGTH}
+                    max={MAX_LENGTH}
+                    value={length}
+                    setValue={handleRangeChangeLenght}
+                  />
                 </label>
               </div>
 
