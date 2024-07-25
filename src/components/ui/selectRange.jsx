@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 
-function SelectRange({ min, max, value, setValue }) {
+function SelectRange({ min, max, value, setValue, id }) {
   return (
     <>
       <div className=" rounded-custom bg-white py-2 px-2">
         <input
           value={Number(value)}
           type="range"
-          id="length"
+          id={id}
           step={0.1}
           onChange={setValue}
           className=" my-2 transparent h-[4px] w-full cursor-pointer appearance-none border-transparent bg-surface-dark"
@@ -16,11 +16,8 @@ function SelectRange({ min, max, value, setValue }) {
         />
       </div>
       <div className=" flex justify-between">
-        <span>{min}</span>
-        <span className="py-2 text-primary font-bold">
-          {`  Selected Value : ${value}`}
-        </span>
-        <span>{max}</span>
+        <span>min: {min}</span>
+        <span>max: {max}</span>
       </div>
     </>
   );

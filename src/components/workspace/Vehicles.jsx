@@ -12,13 +12,25 @@ function Vehicles() {
   const MIN_LENGTH = 3;
   const MAX_WIDTH = 2.5;
   const MIN_WIDTH = 1.5;
-  const [length, setLenght] = useState(3);
+  const MAX_CAPACITY = 40;
+  const MIN_CAPACITY = 1;
+  const [length, setLenght] = useState(MIN_LENGTH);
+  const [width, setWidth] = useState(MIN_WIDTH);
   const [color, setColor] = useState("");
+  const [capacity, setCapacity] = useState(MIN_CAPACITY);
 
+  const handleRangeChangeCapacity = (ev) => {
+    setCapacity(ev.target.value);
+  };
   const handleRangeChangeLenght = (ev) => {
     setLenght(ev.target.value);
   };
-  const createModal = () => {
+
+  const handleRangeChangeWidth = (ev) => {
+    setWidth(ev.target.value);
+  };
+
+  const modalController = () => {
     setCreateIsActive(!createIsActive);
   };
   return (
@@ -32,7 +44,7 @@ function Vehicles() {
             <button
               className="btn"
               onClick={() => {
-                createModal();
+                modalController();
               }}
             >
               Add new vehicle
@@ -47,7 +59,7 @@ function Vehicles() {
         <section
           onClick={(ev) => {
             if (ev.target === ev.currentTarget) {
-              createModal();
+              modalController();
             }
           }}
           className=" absolute flex justify-center align-middle h-full w-full lg:hidden top-0 left-0 p-4 md:p-32"
@@ -64,8 +76,8 @@ function Vehicles() {
               </p>
             </div>
             <FuelVehicle fuel={fuel} setFuel={setFuel} />
-            <div className={"grid md:grid-cols-2 grid-cols-1 gap-2"}>
-              <div className={"grid grid-cols-1 md:grid-cols-2 gap-2"}>
+            <div className={"grid md:grid-cols-2 grid-cols-1 gap-4"}>
+              <div className={"grid grid-cols-1 md:grid-cols-2 gap-4"}>
                 <label
                   htmlFor="make"
                   className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
@@ -90,12 +102,52 @@ function Vehicles() {
                   htmlFor="length"
                   className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
                 >
-                  Vehicle Length
+                  <p className="m-0">
+                    Vehicle Length:{" "}
+                    <span className=" font-semibold text-primary">
+                      {length}
+                    </span>
+                  </p>
                   <SelectRange
+                    id={"length"}
                     min={MIN_LENGTH}
                     max={MAX_LENGTH}
                     value={length}
                     setValue={handleRangeChangeLenght}
+                  />
+                </label>
+                <label
+                  htmlFor="width"
+                  className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+                >
+                  <p className="m-0">
+                    Vehicle Width:{" "}
+                    <span className=" font-semibold text-primary">{width}</span>
+                  </p>
+                  <SelectRange
+                    id={"width"}
+                    min={MIN_WIDTH}
+                    max={MAX_WIDTH}
+                    value={width}
+                    setValue={handleRangeChangeWidth}
+                  />
+                </label>
+                <label
+                  htmlFor="capacity"
+                  className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+                >
+                  <p className="m-0">
+                    Vehicle Capacity:{" "}
+                    <span className=" font-semibold text-primary">
+                      {capacity}
+                    </span>
+                  </p>
+                  <SelectRange
+                    id={"capacity"}
+                    min={MIN_CAPACITY}
+                    max={MAX_CAPACITY}
+                    value={capacity}
+                    setValue={handleRangeChangeCapacity}
                   />
                 </label>
               </div>
@@ -107,7 +159,15 @@ function Vehicles() {
               />
             </div>
             <div className=" flex flex-wrap gap-5">
-              <button className="btn--outline">Cancel</button>
+              <button
+                className="btn--outline"
+                onClick={(ev) => {
+                  ev.preventDefault();
+                  modalController();
+                }}
+              >
+                Cancel
+              </button>
               <button className="btn">Create Vehicle</button>
             </div>
           </form>
