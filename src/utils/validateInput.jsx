@@ -10,23 +10,23 @@ const validateEmail = (email) => {
   }
 };
 
-const validateAddress = (address)=>{
-const addressPattern = /^[a-zA-Z0-9\s-#]+$/;
+const validateAddress = (address) => {
+  const addressPattern = /^[a-zA-Z0-9\s-#]+$/;
 
- if (address.trim() === "") {
-   return "Address must be provided";
- }
+  if (address.trim() === "") {
+    return "Address must be provided";
+  }
 
- if (address.length < 8) {
-   return "Address must be at least 8 characters long";
- }
+  if (address.length < 8) {
+    return "Address must be at least 8 characters long";
+  }
 
- if (!addressPattern.test(address)) {
-   return "Address must contain only letters,spaces, number or #";
- }
+  if (!addressPattern.test(address)) {
+    return "Address must contain only letters,spaces, number or #";
+  }
 
- return "";
-}
+  return "";
+};
 
 const validatePassword = (password) => {
   if (password.length < 6) {
@@ -45,7 +45,6 @@ const validatePassword = (password) => {
 
   return "";
 };
-
 
 const validateName = (name) => {
   const namePattern = /^[a-zA-Z\s]+$/; // This pattern allows only letters and spaces
@@ -84,10 +83,21 @@ const validatePhoneNumber = (phoneNumber) => {
   return "";
 };
 
+const validateVehicleMake = (make) => {
+  const requiredLength = 3;
+  if (make.trim() === "") {
+    return "Make must be provided";
+  }
+  if (make.length < requiredLength) {
+    return `Make must be larger ${requiredLength} `;
+  }
+};
+
 export {
   validateEmail,
   validatePassword,
   validateName,
   validateAddress,
   validatePhoneNumber,
+  validateVehicleMake,
 };

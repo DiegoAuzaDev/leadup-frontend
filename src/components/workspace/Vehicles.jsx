@@ -4,6 +4,7 @@ import FuelVehicle from "../ui/fuelVehicle";
 import vehicleImg from "../../assets/truck.webp";
 import SelecteColor from "../ui/selectColor";
 import SelectRange from "../ui/selectRange";
+import { validateVehicleMake } from "../../utils/validateInput";
 
 function Vehicles() {
   const [createIsActive, setCreateIsActive] = useState(false);
@@ -17,11 +18,20 @@ function Vehicles() {
   const [length, setLenght] = useState(MIN_LENGTH);
   const [width, setWidth] = useState(MIN_WIDTH);
   const [color, setColor] = useState("");
-  const [capacity, setCapacity] = useState(MIN_CAPACITY);
+  const [make, setMake] = useState("")
+  const [isLoading, setIsLoading] = useState(false);
+  const [capacity, setCapacity] = useState(MIN_CAPACITY); 
+  const [makeError, setMakeError] = useState(false);
 
+  const newVehicle = {
+    make : make
+  }
   const handleRangeChangeCapacity = (ev) => {
     setCapacity(ev.target.value);
   };
+  const loadingController = ()=>{
+    setIsLoading(!isLoading);
+  }
   const handleRangeChangeLenght = (ev) => {
     setLenght(ev.target.value);
   };
@@ -32,6 +42,18 @@ function Vehicles() {
 
   const modalController = () => {
     setCreateIsActive(!createIsActive);
+  };
+
+  const makeValidator = (ev)=>{
+    let make = ev.target.value;
+    setMake(make);
+    setMakeError(validateVehicleMake(make));
+
+  }
+  const submitController = (ev) => {
+    ev.preventDefault();
+    loadingController();
+    console.log("creating new vehicle")
   };
   return (
     <>
@@ -64,7 +86,12 @@ function Vehicles() {
           }}
           className=" absolute flex justify-center align-middle h-full w-full lg:hidden top-0 left-0 p-4 md:p-32"
         >
-          <form className="bg-surface-light border-2 rounded-custom border-surface-dark m-auto p-5 inputFadeIn flex flex-col gap-4">
+          <form
+            onSubmit={(ev) => {
+              submitController(ev);
+            }}
+            className="bg-surface-light border-2 rounded-custom border-surface-dark m-auto p-4 inputFadeIn flex flex-col gap-4"
+          >
             <div className=" flex flex-col">
               <p className=" text-[1.424rem] md:text-[1.728rem] lg:text-[1.953rem] mt-4 font-bold text-center">
                 Create a new vehicle and make your team bigger
@@ -76,21 +103,31 @@ function Vehicles() {
               </p>
             </div>
             <FuelVehicle fuel={fuel} setFuel={setFuel} />
-            <div className={"grid md:grid-cols-2 grid-cols-1 gap-4"}>
+            <div className={"grid md:grid-cols-2 grid-cols-1 gap-2"}>
               <div className={"grid grid-cols-1 md:grid-cols-2 gap-4"}>
-                <p className=" m-0 col-span-full font-bold text-primary-light">Vehicle Specifications</p>
+                <p className=" m-0 col-span-full font-bold text-primary-light">
+                  Vehicle Specifications
+                </p>
                 <label
                   htmlFor="make"
                   className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
                 >
-                  Vehicle Make
+                  Vehicle Make *
                   <input
+                    required
                     maxLength={10}
-                    className={"input"}
+                    className={`input ${makeError ? "input-error" : ""}`}
                     placeholder={"Add Vehicle make"}
                     type="text"
                     id={"make"}
+                    value={make}
+                    onChange={(ev) => makeValidator(ev)}
                   />
+                  {makeError && (
+                    <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
+                      {makeError}
+                    </small>
+                  )}
                 </label>
                 <label
                   htmlFor="color"
@@ -103,12 +140,10 @@ function Vehicles() {
                   htmlFor="length"
                   className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
                 >
-                  <p className="m-0">
-                    Vehicle Length:{" "}
-                    <span className=" font-semibold text-primary">
-                      {length}
-                    </span>
-                  </p>
+                  <p className="m-0">Vehicle Length</p>
+                  <span className=" font-semibold text-primary">
+                    {length} Meters
+                  </span>
                   <SelectRange
                     id={"length"}
                     min={MIN_LENGTH}
@@ -121,10 +156,10 @@ function Vehicles() {
                   htmlFor="width"
                   className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
                 >
-                  <p className="m-0">
-                    Vehicle Width:{" "}
-                    <span className=" font-semibold text-primary">{width}</span>
-                  </p>
+                  <p className="m-0">Vehicle Width</p>
+                  <span className=" font-semibold text-primary">
+                    {width} Meters
+                  </span>
                   <SelectRange
                     id={"width"}
                     min={MIN_WIDTH}
@@ -137,12 +172,10 @@ function Vehicles() {
                   htmlFor="capacity"
                   className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
                 >
-                  <p className="m-0">
-                    Vehicle Capacity:{" "}
-                    <span className=" font-semibold text-primary">
-                      {capacity}
-                    </span>
-                  </p>
+                  <p className="m-0">Vehicle Capacity</p>
+                  <span className=" font-semibold text-primary">
+                    {capacity} tons
+                  </span>
                   <SelectRange
                     id={"capacity"}
                     min={MIN_CAPACITY}
