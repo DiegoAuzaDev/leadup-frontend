@@ -4,7 +4,11 @@ import FuelVehicle from "../ui/fuelVehicle";
 import vehicleImg from "../../assets/truck.webp";
 import SelectColor from "../ui/selectColor";
 import SelectRange from "../ui/selectRange";
-import { validateVehicleMake, validateVehicleModel } from "../../utils/validateInput";
+import {
+  validatePlate,
+  validateVehicleMake,
+  validateVehicleModel,
+} from "../../utils/validateInput";
 import SelectYear from "../ui/selectYear";
 
 function Vehicles() {
@@ -18,14 +22,16 @@ function Vehicles() {
   const [width, setWidth] = useState(MIN_WIDTH);
   const [color, setColor] = useState("");
   const [year, setYear] = useState(1990);
-  const [make, setMake] = useState("")
-  const [model, setModel] = useState("")
+  const [make, setMake] = useState("");
+  const [model, setModel] = useState("");
+  const [fuel, setFuel] = useState("");
+  const [plate, setPlate] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [capacity, setCapacity] = useState(MIN_CAPACITY); 
+  const [capacity, setCapacity] = useState(MIN_CAPACITY);
   const [makeError, setMakeError] = useState(false);
   const [modelError, setModelError] = useState(false);
-    const [createIsActive, setCreateIsActive] = useState(false);
-    const [fuel, setFuel] = useState("");
+  const [plateError, setPlateError] = useState(false)
+  const [createIsActive, setCreateIsActive] = useState(false);
 
   const newVehicle = {
     make: make,
@@ -34,14 +40,14 @@ function Vehicles() {
     year: year,
     color: color,
     width: width,
-    length : length
+    length: length,
   };
   const handleRangeChangeCapacity = (ev) => {
     setCapacity(ev.target.value);
   };
-  const loadingController = ()=>{
+  const loadingController = () => {
     setIsLoading(!isLoading);
-  }
+  };
   const handleRangeChangeLenght = (ev) => {
     setLenght(ev.target.value);
   };
@@ -54,22 +60,26 @@ function Vehicles() {
     setCreateIsActive(!createIsActive);
   };
 
-  const makeValidator = (ev)=>{
+  const makeValidator = (ev) => {
     let make = ev.target.value;
     setMake(make);
     setMakeError(validateVehicleMake(make));
+  };
 
+  const plateValidator = (ev)=>{
+    let plate = ev.target.value;
+    setPlate(plate)
+    setPlateError(validatePlate(plate))
   }
-  const modelValidator = (ev)=>{
+  const modelValidator = (ev) => {
     let model = ev.target.value;
     setModel(model);
     setModelError(validateVehicleModel(model));
-
-  }
+  };
   const submitController = (ev) => {
     ev.preventDefault();
     loadingController();
-    console.log("creating new vehicle")
+    console.log("creating new vehicle");
   };
   return (
     <>
@@ -178,10 +188,31 @@ function Vehicles() {
               <div className={"grid grid-cols-1 md:grid-cols-2 gap-4"}>
                 <label
                   htmlFor="color"
-                  className=" col-span-full text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+                  className=" text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
                 >
                   Vehicle Color
                   <SelectColor setColor={setColor} />
+                </label>
+                <label
+                  htmlFor="plate"
+                  className=" text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+                >
+                  Vehicle Plate Number*
+                  <input
+                    required
+                    maxLength={7}
+                    className={`input ${modelError ? "input-error" : ""}`}
+                    placeholder={"Add Vehicle Plate Number"}
+                    type="text"
+                    id={"plate"}
+                    value={plate}
+                    onChange={(ev) => plateValidator(ev)}
+                  />
+                  {plateError && (
+                    <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
+                      {plateError}
+                    </small>
+                  )}
                 </label>
                 <label
                   htmlFor="length"

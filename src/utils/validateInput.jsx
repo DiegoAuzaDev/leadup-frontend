@@ -91,6 +91,7 @@ const validateVehicleMake = (make) => {
   if (make.length < requiredLength) {
     return `Make must be larger ${requiredLength} `;
   }
+   return "";
 };
 const validateVehicleModel = (model) => {
   const requiredLength = 3;
@@ -100,6 +101,7 @@ const validateVehicleModel = (model) => {
   if (model.length < requiredLength) {
     return `Model must be larger ${requiredLength} `;
   }
+   return "";
 };
 
 const validatePlate = (plate) => {
@@ -110,7 +112,7 @@ const validatePlate = (plate) => {
   }
 
   if (!platePattern.test(plate)) {
-    return "Plate must be exactly 6 characters long and contain only letters and numbers";
+    return "Plate must be exactly 6 characters long";
   }
 
   return "";
