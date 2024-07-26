@@ -6,8 +6,7 @@ function FuelVehicle({ fuel, setFuel }) {
   const hybrid = "Hybrid";
   return (
     <>
-    <p className="m-0 font-bold text-primary-light">Select Fuel Type</p>
-      <div className=" overflow-hidden border-2 rounded-custom grid divide-y md:grid-cols-4 md:divide-x md:divide-y-0">
+      <div className=" my-2 overflow-hidden border-2 rounded-custom grid divide-y md:grid-cols-4 md:divide-x md:divide-y-0">
         <button
           value={diesel}
           onClick={(ev) => {

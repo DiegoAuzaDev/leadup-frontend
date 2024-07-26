@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 
-function SelecteColor({ setColor }) {
+function SelectColor({ setColor }) {
   const colors = ["Black", "White", "Gray", "Red", "Orange", "Blue", "Yellow"];
   useEffect(() => {
     setColor(colors[0]);
@@ -24,7 +24,7 @@ function SelecteColor({ setColor }) {
   );
 }
 
-SelecteColor.propTypes = {
+SelectColor.propTypes = {
   setColor: PropTypes.func,
 };
-export default SelecteColor;
+export default SelectColor;

@@ -92,6 +92,30 @@ const validateVehicleMake = (make) => {
     return `Make must be larger ${requiredLength} `;
   }
 };
+const validateVehicleModel = (model) => {
+  const requiredLength = 3;
+  if (model.trim() === "") {
+    return "Model must be provided";
+  }
+  if (model.length < requiredLength) {
+    return `Model must be larger ${requiredLength} `;
+  }
+};
+
+const validatePlate = (plate) => {
+  const platePattern = /^[A-Za-z0-9]{6}$/; 
+
+  if (plate.trim() === "") {
+    return "Plate must be provided";
+  }
+
+  if (!platePattern.test(plate)) {
+    return "Plate must be exactly 6 characters long and contain only letters and numbers";
+  }
+
+  return "";
+};
+
 
 export {
   validateEmail,
@@ -100,4 +124,6 @@ export {
   validateAddress,
   validatePhoneNumber,
   validateVehicleMake,
+  validateVehicleModel,
+  validatePlate,
 };

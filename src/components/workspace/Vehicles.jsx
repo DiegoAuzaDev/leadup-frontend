@@ -2,13 +2,12 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import FuelVehicle from "../ui/fuelVehicle";
 import vehicleImg from "../../assets/truck.webp";
-import SelecteColor from "../ui/selectColor";
+import SelectColor from "../ui/selectColor";
 import SelectRange from "../ui/selectRange";
-import { validateVehicleMake } from "../../utils/validateInput";
+import { validateVehicleMake, validateVehicleModel } from "../../utils/validateInput";
+import SelectYear from "../ui/selectYear";
 
 function Vehicles() {
-  const [createIsActive, setCreateIsActive] = useState(false);
-  const [fuel, setFuel] = useState("");
   const MAX_LENGTH = 12;
   const MIN_LENGTH = 3;
   const MAX_WIDTH = 2.5;
@@ -18,14 +17,25 @@ function Vehicles() {
   const [length, setLenght] = useState(MIN_LENGTH);
   const [width, setWidth] = useState(MIN_WIDTH);
   const [color, setColor] = useState("");
+  const [year, setYear] = useState(1990);
   const [make, setMake] = useState("")
+  const [model, setModel] = useState("")
   const [isLoading, setIsLoading] = useState(false);
   const [capacity, setCapacity] = useState(MIN_CAPACITY); 
   const [makeError, setMakeError] = useState(false);
+  const [modelError, setModelError] = useState(false);
+    const [createIsActive, setCreateIsActive] = useState(false);
+    const [fuel, setFuel] = useState("");
 
   const newVehicle = {
-    make : make
-  }
+    make: make,
+    model: model,
+    fuel: fuel,
+    year: year,
+    color: color,
+    width: width,
+    length : length
+  };
   const handleRangeChangeCapacity = (ev) => {
     setCapacity(ev.target.value);
   };
@@ -48,6 +58,12 @@ function Vehicles() {
     let make = ev.target.value;
     setMake(make);
     setMakeError(validateVehicleMake(make));
+
+  }
+  const modelValidator = (ev)=>{
+    let model = ev.target.value;
+    setModel(model);
+    setModelError(validateVehicleModel(model));
 
   }
   const submitController = (ev) => {
@@ -84,7 +100,7 @@ function Vehicles() {
               modalController();
             }
           }}
-          className=" absolute flex justify-center align-middle h-full w-full lg:hidden top-0 left-0 p-4 md:p-32"
+          className=" absolute flex justify-center align-middle h-full w-full lg:hidden top-0 left-0 p-4 md:p-20 overflow-scroll"
         >
           <form
             onSubmit={(ev) => {
@@ -102,39 +118,70 @@ function Vehicles() {
                 capacity and so on.
               </p>
             </div>
+            <p className=" m-0 col-span-full font-bold text-primary-light">
+              Vehicle Specifications
+            </p>
+            <div className="grid md:grid-cols-3 grid-cols-1 gap-2">
+              <label
+                htmlFor="make"
+                className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+              >
+                Vehicle Make *
+                <input
+                  required
+                  maxLength={10}
+                  className={`input ${makeError ? "input-error" : ""}`}
+                  placeholder={"Add Vehicle make"}
+                  type="text"
+                  id={"make"}
+                  value={make}
+                  onChange={(ev) => makeValidator(ev)}
+                />
+                {makeError && (
+                  <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
+                    {makeError}
+                  </small>
+                )}
+              </label>
+              <label
+                htmlFor="model"
+                className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+              >
+                Vehicle Model *
+                <input
+                  required
+                  maxLength={10}
+                  className={`input ${modelError ? "input-error" : ""}`}
+                  placeholder={"Add Vehicle model"}
+                  type="text"
+                  id={"model"}
+                  value={model}
+                  onChange={(ev) => modelValidator(ev)}
+                />
+                {modelError && (
+                  <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
+                    {modelError}
+                  </small>
+                )}
+              </label>
+              <label
+                htmlFor="year"
+                className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+              >
+                Vehicle factory year
+                <SelectYear setYear={setYear} />
+              </label>
+            </div>
             <FuelVehicle fuel={fuel} setFuel={setFuel} />
+
             <div className={"grid md:grid-cols-2 grid-cols-1 gap-2"}>
               <div className={"grid grid-cols-1 md:grid-cols-2 gap-4"}>
-                <p className=" m-0 col-span-full font-bold text-primary-light">
-                  Vehicle Specifications
-                </p>
-                <label
-                  htmlFor="make"
-                  className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
-                >
-                  Vehicle Make *
-                  <input
-                    required
-                    maxLength={10}
-                    className={`input ${makeError ? "input-error" : ""}`}
-                    placeholder={"Add Vehicle make"}
-                    type="text"
-                    id={"make"}
-                    value={make}
-                    onChange={(ev) => makeValidator(ev)}
-                  />
-                  {makeError && (
-                    <small className=" text-red text-base md:text-[1.05rem] lg:text-[1.1rem]">
-                      {makeError}
-                    </small>
-                  )}
-                </label>
                 <label
                   htmlFor="color"
-                  className="text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
+                  className=" col-span-full text-base md:text-[1.05rem] lg:text-[1.1rem] flex flex-col"
                 >
                   Vehicle Color
-                  <SelecteColor setColor={setColor} />
+                  <SelectColor setColor={setColor} />
                 </label>
                 <label
                   htmlFor="length"
